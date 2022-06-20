@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PcStatsReporter.Contracts\PcStatsReporter.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

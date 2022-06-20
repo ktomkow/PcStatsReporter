@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Google.Protobuf;
+using PcStatsReporter.Contracts;
 
 namespace PcStatsReporter.Client
 {
@@ -14,16 +16,19 @@ namespace PcStatsReporter.Client
 
             Console.WriteLine($"tcpClient.Connected {tcpClient.Connected}");
 
-            var payload = Encoding.UTF8.GetBytes("Client");
-
-            await tcpClient.GetStream().WriteAsync(payload, 0, payload.Length);
-
+            
             Console.WriteLine("Wrote");
 
             while (true)
             {
                 var line = Console.ReadLine();
-                payload = Encoding.UTF8.GetBytes(line);
+                
+                var toServer = new ToServer();
+                toServer.MyMessage = new MyMessage();
+                toServer.MyMessage.Text = line;
+
+                var payload = toServer.ToByteArray();
+                
                 await tcpClient.GetStream().WriteAsync(payload, 0, payload.Length);
             }
             

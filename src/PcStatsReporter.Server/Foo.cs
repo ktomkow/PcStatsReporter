@@ -1,6 +1,7 @@
 ﻿using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using PcStatsReporter.Contracts;
 
 namespace PcStatsReporter.Server;
 
@@ -44,7 +45,9 @@ public class Foo
                 Byte[] buffer = new Byte[_tcpClient.Available];
                 
                 await stream.ReadAsync(buffer, 0, buffer.Length);
-                string data = Encoding.UTF8.GetString(buffer);
+                
+                var toServer = ToServer.Parser.ParseFrom(buffer);
+                string data = toServer.MyMessage.Text;
             
                 Console.WriteLine($"Id: {ShortId} - Message: {data}");
             }

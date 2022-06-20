@@ -1,0 +1,13 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "PcStatsReporter.Contracts";
+
+message ToServer {
+    oneof payload {
+        MyMessage my_message = 1;
+    }
+}
+
+message MyMessage {
+    string text = 1;
+}

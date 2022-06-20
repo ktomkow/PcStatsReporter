@@ -5,5 +5,22 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  
+  <Target Name="BeforeBuild">
+    <Message Text="HandleProto Text" Importance="High" />
+  </Target>
+  
+  <ItemGroup>
+    <Protobuf Include="contracts.proto">
+      <Link>contracts.proto</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Protobuf>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.21.1" />
+    <PackageReference Include="Grpc" Version="2.46.3" />
+    <PackageReference Include="Grpc.Tools" Version="2.46.3" PrivateAssets="All" />
+  </ItemGroup>
 
 </Project>
