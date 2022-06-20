@@ -1,6 +1,6 @@
 ﻿namespace PcStatsReporter.Server;
 
-public enum FooState
+public enum ChannelState
 {
     Created = 0,
     Started = 1,

@@ -18,8 +18,8 @@ namespace PcStatsReporter.Server
             while (true)
             {
                 TcpClient client = await server.AcceptTcpClientAsync();
-                Foo foo = new(client);
-                var task = foo.Run();
+                Channel channel = new(client);
+                var task = channel.Run();
                 tasks.Add(task);
             }
             

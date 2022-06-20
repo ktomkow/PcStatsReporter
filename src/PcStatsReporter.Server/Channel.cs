@@ -1,27 +1,26 @@
 ﻿using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Text;
 using PcStatsReporter.Contracts;
 
 namespace PcStatsReporter.Server;
 
-public class Foo
+public class Channel
 {
     public Guid Id { get; }
     private string ShortId => Id.ToString().Substring(0, 4);
     private readonly TcpClient _tcpClient;
-    public FooState State { get; private set; }
+    public ChannelState State { get; private set; }
 
-    public Foo(TcpClient tcpClient)
+    public Channel(TcpClient tcpClient)
     {
         _tcpClient = tcpClient;
-        State = FooState.Created;
+        State = ChannelState.Created;
         Id = Guid.NewGuid();
     }
 
     public async Task Run()
     {
-        if (State != FooState.Created)
+        if (State != ChannelState.Created)
         {
             await Task.CompletedTask;
             return;
@@ -29,7 +28,7 @@ public class Foo
         
         Console.WriteLine($"{ShortId} Started");
 
-        State = FooState.Started;
+        State = ChannelState.Started;
 
         NetworkStream stream = _tcpClient.GetStream();
         
@@ -54,7 +53,7 @@ public class Foo
         }
 
         Console.WriteLine($"{ShortId} Finished");
-        State = FooState.Finished;
+        State = ChannelState.Finished;
         await Task.CompletedTask;
     }
 }

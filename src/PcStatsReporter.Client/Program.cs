@@ -20,14 +20,17 @@ namespace PcStatsReporter.Client
             while (true)
             {
                 var line = Console.ReadLine();
-                
-                var toServer = new ToServer();
-                toServer.MyMessage = new MyMessage();
-                toServer.MyMessage.Text = line;
 
-                var payload = toServer.ToByteArray();
+                for (int i = 0; i < 3; i++)
+                {
+                    var toServer = new ToServer();
+                    toServer.MyMessage = new MyMessage();
+                    toServer.MyMessage.Text = line;
+
+                    var payload = toServer.ToByteArray();
                 
-                await tcpClient.GetStream().WriteAsync(payload, 0, payload.Length);
+                    await tcpClient.GetStream().WriteAsync(payload, 0, payload.Length);
+                }
             }
             
 
