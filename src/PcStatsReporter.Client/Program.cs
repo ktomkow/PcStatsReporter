@@ -17,8 +17,6 @@ namespace PcStatsReporter.Client
             Console.WriteLine($"tcpClient.Connected {tcpClient.Connected}");
 
             
-            Console.WriteLine("Wrote");
-
             while (true)
             {
                 var line = Console.ReadLine();
