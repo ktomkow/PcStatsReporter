@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "PcStatsReporter.Contracts";
+option csharp_namespace = "PcStatsReporter.Proto";
 
 message ToServer {
     oneof payload {
@@ -10,4 +10,8 @@ message ToServer {
 
 message MyMessage {
     string text = 1;
+}
+
+message Dupa {
+    int32 id = 1;
 }
