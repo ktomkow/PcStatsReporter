@@ -2,7 +2,7 @@
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
-namespace PcStatsReporter.OpenHardware
+namespace PcStatsReporter.Server
 {
     public static class Extensions
     {

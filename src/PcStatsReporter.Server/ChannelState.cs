@@ -1,4 +1,4 @@
-﻿namespace PcStatsReporter.OpenHardware
+﻿namespace PcStatsReporter.Server
 {
     public enum ChannelState
     {
