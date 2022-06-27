@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
 using System.Threading.Tasks;
-using OpenHardwareMonitor.Hardware;
+using PcStatsReporter.Core;
 
 namespace PcStatsReporter.OpenHardware
 {
@@ -14,7 +11,9 @@ namespace PcStatsReporter.OpenHardware
 
             Console.WriteLine("Init");
 
-            var collector = new CpuDataCollector(null);
+            var store = new Store();
+
+            var collector = new CpuDataCollector(store);
             await collector.Start();
 
             Console.WriteLine("Finished");
