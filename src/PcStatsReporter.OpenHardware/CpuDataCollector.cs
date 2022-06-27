@@ -10,7 +10,7 @@ namespace PcStatsReporter.OpenHardware
     {
         private readonly Store store;
         private readonly Computer computer;
-        private readonly TimeSpan period = TimeSpan.FromSeconds(1000);
+        private readonly TimeSpan period = TimeSpan.FromMilliseconds(500);
 
         public CpuDataCollector(Store store)
         {
