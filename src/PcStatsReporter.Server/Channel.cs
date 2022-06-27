@@ -84,12 +84,12 @@ namespace PcStatsReporter.Server
                     switch (command.CommandCase)
                     {
                         case ToServerCommand.CommandOneofCase.Disconnect:
-                            Console.WriteLine("Disconnecting.. but I do not know how to o_0");
+                            Console.WriteLine($"{this.Id} Disconnecting.. but I do not know how to o_0");
                             // todo
                             break;
 
                         case ToServerCommand.CommandOneofCase.SendData:
-                            //Console.WriteLine("Send Data Request");
+                            Console.WriteLine($"{this.Id} Send Data Request");
                             var cpu = this.store.Get<CpuData>();
                             var toClient = cpu.MapToClient();
 

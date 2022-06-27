@@ -38,6 +38,7 @@ namespace PcStatsReporter.Client
             
             while (counter <= maxCount)
             {
+                await Task.Delay(TimeSpan.FromSeconds(2));
                 //Console.WriteLine($"Loop no. {i}");
                 // var line = Console.ReadLine();
                 //
@@ -71,13 +72,13 @@ namespace PcStatsReporter.Client
                 var toClient = ToClient.Parser.ParseFrom(toClientPayload);
                 
                 var cpu = toClient.Data.Cpu;
-                //Console.WriteLine("*******************************");
-                //Console.WriteLine($"CPU name: {cpu.Name}");
-                //foreach (var core in cpu.Cores)
-                //{
-                    //Console.WriteLine($"{core.Id} : {core.Temperature}ºC, {core.Speed} MHz");
-                //}
-                //Console.WriteLine("*******************************");
+                Console.WriteLine("*******************************");
+                Console.WriteLine($"CPU name: {cpu.Name}");
+                foreach (var core in cpu.Cores)
+                {
+                    Console.WriteLine($"{core.Id} : {core.Temperature}ºC, {core.Speed} MHz, Load: {core.Load}");
+                }
+                Console.WriteLine("*******************************");
 
                 //await Task.Delay(TimeSpan.FromSeconds(5));
                 counter++;
