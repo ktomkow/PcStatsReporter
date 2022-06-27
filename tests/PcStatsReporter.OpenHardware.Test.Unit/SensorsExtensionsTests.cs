@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 using OpenHardwareMonitor.Hardware;
 using OpenHardwareMonitor.Collections;
+using PcStatsReporter.Core.Models;
 
 namespace PcStatsReporter.OpenHardware.Test.Unit
 {
@@ -44,18 +46,39 @@ namespace PcStatsReporter.OpenHardware.Test.Unit
             Assert.AreEqual(expected, result);
         }
 
-        // [TestMethod]
-        // public void GetCores()
-        // {
-        //     List<ISensor> sensors = new List<ISensor>();
-        //
-        //     var sensor = new Sensor()
-        //     {
-        //         Name = "CPU Core #1",
-        //         SensorType = SensorType.Temperature,
-        //         Value = 123.3f
-        //     };
-        // }
+        [TestMethod]
+        public void GetCores()
+        {
+            List<ISensor> sensors = new List<ISensor>()
+            {
+                new Sensor()
+                {
+                    Name = "CPU Core #1",
+                    SensorType = SensorType.Temperature,
+                    Value = 56.3f
+                },
+                new Sensor()
+                {
+                    Name = "CPU Core #1",
+                    SensorType = SensorType.Clock,
+                    Value = 3456.1f
+                },
+                new Sensor()
+                {
+                    Name = "CPU Core #1",
+                    SensorType = SensorType.Load,
+                    Value = 63.49f
+                },
+            };
+
+            List<CpuCore> cores = sensors.GetCpuCores();
+            CpuCore core = cores.Single();
+
+            Assert.AreEqual(core.Id, (uint) 1);
+            Assert.AreEqual(core.Temperature, (uint) 56);
+            Assert.AreEqual(core.Speed, (uint) 3456);
+            Assert.AreEqual(core.Load, (uint) 63);
+        }
 
 
         private class Sensor : ISensor

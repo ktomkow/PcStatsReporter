@@ -14,48 +14,48 @@ namespace PcStatsReporter.OpenHardware
         public static bool TryGetCoreId(this string name, out uint result)
         {
             string cutNumber = name.ToLowerInvariant().Replace("cpu core #", "");
-            
+
             return uint.TryParse(cutNumber, out result);
         }
-        
-        public static List<CpuCore> GetCores(this IEnumerable<ISensor> sensors)
+
+        public static List<CpuCore> GetCpuCores(this IEnumerable<ISensor> sensors)
         {
             Dictionary<uint, CpuCore> cores = new Dictionary<uint, CpuCore>();
 
             foreach (var sensor in sensors)
             {
-                if(sensor.Value.HasValue == false)
+                if (sensor.Value.HasValue == false)
                 {
                     continue;
                 }
 
-                // Console.WriteLine(sensor.SensorType + " " + sensor.Value.HasValue);
-                // if (sensor.SensorType == SensorType.Temperature && sensor.Value.HasValue)
-                // {
-                //     // coreAndTemperature.Add(sensor.Name, sensor.Value.Value);
-                //     Console.WriteLine(
-                //         $"FIRST LOOP sensor.Name {sensor.Name}, sensor.Value.Value {sensor.Value}");
-                // }
-
-                if (sensor.Value.HasValue)
+                bool isCoreInfo = sensor.Name.TryGetCoreId(out uint coreId);
+                if (isCoreInfo == false)
                 {
-                    Console.WriteLine(
-                        $"sensor.Name {sensor.Name}, sensor.Value {sensor.Value}, sensor.SensorType {sensor.SensorType}");
+                    continue;
                 }
 
-                if (sensor.Value.HasValue)
+                if (cores.ContainsKey(coreId) == false)
                 {
-                    switch (sensor.SensorType)
-                    {
-                        case SensorType.Temperature:
-                            break;
+                    CpuCore newCore = new CpuCore() {Id = coreId};
+                    cores.Add(coreId, newCore);
+                }
 
-                        case SensorType.Clock:
-                            break;
+                CpuCore core = cores[coreId];
 
-                        case SensorType.Load:
-                            break;
-                    }
+                switch (sensor.SensorType)
+                {
+                    case SensorType.Temperature:
+                        core.Temperature = (uint) sensor.Value;
+                        break;
+
+                    case SensorType.Clock:
+                        core.Speed = (uint) sensor.Value;
+                        break;
+
+                    case SensorType.Load:
+                        core.Load = (uint) sensor.Value;
+                        break;
                 }
             }
 
