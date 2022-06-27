@@ -4,6 +4,7 @@ namespace PcStatsReporter.Core.Models
 {
     public class CpuData
     {
+        public string Name { get; set; }
         public ICollection<CpuCore> Cores { get; set; }
 
         public uint PackageTemperature { get; set; }
