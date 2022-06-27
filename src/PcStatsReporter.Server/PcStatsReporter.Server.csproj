@@ -62,6 +62,7 @@
     <Compile Include="Channel.cs" />
     <Compile Include="ChannelState.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Mappers\CpuDataMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,6 +71,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\tests\PcStatsReporter.Test.Unit\PcStatsReporter.Core.Test.Unit.csproj">
+      <Project>{802bf2a4-be8a-4829-92af-24437891436c}</Project>
+      <Name>PcStatsReporter.Core.Test.Unit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PcStatsReporter.Core\PcStatsReporter.Core.csproj">
+      <Project>{828f3973-9c91-43fa-a953-8098faf0b416}</Project>
+      <Name>PcStatsReporter.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PcStatsReporter.OpenHardware\PcStatsReporter.OpenHardware.csproj">
+      <Project>{72a2d063-a3f3-450f-90d6-2535bbef324c}</Project>
+      <Name>PcStatsReporter.OpenHardware</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PcStatsReporter.Proto\PcStatsReporter.Proto\PcStatsReporter.Proto.csproj">
       <Project>{6dceb318-9ee3-4cd3-9ab7-6ba9a4a35b46}</Project>
       <Name>PcStatsReporter.Proto</Name>

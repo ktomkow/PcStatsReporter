@@ -4,6 +4,9 @@ using System;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using PcStatsReporter.Core;
+using PcStatsReporter.Server.Mappers;
+using CpuData = PcStatsReporter.Core.Models.CpuData;
 
 namespace PcStatsReporter.Server
 {
@@ -12,20 +15,13 @@ namespace PcStatsReporter.Server
         public Guid Id { get; }
         private string ShortId => Id.ToString().Substring(0, 4);
         private readonly TcpClient _tcpClient;
-        private readonly ToClientData _toClientData;
+        private readonly Store store;
         public ChannelState State { get; private set; }
 
-        public Channel(TcpClient tcpClient)
+        public Channel(TcpClient tcpClient, Store store)
         {
             _tcpClient = tcpClient;
-            State = ChannelState.Created;
-            Id = Guid.NewGuid();
-        }
-
-        public Channel(TcpClient tcpClient, ToClientData toClientData)
-        {
-            _tcpClient = tcpClient;
-            _toClientData = toClientData;
+            this.store = store;
             State = ChannelState.Created;
             Id = Guid.NewGuid();
         }
@@ -94,10 +90,8 @@ namespace PcStatsReporter.Server
 
                         case ToServerCommand.CommandOneofCase.SendData:
                             //Console.WriteLine("Send Data Request");
-                            var toClient = new ToClient
-                            {
-                                Data = _toClientData
-                            };
+                            var cpu = this.store.Get<CpuData>();
+                            var toClient = cpu.MapToClient();
 
                             var toClientBytes = toClient.ToByteArray();
 
