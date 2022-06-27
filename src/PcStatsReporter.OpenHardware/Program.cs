@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using PcStatsReporter.Core;
+using PcStatsReporter.Core.Models;
 
 namespace PcStatsReporter.OpenHardware
 {
@@ -14,7 +15,12 @@ namespace PcStatsReporter.OpenHardware
             var store = new Store();
 
             var collector = new CpuDataCollector(store);
-            await collector.Start();
+            collector.Start();
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            CpuData cpuData = store.Get<CpuData>();
+
+            Console.WriteLine(cpuData);
 
             Console.WriteLine("Finished");
             Console.ReadLine();
