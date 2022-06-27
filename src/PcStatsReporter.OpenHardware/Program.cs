@@ -16,11 +16,14 @@ namespace PcStatsReporter.OpenHardware
 
             var collector = new CpuDataCollector(store);
             collector.Start();
-
-            await Task.Delay(TimeSpan.FromSeconds(1));
-            CpuData cpuData = store.Get<CpuData>();
-
-            Console.WriteLine(cpuData);
+            
+            while (true)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(1));
+                Console.Clear();
+                CpuData cpuData = store.Get<CpuData>();
+                Console.WriteLine(cpuData);
+            }
 
             Console.WriteLine("Finished");
             Console.ReadLine();

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace PcStatsReporter.Core.Test.Unit
 {
@@ -49,19 +48,40 @@ namespace PcStatsReporter.Core.Test.Unit
             };
 
             store.Set(panda);
-            Guid id = panda.Id;
             panda = null;
 
             Panda result = this.store.Get<Panda>();
 
-            Assert.AreEqual(id, result.Id);
             Assert.AreEqual("Cheese", result.Name);
             Assert.AreEqual(2.5d, result.Number);
+        }
+        
+        [TestMethod]
+        public void GetSet_PandaTwoTimes_GetSecondOne()
+        {
+            Panda pandaOne = new Panda()
+            {
+                Name = "Cheese",
+                Number = 2.5d
+            };
+            
+            Panda pandaTwo = new Panda()
+            {
+                Name = "Tatanka",
+                Number = 33.19d
+            };
+
+            store.Set(pandaOne);
+            store.Set(pandaTwo);
+
+            Panda result = this.store.Get<Panda>();
+
+            Assert.AreEqual("Tatanka", result.Name);
+            Assert.AreEqual(33.19d, result.Number);
         }
 
         private class Panda
         {
-            public Guid Id { get; set; } = Guid.NewGuid();
             public string Name { get; set; }
             public double Number { get; set; }
         }
