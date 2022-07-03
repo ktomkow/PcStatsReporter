@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered class="q-pa-lg">
+  <q-card flat bordered class="card flex column justify-center">
     <q-card-section>
       <div class="text-center text-h4">{{ displayValue }}</div>
     </q-card-section>
@@ -62,4 +62,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card {
+  width: 14em;
+  height: 14em;
+}
+</style>
