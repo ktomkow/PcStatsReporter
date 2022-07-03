@@ -6,8 +6,9 @@ import eventBusKeys from "src/consts/eventBusKeys";
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(async ({ store }) => {
   eventBus.on(eventBusKeys.CPU_DATA_ARRIVED, handleCpuDataArrived);
-});
+  function handleCpuDataArrived(data) {
+    const temperatures = data.cores.map((x) => x.temperature);
 
-const handleCpuDataArrived = (data) => {
-  console.log("handleCpuDataArrived", data);
-};
+    store.dispatch("statistics/processTemperatures", temperatures);
+  }
+});
