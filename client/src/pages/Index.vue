@@ -28,6 +28,10 @@ import { reactive, toRefs, defineComponent, onMounted, onUnmounted } from "vue";
 import { api } from "src/boot/axios";
 import SimpleDigitalDisplay from "src/components/SimpleDigitalDisplay";
 
+import { useEventBus } from "src/composables/eventBusComposable";
+import eventBusKeys from "src/consts/eventBusKeys";
+import { eventBus } from "src/boot/eventBus";
+
 export default defineComponent({
   name: "PageIndex",
   components: { SimpleDigitalDisplay },
@@ -39,6 +43,17 @@ export default defineComponent({
       intervalId: null,
     });
 
+    const send = () => {
+      eventBus.emit(eventBusKeys.CPU_DATA_ARRIVED);
+      console.log("send");
+    };
+
+    const receive = () => {
+      console.log("receive");
+    };
+
+    useEventBus(eventBusKeys.CPU_DATA_ARRIVED, receive);
+
     onMounted(() => {
       state.intervalId = setInterval(async () => {
         try {
@@ -47,6 +62,7 @@ export default defineComponent({
           state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
           state.cpuCoresTemperatures = mapCoreTemperatures(cpuData);
           state.isLoading = false;
+          send();
         } catch (e) {
           console.error(e);
           state.isLoading = true;
