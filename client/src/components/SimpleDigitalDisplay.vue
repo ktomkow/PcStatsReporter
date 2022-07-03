@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <div>
-      {{ displayValue }}
-    </div>
-    <div v-if="label">
-      {{ label }}
-    </div>
-  </div>
+  <q-card flat bordered class="q-pa-lg">
+    <q-card-section>
+      <div class="text-center">{{ displayValue }}</div>
+    </q-card-section>
+    <q-card-section v-if="label">
+      <div class="text-center">{{ label }}</div>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
