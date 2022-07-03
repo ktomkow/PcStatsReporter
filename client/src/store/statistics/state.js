@@ -1,5 +1,5 @@
 export default function () {
-  initialState();
+  return initialState();
 }
 
 const initialState = () => {
