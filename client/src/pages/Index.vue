@@ -5,6 +5,7 @@
       :value="cpuAverageTemperature"
       label="CPU"
       unit="℃"
+      round
     />
     <div class="flex row">
       <SimpleDigitalDisplay

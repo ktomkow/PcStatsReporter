@@ -30,18 +30,31 @@ export default {
       required: false,
       default: null,
     },
+    round: {
+      type: Boolean,
+      required: false,
+      default: null,
+    },
   },
   setup(props, { emit }) {
+    const round = (number) => {
+      if (!props.round) {
+        return number;
+      }
+
+      return Math.round(number);
+    };
+
     const displayValue = computed(() => {
       if (!props.value) {
         return "0";
       }
 
       if (!props.unit) {
-        return props.value.toString();
+        return round(props.value).toString();
       }
 
-      return props.value.toString() + " " + props.unit;
+      return round(props.value).toString() + " " + props.unit;
     });
 
     return { displayValue };
