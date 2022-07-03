@@ -18,7 +18,7 @@ public class CpuDataCollector
         this.computer.Open();
     }
 
-    public CpuData Read()
+    public CpuData Collect()
     {
         foreach (var hardware in computer.Hardware)
         {
