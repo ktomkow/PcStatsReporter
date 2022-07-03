@@ -5,8 +5,8 @@ export default function () {
 const initialState = () => {
   return {
     temperatures: {
-      min: 0,
-      max: 0,
+      min: null,
+      max: null,
     },
   };
 };
