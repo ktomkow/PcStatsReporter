@@ -7,7 +7,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using PcStatsReporter.Core;
-using PcStatsReporter.OpenHardware;
 
 namespace PcStatsReporter.Server
 {
@@ -20,8 +19,8 @@ namespace PcStatsReporter.Server
             var tasks = new List<Task>();
 
             Store store = new Store();
-            CpuDataCollector cpuDataCollector = new CpuDataCollector(store);
-            tasks.Add(cpuDataCollector.Start());
+            // CpuDataCollector cpuDataCollector = new CpuDataCollector(store);
+            // tasks.Add(cpuDataCollector.Start());
 
             TcpListener server = new TcpListener(IPAddress.Parse("127.0.0.1"), 9090);
             server.Start();
