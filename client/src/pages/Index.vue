@@ -44,7 +44,6 @@ export default defineComponent({
         try {
           const result = await api.get("api/cpu");
           const cpuData = result.data;
-          console.log(cpuData);
           state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
           state.cpuCoresTemperatures = mapCoreTemperatures(cpuData);
           state.isLoading = false;
