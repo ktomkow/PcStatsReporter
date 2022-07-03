@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.LibreHardwa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.LibreHardware.Tests.Unit", "tests\PcStatsReporter.LibreHardware.Tests.Unit\PcStatsReporter.LibreHardware.Tests.Unit.csproj", "{8250C055-60A5-43D6-ADCE-5AB14D179721}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.SignalR", "src\PcStatsReporter.SignalR\PcStatsReporter.SignalR.csproj", "{03EFE5A3-7883-4011-AB26-E0286E4CB850}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{8250C055-60A5-43D6-ADCE-5AB14D179721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8250C055-60A5-43D6-ADCE-5AB14D179721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8250C055-60A5-43D6-ADCE-5AB14D179721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03EFE5A3-7883-4011-AB26-E0286E4CB850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03EFE5A3-7883-4011-AB26-E0286E4CB850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03EFE5A3-7883-4011-AB26-E0286E4CB850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03EFE5A3-7883-4011-AB26-E0286E4CB850}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{9AE3C46D-8754-4E11-9257-8410694CA031} = {57109AEA-05A4-4A54-9C05-CBDEAD7015BE}
 		{3D8FCB69-C322-4FF7-BF04-53342BA8831D} = {6C065DCE-3483-4493-B9E3-4D7948594D92}
 		{8250C055-60A5-43D6-ADCE-5AB14D179721} = {57109AEA-05A4-4A54-9C05-CBDEAD7015BE}
+		{03EFE5A3-7883-4011-AB26-E0286E4CB850} = {6C065DCE-3483-4493-B9E3-4D7948594D92}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB034649-E2E3-4CDC-AEF3-A893ACCA6E91}
