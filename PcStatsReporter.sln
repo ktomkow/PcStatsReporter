@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.AspNetCore"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.RestContracts", "src\PcStatsReporter.RestContracts\PcStatsReporter.RestContracts.csproj", "{8A23511C-E709-4EFD-B6A7-2157B7EBEB45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.Core.Test.Unit", "tests\PcStatsReporter.Core.Test.Unit\PcStatsReporter.Core.Test.Unit.csproj", "{9AE5A4C5-8082-4A85-8778-83B593316C67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{8A23511C-E709-4EFD-B6A7-2157B7EBEB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A23511C-E709-4EFD-B6A7-2157B7EBEB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A23511C-E709-4EFD-B6A7-2157B7EBEB45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE5A4C5-8082-4A85-8778-83B593316C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE5A4C5-8082-4A85-8778-83B593316C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE5A4C5-8082-4A85-8778-83B593316C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE5A4C5-8082-4A85-8778-83B593316C67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{8250C055-60A5-43D6-ADCE-5AB14D179721} = {57109AEA-05A4-4A54-9C05-CBDEAD7015BE}
 		{03EFE5A3-7883-4011-AB26-E0286E4CB850} = {6C065DCE-3483-4493-B9E3-4D7948594D92}
 		{8A23511C-E709-4EFD-B6A7-2157B7EBEB45} = {6C065DCE-3483-4493-B9E3-4D7948594D92}
+		{9AE5A4C5-8082-4A85-8778-83B593316C67} = {57109AEA-05A4-4A54-9C05-CBDEAD7015BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB034649-E2E3-4CDC-AEF3-A893ACCA6E91}
