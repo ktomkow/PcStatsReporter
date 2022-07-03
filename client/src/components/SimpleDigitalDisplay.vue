@@ -1,10 +1,10 @@
 <template>
   <q-card flat bordered class="q-pa-lg">
     <q-card-section>
-      <div class="text-center">{{ displayValue }}</div>
+      <div class="text-center text-h4">{{ displayValue }}</div>
     </q-card-section>
     <q-card-section v-if="label">
-      <div class="text-center">{{ label }}</div>
+      <div class="text-center text-weight-bold">{{ label }}</div>
     </q-card-section>
   </q-card>
 </template>

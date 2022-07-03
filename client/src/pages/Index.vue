@@ -1,12 +1,24 @@
 <template>
   <q-page class="flex flex-center column">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
+    <SimpleDigitalDisplay
+      v-if="!!cpuAverageTemperature"
+      :value="cpuAverageTemperature"
+      label="CPU"
+      unit="℃"
     />
-    <q-btn color="primary" label="shot" @click="onClick" class="q-ma-xl" />
-    <SimpleDigitalDisplay :value="cpuAverageTemperature" />
+    <div class="flex row">
+      <SimpleDigitalDisplay
+        v-for="core in cpuCoresTemperatures"
+        :key="core.id"
+        :value="core.temperature"
+        :label="'CPU #' + core.id"
+        unit="℃"
+        class="q-ma-sm"
+      />
+    </div>
+    <q-inner-loading :showing="isLoading">
+      <q-spinner-gears size="50px" color="primary" />
+    </q-inner-loading>
   </q-page>
 </template>
 
@@ -19,10 +31,33 @@ export default defineComponent({
   name: "PageIndex",
   components: { SimpleDigitalDisplay },
   setup() {
-    const state = reactive({ cpuAverageTemperature: 0 });
+    const state = reactive({
+      cpuAverageTemperature: 0,
+      cpuCoresTemperatures: [],
+      isLoading: true,
+      intervalId: null,
+    });
 
     onMounted(() => {
-      console.warn("Yeah ho mounted");
+      state.intervalId = setInterval(async () => {
+        try {
+          const result = await api.get("api/cpu");
+          const cpuData = result.data;
+          console.log(cpuData);
+          state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
+          state.cpuCoresTemperatures = mapCoreTemperatures(cpuData);
+          state.isLoading = false;
+        } catch (e) {
+          console.error(e);
+          state.isLoading = true;
+        }
+      }, 1000);
+    });
+
+    onUnmounted(() => {
+      if (!!state.intervalId) {
+        clearInterval(state.intervalId);
+      }
     });
 
     const calculateAverage = (values) => {
@@ -45,18 +80,13 @@ export default defineComponent({
       return calculateAverage(coresTemperature);
     };
 
-    const onClick = async () => {
-      try {
-        const result = await api.get("api/cpu");
-        const cpuData = result.data;
-        console.log(cpuData);
-        state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
-      } catch (e) {
-        console.error(e);
-      }
+    const mapCoreTemperatures = (cpuData) => {
+      return cpuData.cores.map((x) => {
+        return { id: x.id, temperature: x.temperature };
+      });
     };
 
-    return { ...toRefs(state), onClick };
+    return { ...toRefs(state) };
   },
 });
 </script>
