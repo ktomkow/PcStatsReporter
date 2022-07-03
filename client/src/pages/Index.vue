@@ -18,7 +18,7 @@
       />
     </div>
     <q-inner-loading :showing="isLoading">
-      <q-spinner-gears size="50px" color="primary" />
+      <q-spinner-gears size="6em" color="primary" />
     </q-inner-loading>
   </q-page>
 </template>
