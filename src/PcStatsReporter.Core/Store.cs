@@ -6,7 +6,7 @@ namespace PcStatsReporter.Core
     public class Store
     {
         private static readonly ConcurrentDictionary<Type, object> ConcurrentDictionary = new ConcurrentDictionary<Type, object>();
-
+        
         public void Set<T>(T obj)
         {
             var type = typeof(T);

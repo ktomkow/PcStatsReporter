@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <RootNamespace>PcStatsReporter.AspNetCore</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PcStatsReporter.LibreHardware\PcStatsReporter.LibreHardware.csproj" />
+      <ProjectReference Include="..\PcStatsReporter.RestContracts\PcStatsReporter.RestContracts.csproj" />
+    </ItemGroup>
+
+</Project>

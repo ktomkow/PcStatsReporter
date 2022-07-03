@@ -1,16 +1,16 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenHardwareMonitor.Hardware;
-using OpenHardwareMonitor.Collections;
+using FluentAssertions;
+using LibreHardwareMonitor.Hardware;
 using PcStatsReporter.Core.Models;
+using Xunit;
 
-namespace PcStatsReporter.OpenHardware.Test.Unit
+namespace PcStatsReporter.LibreHardware.Tests.Unit
 {
-    [TestClass]
     public class SensorsExtensionsTests
     {
-        [TestMethod]
+        [Fact]
         public void TryGetCoreId_WhenCpu1_Then1()
         {
             uint expected = 1;
@@ -18,11 +18,11 @@ namespace PcStatsReporter.OpenHardware.Test.Unit
 
             bool isSuccess = input.TryGetCoreId(out uint result);
 
-            Assert.IsTrue(isSuccess);
-            Assert.AreEqual(expected, result);
+            isSuccess.Should().BeTrue();
+            result.Should().Be(expected);
         }
 
-        [TestMethod]
+        [Fact]
         public void TryGetCoreId_WhenCpu9_Then9()
         {
             uint expected = 9;
@@ -30,11 +30,11 @@ namespace PcStatsReporter.OpenHardware.Test.Unit
 
             bool isSuccess = input.TryGetCoreId(out uint result);
 
-            Assert.IsTrue(isSuccess);
-            Assert.AreEqual(expected, result);
+            isSuccess.Should().BeTrue();
+            result.Should().Be(expected);
         }
 
-        [TestMethod]
+        [Fact]
         public void TryGetCoreId_WhenPackage_ThenFalseAnd0()
         {
             uint expected = default(uint);
@@ -42,11 +42,11 @@ namespace PcStatsReporter.OpenHardware.Test.Unit
 
             bool isSuccess = input.TryGetCoreId(out uint result);
 
-            Assert.IsFalse(isSuccess);
-            Assert.AreEqual(expected, result);
+            isSuccess.Should().BeFalse();
+            result.Should().Be(expected);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetCores()
         {
             List<ISensor> sensors = new List<ISensor>()
@@ -74,49 +74,48 @@ namespace PcStatsReporter.OpenHardware.Test.Unit
             List<CpuCore> cores = sensors.GetCpuCores();
             CpuCore core = cores.Single();
 
-            Assert.AreEqual(core.Id, (uint) 1);
-            Assert.AreEqual(core.Temperature, (uint) 56);
-            Assert.AreEqual(core.Speed, (uint) 3456);
-            Assert.AreEqual(core.Load, (uint) 63);
+            core.Id.Should().Be((uint) 1);
+            core.Temperature.Should().Be((uint) 56);
+            core.Speed.Should().Be((uint) 3456);
+            core.Load.Should().Be((uint) 63);
         }
-
-
+        
         private class Sensor : ISensor
         {
+            public IReadOnlyList<IParameter> Parameters { get; }
             public SensorType SensorType { get; set; }
 
-            public string Name { get; set; }
-
-            public float? Value { get; set; }
-
-            public int Index => throw new System.NotImplementedException();
-            public Identifier Identifier => throw new System.NotImplementedException();
-            public bool IsDefaultHidden => throw new System.NotImplementedException();
-            public IReadOnlyArray<IParameter> Parameters => throw new System.NotImplementedException();
-            public float? Min => throw new System.NotImplementedException();
-            public float? Max => throw new System.NotImplementedException();
-            public IEnumerable<SensorValue> Values => throw new System.NotImplementedException();
-            public IControl Control => throw new System.NotImplementedException();
-            public IHardware Hardware => throw new System.NotImplementedException();
-
-            public void Accept(IVisitor visitor)
+            public void ResetMin()
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public void ResetMax()
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
-            public void ResetMin()
+            public IControl Control { get; }
+            public IHardware Hardware { get; }
+            public Identifier Identifier { get; }
+            public int Index { get; }
+            public bool IsDefaultHidden { get; }
+            public float? Max { get; }
+            public float? Min { get; }
+            public string Name { get; set; }
+
+            public float? Value { get; set; }
+            public IEnumerable<SensorValue> Values { get; }
+            public TimeSpan ValuesTimeWindow { get; set; }
+
+            public void Accept(IVisitor visitor)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public void Traverse(IVisitor visitor)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
         }
     }

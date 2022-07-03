@@ -71,9 +71,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\tests\PcStatsReporter.Test.Unit\PcStatsReporter.Core.Test.Unit.csproj">
+    <ProjectReference Include="..\..\tests\PcStatsReporter.Test.Unit\PcStatsReporter.Core.Test.Unit.Framework.csproj">
       <Project>{802bf2a4-be8a-4829-92af-24437891436c}</Project>
-      <Name>PcStatsReporter.Core.Test.Unit</Name>
+      <Name>PcStatsReporter.Core.Test.Unit.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\PcStatsReporter.Core\PcStatsReporter.Core.csproj">
       <Project>{828f3973-9c91-43fa-a953-8098faf0b416}</Project>
