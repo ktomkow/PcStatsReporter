@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.Server", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcStatsReporter.Core", "src\PcStatsReporter.Core\PcStatsReporter.Core.csproj", "{828F3973-9C91-43FA-A953-8098FAF0B416}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.Core.Test.Unit", "tests\PcStatsReporter.Test.Unit\PcStatsReporter.Core.Test.Unit.csproj", "{802BF2A4-BE8A-4829-92AF-24437891436C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.Core.Test.Unit.Framework", "tests\PcStatsReporter.Test.Unit\PcStatsReporter.Core.Test.Unit.Framework.csproj", "{802BF2A4-BE8A-4829-92AF-24437891436C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcStatsReporter.LibreHardware", "src\PcStatsReporter.LibreHardware\PcStatsReporter.LibreHardware.csproj", "{3D8FCB69-C322-4FF7-BF04-53342BA8831D}"
 EndProject
