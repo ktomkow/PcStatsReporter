@@ -1,5 +1,12 @@
 export default function () {
-  return {
-    //
-  }
+  initialState();
 }
+
+const initialState = () => {
+  return {
+    temperatures: {
+      min: 0,
+      max: 0,
+    },
+  };
+};
