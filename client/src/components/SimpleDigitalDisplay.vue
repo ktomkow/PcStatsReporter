@@ -33,7 +33,7 @@ export default {
     round: {
       type: Boolean,
       required: false,
-      default: null,
+      default: true,
     },
   },
   setup(props, { emit }) {
