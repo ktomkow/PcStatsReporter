@@ -16,11 +16,11 @@ public static class KestrelConfigurationProvider
     
             // Setup a HTTP/2 endpoint without TLS for grpc
             options.ListenLocalhost(ports.First(), o => o.Protocols =
-                HttpProtocols.Http2);
+                HttpProtocols.Http1);
     
             // Setup a HTTP/1 endpoint without TLS for web clients
             options.ListenLocalhost(ports.Last(), o => o.Protocols =
-                HttpProtocols.Http1);
+                HttpProtocols.Http2);
         });
     }
 }

@@ -1,9 +1,9 @@
 <template>
   <q-page class="flex flex-center column">
     <SimpleDigitalDisplay
-      v-if="!!cpuAverageTemperature"
-      :value="cpuAverageTemperature"
-      label="CPU"
+      v-if="!!cpuPackageTemperature"
+      :value="cpuPackageTemperature"
+      label="CPU Package"
       unit="℃"
       round
     />
@@ -17,6 +17,13 @@
         class="q-ma-sm"
       />
     </div>
+    <SimpleDigitalDisplay
+      v-if="!!cpuAverageTemperature"
+      :value="cpuAverageTemperature"
+      label="CPU Core Average"
+      unit="℃"
+      round
+    />
     <div class="flex row">
       <div class="text-h6 q-pa-sm q-ma-sm bg-green-2">
         {{ minTemperature }} ℃
@@ -53,6 +60,7 @@ export default defineComponent({
     const state = reactive({
       cpuAverageTemperature: 0,
       cpuCoresTemperatures: [],
+      cpuPackageTemperature: 0,
       isLoading: true,
       intervalId: null,
     });
@@ -72,6 +80,7 @@ export default defineComponent({
         try {
           const result = await api.get("api/cpu");
           const cpuData = result.data;
+          state.cpuPackageTemperature = cpuData.packageTemperature;
           state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
           state.cpuCoresTemperatures = mapCoreTemperatures(cpuData);
           state.isLoading = false;
@@ -79,9 +88,8 @@ export default defineComponent({
         } catch (e) {
           console.error(e);
           state.isLoading = true;
-          d;
         }
-      }, 500);
+      }, 1000);
     });
 
     onUnmounted(() => {
