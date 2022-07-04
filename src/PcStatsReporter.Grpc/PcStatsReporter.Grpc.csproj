@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Protobuf Include="../../Protos/*.proto" GrpcServices="Server" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\PcStatsReporter.Core\PcStatsReporter.Core.csproj" />
+      <ProjectReference Include="..\PcStatsReporter.Proto\PcStatsReporter.Proto\PcStatsReporter.Proto.csproj" />
+    </ItemGroup>
+
+</Project>

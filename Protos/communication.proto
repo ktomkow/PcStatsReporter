@@ -1,0 +1,53 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "PcStatsReporter.Grpc.Proto";
+
+message ToServer {
+    oneof payload {
+        ToServerCommand command = 1;
+    }
+}
+
+message ToClient {
+    oneof payload {
+        ToClientCommand command = 1;
+        ToClientData data = 2;
+    }
+}
+
+message ToServerCommand {
+    oneof command {
+        Disconnect disconnect = 1;
+        SendData send_data = 2;
+    }
+}
+
+message ToClientCommand {
+    
+}
+
+message Disconnect {
+
+}
+
+message SendData {
+    
+}
+
+message ToClientData {
+    oneof data {
+        CpuData cpu = 1;
+    }
+}
+
+message CpuData {
+    string name = 1;
+    repeated Core cores = 2;
+}
+
+message Core {
+    uint32 id = 1;
+    uint32 temperature = 2;
+    uint32 speed = 3;
+    uint32 load = 4;
+}
