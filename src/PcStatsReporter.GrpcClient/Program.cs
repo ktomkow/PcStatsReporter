@@ -11,7 +11,7 @@ public static class Program
     {
         Console.WriteLine("Init");
 
-        using var channel = GrpcChannel.ForAddress("http://localhost:5287");
+        using var channel = GrpcChannel.ForAddress("http://localhost:11111");
 
         var client = new Calculator.CalculatorClient(channel);
 

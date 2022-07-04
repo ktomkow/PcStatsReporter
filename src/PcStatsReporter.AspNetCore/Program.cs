@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,13 +16,18 @@ using PcStatsReporter.RestContracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// for grpc
 builder.WebHost.ConfigureKestrel(options =>
 {
-    var port = int.Parse(builder.Configuration.GetSection("Port").Value);
-    // Setup a HTTP/2 endpoint without TLS.
-    options.ListenLocalhost(port, o => o.Protocols =
-        HttpProtocols.Http1AndHttp2);
+    var portsAsStrings = builder.Configuration.GetSection("Ports").Value;
+    var ports = portsAsStrings.Split(";").Select(int.Parse).ToList();
+    
+    // Setup a HTTP/2 endpoint without TLS for grpc
+    options.ListenLocalhost(ports.First(), o => o.Protocols =
+        HttpProtocols.Http2);
+    
+    // Setup a HTTP/1 endpoint without TLS for web clients
+    options.ListenLocalhost(ports.Last(), o => o.Protocols =
+        HttpProtocols.Http1);
 });
 
 // Add services to the container.
