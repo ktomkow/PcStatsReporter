@@ -2,15 +2,26 @@ using System;
 using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using PcStatsReporter.AspNetCore.Mappers;
 using PcStatsReporter.AspNetCore.Mappers.Maps;
 using PcStatsReporter.Core.Models;
+using PcStatsReporter.Grpc;
 using PcStatsReporter.LibreHardware;
 using PcStatsReporter.RestContracts;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// for grpc
+builder.WebHost.ConfigureKestrel(options =>
+{
+    // Setup a HTTP/2 endpoint without TLS.
+    options.ListenLocalhost(5287, o => o.Protocols =
+        HttpProtocols.Http2);
+});
 
 // Add services to the container.
 
@@ -25,8 +36,11 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 });
 
+
 builder.Services.AddSingleton<IMap<CpuData, CpuResponse>, CpuMap>();
 builder.Services.AddSingleton<CpuDataCollector>();
+
+builder.Services.UseReporterGrpc();
 
 var app = builder.Build();
 
@@ -39,11 +53,15 @@ app.UseSwaggerUI(c =>
 });
 
 
+app.UseRouting();
 app.MapControllers();
 
 app.UseCors(x => x
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowAnyOrigin());
+
+
+app.AddReporterGrpc();
 
 app.Run();

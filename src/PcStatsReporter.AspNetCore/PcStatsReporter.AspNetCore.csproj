@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\PcStatsReporter.Grpc\PcStatsReporter.Grpc.csproj" />
       <ProjectReference Include="..\PcStatsReporter.LibreHardware\PcStatsReporter.LibreHardware.csproj" />
       <ProjectReference Include="..\PcStatsReporter.RestContracts\PcStatsReporter.RestContracts.csproj" />
     </ItemGroup>

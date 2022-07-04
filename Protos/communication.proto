@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "PcStatsReporter.Proto";
+option csharp_namespace = "PcStatsReporter.Grpc.Proto";
 
 message ToServer {
     oneof payload {
