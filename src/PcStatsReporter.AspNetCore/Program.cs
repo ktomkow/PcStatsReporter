@@ -33,7 +33,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddCustomSwagger();
 
-builder.Services.AddSingleton<IMap<CpuData, CpuResponse>, CpuMap>();
+builder.Services.AddMaps();
+
 builder.Services.AddSingleton<CpuDataCollector>();
 
 builder.Services.UseReporterGrpc();
