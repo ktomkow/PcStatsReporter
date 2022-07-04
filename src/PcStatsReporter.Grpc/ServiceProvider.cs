@@ -14,10 +14,5 @@ public static class ServiceProvider
     public static void AddReporterGrpc(this WebApplication app)
     {
         app.MapGrpcService<CalculatorService>();
-
-        // app.UseEndpoints(endpoints =>
-        // {
-        //     endpoints.MapGrpcService<CalculatorService>();
-        // });
     }
 }
