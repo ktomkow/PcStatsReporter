@@ -30,6 +30,16 @@
       </div>
       <div class="text-h6 q-pa-sm q-ma-sm bg-red-2">{{ maxTemperature }} ℃</div>
     </div>
+    <div>
+      <vue-speedometer
+        :needleHeightRatio="0.7"
+        :maxSegmentLabels="5"
+        :segments="3"
+        :customSegmentStops="[0, 500, 750, 900, 1000]"
+        :segmentColors="['firebrick', 'tomato', 'gold', 'limegreen']"
+        :value="333"
+      />
+    </div>
     <q-inner-loading :showing="isLoading">
       <q-spinner-gears size="6em" color="primary" />
     </q-inner-loading>
@@ -47,6 +57,7 @@ import {
 } from "vue";
 import { api } from "src/boot/axios";
 import SimpleDigitalDisplay from "src/components/SimpleDigitalDisplay";
+import VueSpeedometer from "vue-speedometer";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
@@ -55,7 +66,7 @@ import { useStore } from "vuex";
 
 export default defineComponent({
   name: "PageIndex",
-  components: { SimpleDigitalDisplay },
+  components: { SimpleDigitalDisplay, VueSpeedometer },
   setup() {
     const state = reactive({
       cpuAverageTemperature: 0,
