@@ -26,6 +26,7 @@ public class CpuDataCollector
             CpuData cpu = new CpuData
             {
                 Name = hardware.Name,
+                PackageTemperature = hardware.Sensors.GetPackageTemperature(),
                 Cores = hardware.Sensors.GetCpuCores()
             };
 

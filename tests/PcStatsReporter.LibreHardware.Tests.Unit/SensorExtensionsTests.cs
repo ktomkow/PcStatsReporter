@@ -79,6 +79,24 @@ namespace PcStatsReporter.LibreHardware.Tests.Unit
             core.Speed.Should().Be((uint) 3456);
             core.Load.Should().Be((uint) 63);
         }
+
+        [Fact]
+        public void GetPackageTemperature_When60_Then60()
+        {
+            List<ISensor> sensors = new List<ISensor>()
+            {
+                new Sensor()
+                {
+                    Name = "CPU Package",
+                    SensorType = SensorType.Temperature,
+                    Value = 60.0f
+                },
+            };
+
+            uint result = sensors.GetPackageTemperature();
+
+            result.Should().Be((uint)60);
+        }
         
         private class Sensor : ISensor
         {

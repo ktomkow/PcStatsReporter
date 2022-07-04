@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LibreHardwareMonitor.Hardware;
 using PcStatsReporter.Core.Models;
@@ -12,6 +13,21 @@ namespace PcStatsReporter.LibreHardware
             string cutNumber = name.ToLowerInvariant().Replace("cpu core #", "");
 
             return uint.TryParse(cutNumber, out result);
+        }
+
+        public static uint GetPackageTemperature(this IEnumerable<ISensor> sensors)
+        {
+            ISensor? sensor = sensors
+                .Where(x => x.SensorType == SensorType.Temperature)
+                .Where(x => x.Value.HasValue)
+                .FirstOrDefault(x => x.Name.Contains("cpu package", StringComparison.InvariantCultureIgnoreCase));
+
+            if (sensor is null)
+            {
+                return default;
+            }
+
+            return (uint)sensor.Value;
         }
 
         public static List<CpuCore> GetCpuCores(this IEnumerable<ISensor> sensors)

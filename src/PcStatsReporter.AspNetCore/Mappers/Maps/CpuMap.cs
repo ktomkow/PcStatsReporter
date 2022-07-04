@@ -12,9 +12,10 @@ public class CpuMap : IMap<CpuData, CpuResponse>
         CpuResponse result = new()
         {
             Name = source.Name,
+            PackageTemperature = source.PackageTemperature,
             Cores = MapCores(source.Cores)
         };
-        
+
         return result;
     }
 
