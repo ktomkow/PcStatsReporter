@@ -17,6 +17,12 @@
         class="q-ma-sm"
       />
     </div>
+    <div class="flex row">
+      <div class="text-h6 q-pa-sm q-ma-sm bg-green-2">
+        {{ minTemperature }} ℃
+      </div>
+      <div class="text-h6 q-pa-sm q-ma-sm bg-red-2">{{ maxTemperature }} ℃</div>
+    </div>
     <q-inner-loading :showing="isLoading">
       <q-spinner-gears size="6em" color="primary" />
     </q-inner-loading>
@@ -24,13 +30,21 @@
 </template>
 
 <script>
-import { reactive, toRefs, defineComponent, onMounted, onUnmounted } from "vue";
+import {
+  reactive,
+  toRefs,
+  defineComponent,
+  onMounted,
+  onUnmounted,
+  computed,
+} from "vue";
 import { api } from "src/boot/axios";
 import SimpleDigitalDisplay from "src/components/SimpleDigitalDisplay";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
 import { eventBus } from "src/boot/eventBus";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "PageIndex",
@@ -42,6 +56,16 @@ export default defineComponent({
       isLoading: true,
       intervalId: null,
     });
+
+    const store = useStore();
+
+    const minTemperature = computed(
+      () => store.state.statistics.temperatures.min
+    );
+
+    const maxTemperature = computed(
+      () => store.state.statistics.temperatures.max
+    );
 
     onMounted(() => {
       state.intervalId = setInterval(async () => {
@@ -55,8 +79,9 @@ export default defineComponent({
         } catch (e) {
           console.error(e);
           state.isLoading = true;
+          d;
         }
-      }, 1000);
+      }, 500);
     });
 
     onUnmounted(() => {
@@ -91,7 +116,7 @@ export default defineComponent({
       });
     };
 
-    return { ...toRefs(state) };
+    return { ...toRefs(state), minTemperature, maxTemperature };
   },
 });
 </script>
