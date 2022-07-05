@@ -30,7 +30,7 @@
       </div>
       <div class="text-h6 q-pa-sm q-ma-sm bg-red-2">{{ maxTemperature }} ℃</div>
     </div>
-    <div class="flex column justify-center">
+    <div class="flex column flex-center">
       <LoadSpeedometer label="Average Load" :value="averageLoad" />
       <div class="flex row">
         <LoadSpeedometer
@@ -38,6 +38,7 @@
           :key="core.id"
           :label="'CPU #' + core.id"
           :value="core.load"
+          class="q-ma-sm"
         />
       </div>
     </div>
