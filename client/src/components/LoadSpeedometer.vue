@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered class="card flex column q-py-sm q-px-sm">
+  <q-card flat bordered class="flex column q-py-sm q-px-sm">
     <vue-speedometer
       :needleHeightRatio="0.75"
       needleTransition="easeElastic"
@@ -10,7 +10,7 @@
       :segmentColors="['limegreen', 'green', 'gold', 'tomato', 'firebrick']"
       currentValueText="${value}%"
       :value="value"
-      class="spedometer"
+      class="speedometer"
     />
     <div class="text-center q-pb-xl">{{ label }}</div>
   </q-card>
@@ -49,4 +49,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.speedometer {
+  margin-bottom: -6em;
+}
+</style>
