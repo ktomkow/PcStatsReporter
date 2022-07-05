@@ -13,6 +13,7 @@ public class CpuMap : IMap<CpuData, CpuResponse>
         {
             Name = source.Name,
             PackageTemperature = source.PackageTemperature,
+            AverageLoad = source.AverageLoad,
             Cores = MapCores(source.Cores)
         };
 
