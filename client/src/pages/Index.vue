@@ -30,15 +30,16 @@
       </div>
       <div class="text-h6 q-pa-sm q-ma-sm bg-red-2">{{ maxTemperature }} ℃</div>
     </div>
-    <div>
-      <vue-speedometer
-        :needleHeightRatio="0.7"
-        :maxSegmentLabels="5"
-        :segments="3"
-        :customSegmentStops="[0, 500, 750, 900, 1000]"
-        :segmentColors="['firebrick', 'tomato', 'gold', 'limegreen']"
-        :value="333"
-      />
+    <div class="flex column justify-center">
+      <LoadSpeedometer label="Average Load" :value="averageLoad" />
+      <div class="flex row">
+        <LoadSpeedometer
+          v-for="core in coresLoad"
+          :key="core.id"
+          :label="'CPU #' + core.id"
+          :value="core.load"
+        />
+      </div>
     </div>
     <q-inner-loading :showing="isLoading">
       <q-spinner-gears size="6em" color="primary" />
@@ -57,7 +58,7 @@ import {
 } from "vue";
 import { api } from "src/boot/axios";
 import SimpleDigitalDisplay from "src/components/SimpleDigitalDisplay";
-import VueSpeedometer from "vue-speedometer";
+import LoadSpeedometer from "src/components/LoadSpeedometer";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
@@ -66,7 +67,7 @@ import { useStore } from "vuex";
 
 export default defineComponent({
   name: "PageIndex",
-  components: { SimpleDigitalDisplay, VueSpeedometer },
+  components: { SimpleDigitalDisplay, LoadSpeedometer },
   setup() {
     const state = reactive({
       cpuAverageTemperature: 0,
@@ -74,6 +75,8 @@ export default defineComponent({
       cpuPackageTemperature: 0,
       isLoading: true,
       intervalId: null,
+      averageLoad: 0,
+      coresLoad: [],
     });
 
     const store = useStore();
@@ -93,7 +96,9 @@ export default defineComponent({
           const cpuData = result.data;
           state.cpuPackageTemperature = cpuData.packageTemperature;
           state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
+          state.averageLoad = cpuData.averageLoad;
           state.cpuCoresTemperatures = mapCoreTemperatures(cpuData);
+          state.coresLoad = mapCoresLoad(cpuData);
           state.isLoading = false;
           eventBus.emit(eventBusKeys.CPU_DATA_ARRIVED, cpuData);
         } catch (e) {
@@ -132,6 +137,12 @@ export default defineComponent({
     const mapCoreTemperatures = (cpuData) => {
       return cpuData.cores.map((x) => {
         return { id: x.id, temperature: x.temperature };
+      });
+    };
+
+    const mapCoresLoad = (cpuData) => {
+      return cpuData.cores.map((x) => {
+        return { id: x.id, load: x.load };
       });
     };
 
