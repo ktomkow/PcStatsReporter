@@ -29,6 +29,21 @@ namespace PcStatsReporter.LibreHardware
 
             return (uint)sensor.Value;
         }
+        
+        public static uint GetAverageLoad(this IEnumerable<ISensor> sensors)
+        {
+            ISensor? sensor = sensors
+                .Where(x => x.SensorType == SensorType.Load)
+                .Where(x => x.Value.HasValue)
+                .FirstOrDefault(x => x.Name.Contains("cpu total", StringComparison.InvariantCultureIgnoreCase));
+
+            if (sensor is null)
+            {
+                return default;
+            }
+
+            return (uint)sensor.Value;
+        }
 
         public static List<CpuCore> GetCpuCores(this IEnumerable<ISensor> sensors)
         {

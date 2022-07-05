@@ -98,6 +98,24 @@ namespace PcStatsReporter.LibreHardware.Tests.Unit
             result.Should().Be((uint)60);
         }
         
+        [Fact]
+        public void GetAverageLoad_When33_Then33()
+        {
+            List<ISensor> sensors = new List<ISensor>()
+            {
+                new Sensor()
+                {
+                    Name = "CPU Total",
+                    SensorType = SensorType.Load,
+                    Value = 33.0f
+                },
+            };
+
+            uint result = sensors.GetAverageLoad();
+
+            result.Should().Be((uint)33);
+        }
+        
         private class Sensor : ISensor
         {
             public IReadOnlyList<IParameter> Parameters { get; }
