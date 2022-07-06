@@ -35,9 +35,9 @@
     <div class="flex column flex-center">
       <div class="flex row"> </div>
     </div>
-    <!-- <q-inner-loading :showing="isLoading">
+    <q-inner-loading :showing="isLoading">
       <q-spinner-gears size="6em" color="primary" />
-    </q-inner-loading> -->
+    </q-inner-loading>
   </q-page>
 </template>
 
@@ -95,11 +95,15 @@ export default defineComponent({
           state.coresLoad = mapCoresLoad(cpuData);
           state.isLoading = false;
           eventBus.emit(eventBusKeys.CPU_DATA_ARRIVED, cpuData);
+          eventBus.emit("dupa", {
+            value: cpuData.packageTemperature,
+            date: new Date(),
+          });
         } catch (e) {
           console.error(e);
           state.isLoading = true;
         }
-      }, 100000000);
+      }, 1000);
     });
 
     onUnmounted(() => {
@@ -139,13 +143,6 @@ export default defineComponent({
         return { id: x.id, load: x.load };
       });
     };
-
-    setInterval(() => {
-      eventBus.emit("dupa", {
-        value: 50 + Math.random() * 21 - 10,
-        date: new Date(),
-      });
-    }, 100);
 
     return { ...toRefs(state), minTemperature, maxTemperature };
   },
