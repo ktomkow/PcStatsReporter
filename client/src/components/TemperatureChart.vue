@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <VChart :option="options" style="height: 50em; width: 50em" />
-  </div>
+  <q-card flat bordered>
+    <q-card-section>
+      <VChart :option="options" style="height: 30em; width: 30em" />
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
@@ -18,6 +20,8 @@ import {
 import { LineChart } from "echarts/charts";
 import { UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
+
+import { useEventBus } from "src/composables/eventBusComposable";
 
 use([
   TitleComponent,
@@ -39,26 +43,20 @@ export default {
   },
   setup(props) {
     const state = reactive({});
-
     const myData = ref([]);
 
-    function randomData() {
-      now = new Date(+now + oneDay);
-      value = value + Math.random() * 21 - 10;
-      return {
-        name: now.toString(),
-        value: [
-          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
-          Math.round(value),
-        ],
-      };
-    }
+    useEventBus(props.eventBusKey, addValue);
 
-    let now = new Date(1997, 9, 3);
-    let oneDay = 24 * 3600 * 1000;
-    let value = Math.random() * 1000;
-    for (var i = 0; i < 1000; i++) {
-      myData.value.push(randomData());
+    // {value, date}
+    function addValue(item) {
+      if (myData.value.length > 60) {
+        myData.value.shift();
+      }
+
+      myData.value.push({
+        name: item.date.toString(),
+        value: [item.date, item.value],
+      });
     }
 
     const options = ref({
@@ -72,12 +70,13 @@ export default {
           var date = new Date(params.name);
           return (
             date.getDate() +
-            "/" +
+            "." +
             (date.getMonth() + 1) +
-            "/" +
+            "." +
             date.getFullYear() +
-            " : " +
-            params.value[1]
+            " - " +
+            params.value[1] +
+            "℃"
           );
         },
         axisPointer: {
@@ -86,10 +85,12 @@ export default {
       },
       xAxis: {
         type: "time",
+        show: false,
       },
       yAxis: {
         type: "value",
-        boundaryGap: [0, "100%"],
+        min: 0,
+        max: 120,
         splitLine: {
           show: false,
         },
@@ -103,21 +104,6 @@ export default {
         },
       ],
     });
-
-    setInterval(function () {
-      myData.value.shift();
-      for (var i = 0; i < 5; i++) {
-        myData.value.shift();
-        myData.value.push(randomData());
-      }
-      // myChart.setOption({
-      //   series: [
-      //     {
-      //       myData: myData,
-      //     },
-      //   ],
-      // });
-    }, 1000);
 
     return { ...toRefs(state), options };
   },

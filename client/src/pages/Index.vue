@@ -140,6 +140,13 @@ export default defineComponent({
       });
     };
 
+    setInterval(() => {
+      eventBus.emit("dupa", {
+        value: 50 + Math.random() * 21 - 10,
+        date: new Date(),
+      });
+    }, 100);
+
     return { ...toRefs(state), minTemperature, maxTemperature };
   },
 });
