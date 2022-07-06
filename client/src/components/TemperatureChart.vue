@@ -9,12 +9,24 @@ import { reactive, toRefs, computed, ref } from "vue";
 import "echarts";
 import VChart from "vue-echarts";
 import { use } from "echarts";
-import { GridComponent } from "echarts/components";
+
+import {
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+} from "echarts/components";
 import { LineChart } from "echarts/charts";
 import { UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
 
-use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
+use([
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  LineChart,
+  CanvasRenderer,
+  UniversalTransition,
+]);
 
 export default {
   name: "TemperatureChart",
@@ -29,61 +41,82 @@ export default {
     const state = reactive({});
 
     const myData = ref([]);
-    const now = new Date();
 
-    myData.value.push({
-      name: now.toString(),
-      value: [
-        [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
-        Math.round(1),
-      ],
-    });
-
-    setTimeout(() => {
-      myData.value.push({
+    function randomData() {
+      now = new Date(+now + oneDay);
+      value = value + Math.random() * 21 - 10;
+      return {
         name: now.toString(),
         value: [
           [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
-          Math.round(2),
+          Math.round(value),
         ],
-      });
-    }, 1000);
+      };
+    }
 
-    // function randomData() {
-    //   now = new Date(+now + oneDay);
-    //   value = value + Math.random() * 21 - 10;
-    //   return {
-    //     name: now.toString(),
-    //     value: [
-    //       [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
-    //       Math.round(value),
-    //     ],
-    //   };
-    // }
-
-    // let data = [];
-    // let now = new Date(1997, 9, 3);
-    // let oneDay = 24 * 3600 * 1000;
-    // let value = Math.random() * 1000;
-    // for (var i = 0; i < 1000; i++) {
-    //   data.push(randomData());
-    // }
+    let now = new Date(1997, 9, 3);
+    let oneDay = 24 * 3600 * 1000;
+    let value = Math.random() * 1000;
+    for (var i = 0; i < 1000; i++) {
+      myData.value.push(randomData());
+    }
 
     const options = ref({
+      title: {
+        text: "Dynamic Data & Time Axis",
+      },
+      tooltip: {
+        trigger: "axis",
+        formatter: function (params) {
+          params = params[0];
+          var date = new Date(params.name);
+          return (
+            date.getDate() +
+            "/" +
+            (date.getMonth() + 1) +
+            "/" +
+            date.getFullYear() +
+            " : " +
+            params.value[1]
+          );
+        },
+        axisPointer: {
+          animation: false,
+        },
+      },
       xAxis: {
-        type: "category",
-        data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        type: "time",
       },
       yAxis: {
         type: "value",
+        boundaryGap: [0, "100%"],
+        splitLine: {
+          show: false,
+        },
       },
       series: [
         {
-          data: [150, 230, 224, 218, 135, 147, 260],
+          name: "Fake Data",
           type: "line",
+          showSymbol: false,
+          data: myData,
         },
       ],
     });
+
+    setInterval(function () {
+      for (var i = 0; i < 5; i++) {
+        myData.value.shift();
+        myData.value.push(randomData());
+      }
+      // myChart.setOption({
+      //   series: [
+      //     {
+      //       myData: myData,
+      //     },
+      //   ],
+      // });
+    }, 1000);
 
     return { ...toRefs(state), options };
   },
