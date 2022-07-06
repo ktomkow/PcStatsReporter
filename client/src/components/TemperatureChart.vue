@@ -63,6 +63,12 @@ export default {
       title: {
         text: "Dynamic Data & Time Axis",
       },
+      grid: {
+        left: "8%",
+        right: "4%",
+        bottom: "4%",
+        top: "8%",
+      },
       tooltip: {
         trigger: "axis",
         formatter: function (params) {
@@ -92,7 +98,7 @@ export default {
         min: 0,
         max: 120,
         splitLine: {
-          show: false,
+          show: true,
         },
       },
       series: [
@@ -101,6 +107,9 @@ export default {
           type: "line",
           showSymbol: false,
           data: myData,
+          areaStyle: {},
+          smooth: true,
+          color: "rgb(230,0,38)",
         },
       ],
     });
