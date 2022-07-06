@@ -105,6 +105,7 @@ export default {
     });
 
     setInterval(function () {
+      myData.value.shift();
       for (var i = 0; i < 5; i++) {
         myData.value.shift();
         myData.value.push(randomData());
