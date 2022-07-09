@@ -1,5 +1,7 @@
 <template>
   <q-page class="flex flex-center column">
+    <TemperatureChart event-bus-key="dupa" />
+
     <SimpleDigitalDisplay
       v-if="!!cpuPackageTemperature"
       :value="cpuPackageTemperature"
@@ -31,16 +33,7 @@
       <div class="text-h6 q-pa-sm q-ma-sm bg-red-2">{{ maxTemperature }} ℃</div>
     </div>
     <div class="flex column flex-center">
-      <LoadSpeedometer label="Average Load" :value="averageLoad" />
-      <div class="flex row">
-        <LoadSpeedometer
-          v-for="core in coresLoad"
-          :key="core.id"
-          :label="'CPU #' + core.id"
-          :value="core.load"
-          class="q-ma-sm"
-        />
-      </div>
+      <div class="flex row"> </div>
     </div>
     <q-inner-loading :showing="isLoading">
       <q-spinner-gears size="6em" color="primary" />
@@ -59,16 +52,16 @@ import {
 } from "vue";
 import { api } from "src/boot/axios";
 import SimpleDigitalDisplay from "src/components/SimpleDigitalDisplay";
-import LoadSpeedometer from "src/components/LoadSpeedometer";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
 import { eventBus } from "src/boot/eventBus";
 import { useStore } from "vuex";
+import TemperatureChart from "src/components/TemperatureChart";
 
 export default defineComponent({
   name: "PageIndex",
-  components: { SimpleDigitalDisplay, LoadSpeedometer },
+  components: { SimpleDigitalDisplay, TemperatureChart },
   setup() {
     const state = reactive({
       cpuAverageTemperature: 0,
@@ -102,6 +95,10 @@ export default defineComponent({
           state.coresLoad = mapCoresLoad(cpuData);
           state.isLoading = false;
           eventBus.emit(eventBusKeys.CPU_DATA_ARRIVED, cpuData);
+          eventBus.emit("dupa", {
+            value: cpuData.packageTemperature,
+            date: new Date(),
+          });
         } catch (e) {
           console.error(e);
           state.isLoading = true;

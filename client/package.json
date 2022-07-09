@@ -16,12 +16,13 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "echarts": "^5.3.3",
     "mitt": "^3.0.0",
     "quasar": "^2.0.0",
     "vue": "^3.0.0",
+    "vue-echarts": "^6.2.1",
     "vue-i18n": "^9.0.0",
     "vue-router": "^4.0.0",
-    "vue-speedometer": "^2.0.0",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
