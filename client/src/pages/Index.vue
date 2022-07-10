@@ -76,7 +76,7 @@ export default defineComponent({
       intervalId: null,
       cpuLoadData: [],
       totalRam: 16,
-      usedRam: 9,
+      usedRam: 11,
     });
 
     const store = useStore();
