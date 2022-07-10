@@ -1,14 +1,17 @@
 <template>
   <q-page class="flex flex-center column">
-    <TemperatureChart event-bus-key="dupa" />
-    <LoadChart :values="cpuLoadData" />
-    <SimpleDigitalDisplay
-      v-if="!!cpuPackageTemperature"
-      :value="cpuPackageTemperature"
-      label="CPU Package"
-      unit="℃"
-      round
-    />
+    <div class="flex row" style="gap: 2 em">
+      <RamChart :total="totalRam" :used="usedRam" />
+      <TemperatureChart event-bus-key="dupa" />
+      <LoadChart :values="cpuLoadData" />
+      <SimpleDigitalDisplay
+        v-if="!!cpuPackageTemperature"
+        :value="cpuPackageTemperature"
+        label="CPU Package"
+        unit="℃"
+        round
+      />
+    </div>
     <div class="flex row">
       <SimpleDigitalDisplay
         v-for="core in cpuCoresTemperatures"
@@ -59,10 +62,11 @@ import { eventBus } from "src/boot/eventBus";
 import { useStore } from "vuex";
 import TemperatureChart from "src/components/TemperatureChart";
 import LoadChart from "src/components/LoadChart";
+import RamChart from "src/components/RamChart";
 
 export default defineComponent({
   name: "PageIndex",
-  components: { SimpleDigitalDisplay, TemperatureChart, LoadChart },
+  components: { SimpleDigitalDisplay, TemperatureChart, LoadChart, RamChart },
   setup() {
     const state = reactive({
       cpuAverageTemperature: 0,
@@ -71,6 +75,8 @@ export default defineComponent({
       isLoading: true,
       intervalId: null,
       cpuLoadData: [],
+      totalRam: 16,
+      usedRam: 9,
     });
 
     const store = useStore();
