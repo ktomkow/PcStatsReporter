@@ -1,11 +1,6 @@
 <template>
   <q-card flat bordered>
     <q-card-section>
-      <div v-for="load in values" :key="load.id">
-        <p>{{ load.id }} - {{ load.value }}</p>
-      </div>
-    </q-card-section>
-    <q-card-section>
       <VChart :option="options" style="height: 30em; width: 30em" />
     </q-card-section>
   </q-card>
