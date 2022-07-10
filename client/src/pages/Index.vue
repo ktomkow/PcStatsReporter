@@ -70,8 +70,6 @@ export default defineComponent({
       cpuPackageTemperature: 0,
       isLoading: true,
       intervalId: null,
-      averageLoad: 0,
-      coresLoad: [],
       cpuLoadData: [],
     });
 
@@ -92,9 +90,7 @@ export default defineComponent({
           const cpuData = result.data;
           state.cpuPackageTemperature = cpuData.packageTemperature;
           state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
-          state.averageLoad = cpuData.averageLoad;
           state.cpuCoresTemperatures = mapCoreTemperatures(cpuData);
-          state.coresLoad = mapCoresLoad(cpuData);
           state.isLoading = false;
           eventBus.emit(eventBusKeys.CPU_DATA_ARRIVED, cpuData);
           eventBus.emit("dupa", {
@@ -149,7 +145,7 @@ export default defineComponent({
 
     const mapCoresLoad = (cpuData) => {
       return cpuData.cores.map((x) => {
-        return { id: x.id, load: x.load, value: x.load };
+        return { id: x.id, value: x.load, isAverage: false };
       });
     };
 
