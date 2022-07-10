@@ -99,12 +99,10 @@ export default defineComponent({
             date: new Date(),
           });
 
-          state.cpuLoadData = mapCoresLoad(cpuData);
-          state.cpuLoadData.push({
-            id: "AVERAGE LOAD",
-            value: cpuData.averageLoad,
-            isAverage: true,
-          });
+          state.cpuLoadData = [
+            { id: "AVERAGE LOAD", value: cpuData.averageLoad, isAverage: true },
+            ...mapCoresLoad(cpuData),
+          ];
         } catch (e) {
           console.error(e);
           state.isLoading = true;
