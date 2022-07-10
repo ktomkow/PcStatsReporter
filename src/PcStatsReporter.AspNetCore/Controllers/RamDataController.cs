@@ -29,7 +29,7 @@ public class RamDataController : ControllerBase
     /// <returns>RamResponse</returns>
     /// /// <response code="200">Returns data</response>
     [HttpGet]
-    [ProducesResponseType(typeof(CpuResponse),StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(RamResponse),StatusCodes.Status200OK)]
     [Produces("application/json")]
     public IActionResult Get()
     {
