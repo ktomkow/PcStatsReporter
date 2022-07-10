@@ -87,11 +87,12 @@ export default defineComponent({
       state.intervalId = setInterval(async () => {
         try {
           const result = await api.get("api/cpu");
+          state.isLoading = false;
+
           const cpuData = result.data;
           state.cpuPackageTemperature = cpuData.packageTemperature;
           state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
           state.cpuCoresTemperatures = mapCoreTemperatures(cpuData);
-          state.isLoading = false;
           eventBus.emit(eventBusKeys.CPU_DATA_ARRIVED, cpuData);
           eventBus.emit("dupa", {
             value: cpuData.packageTemperature,
