@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed, ref } from "vue";
+import { reactive, toRefs, computed, ref, watch } from "vue";
 
 import VChart from "vue-echarts";
 import { use } from "echarts";
@@ -53,17 +53,11 @@ export default {
       ];
     });
 
-    setTimeout(() => {
-      options.value.series[0].max = props.total;
-      options.value.series[0].detail.formatter = (v) =>
-        v + " / " + props.total + " GB";
-    }, 3000);
-
     const options = ref({
       series: [
         {
           min: 0,
-          max: 32,
+          max: props.total,
           type: "gauge",
           startAngle: 90,
           endAngle: -270,
@@ -103,14 +97,14 @@ export default {
             fontSize: 14,
           },
           detail: {
-            width: 80,
+            width: 130,
             height: 14,
             fontSize: 14,
             color: "inherit",
             borderColor: "inherit",
             borderRadius: 20,
             borderWidth: 1,
-            formatter: "{value} GB",
+            formatter: (v) => v + " GB / " + props.total + " GB",
           },
         },
       ],

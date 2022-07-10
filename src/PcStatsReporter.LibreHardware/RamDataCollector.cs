@@ -28,7 +28,7 @@ public class RamDataCollector
             
             RamData ram = new RamData()
             {
-                Used = data.used,
+                Used = Math.Round(data.used, 2),
                 Total = Math.Round(data.used + data.available, 2)
             };
 

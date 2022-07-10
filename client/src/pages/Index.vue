@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center column">
     <div class="flex row" style="gap: 2 em">
-      <RamChart :total="totalRam" :used="usedRam" />
+      <RamChart v-if="totalRam != 0" :total="totalRam" :used="usedRam" />
       <TemperatureChart event-bus-key="dupa" />
       <LoadChart :values="cpuLoadData" />
       <SimpleDigitalDisplay
@@ -73,10 +73,11 @@ export default defineComponent({
       cpuCoresTemperatures: [],
       cpuPackageTemperature: 0,
       isLoading: true,
-      intervalId: null,
+      cpuIntervalId: null,
+      ramIntervalId: null,
       cpuLoadData: [],
-      totalRam: 16,
-      usedRam: 11,
+      totalRam: 0,
+      usedRam: 0,
     });
 
     const store = useStore();
@@ -90,7 +91,7 @@ export default defineComponent({
     );
 
     onMounted(() => {
-      state.intervalId = setInterval(async () => {
+      state.cpuIntervalId = setInterval(async () => {
         try {
           const result = await api.get("api/cpu");
           state.isLoading = false;
@@ -114,11 +115,28 @@ export default defineComponent({
           state.isLoading = true;
         }
       }, 1000);
+
+      state.ramIntervalId = setInterval(async () => {
+        try {
+          const result = await api.get("api/ram");
+          state.isLoading = false;
+
+          const ramData = result.data;
+          state.totalRam = ramData.total;
+          state.usedRam = ramData.used;
+        } catch (e) {
+          console.error(e);
+          state.isLoading = true;
+        }
+      }, 1000);
     });
 
     onUnmounted(() => {
-      if (!!state.intervalId) {
-        clearInterval(state.intervalId);
+      if (!!state.cpuIntervalId) {
+        clearInterval(state.cpuIntervalId);
+      }
+      if (!!state.ramIntervalId) {
+        clearInterval(state.ramIntervalId);
       }
     });
 
