@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center column">
     <TemperatureChart event-bus-key="dupa" />
-
+    <LoadChart :values="cpuLoadData" />
     <SimpleDigitalDisplay
       v-if="!!cpuPackageTemperature"
       :value="cpuPackageTemperature"
@@ -58,10 +58,11 @@ import eventBusKeys from "src/consts/eventBusKeys";
 import { eventBus } from "src/boot/eventBus";
 import { useStore } from "vuex";
 import TemperatureChart from "src/components/TemperatureChart";
+import LoadChart from "src/components/LoadChart";
 
 export default defineComponent({
   name: "PageIndex",
-  components: { SimpleDigitalDisplay, TemperatureChart },
+  components: { SimpleDigitalDisplay, TemperatureChart, LoadChart },
   setup() {
     const state = reactive({
       cpuAverageTemperature: 0,
@@ -71,6 +72,7 @@ export default defineComponent({
       intervalId: null,
       averageLoad: 0,
       coresLoad: [],
+      cpuLoadData: [],
     });
 
     const store = useStore();
@@ -98,6 +100,13 @@ export default defineComponent({
           eventBus.emit("dupa", {
             value: cpuData.packageTemperature,
             date: new Date(),
+          });
+
+          state.cpuLoadData = mapCoresLoad(cpuData);
+          state.cpuLoadData.push({
+            id: "AVERAGE LOAD",
+            value: cpuData.averageLoad,
+            isAverage: true,
           });
         } catch (e) {
           console.error(e);
@@ -140,7 +149,7 @@ export default defineComponent({
 
     const mapCoresLoad = (cpuData) => {
       return cpuData.cores.map((x) => {
-        return { id: x.id, load: x.load };
+        return { id: x.id, load: x.load, value: x.load };
       });
     };
 
