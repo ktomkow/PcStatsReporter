@@ -15,6 +15,27 @@ namespace PcStatsReporter.LibreHardware
             return uint.TryParse(cutNumber, out result);
         }
 
+        public static (double used, double available) GetRam(this IEnumerable<ISensor> sensors)
+        {
+            var ramSensors = sensors
+                .Where(x => x.SensorType == SensorType.Data)
+                .Where(x => x.Value.HasValue)
+                .ToList();
+                // .FirstOrDefault(x => x.Name.Contains("cpu package", StringComparison.InvariantCultureIgnoreCase));
+
+                var usedSensor = ramSensors.FirstOrDefault(x =>
+                    x.Name.Contains("memory used", StringComparison.InvariantCultureIgnoreCase));
+
+                var used = usedSensor.Value;
+                
+                var availableSensor = ramSensors.FirstOrDefault(x =>
+                    x.Name.Contains("memory available", StringComparison.InvariantCultureIgnoreCase));
+
+                var available = availableSensor.Value;
+
+                return ((double) used, (double) available);
+        }
+
         public static uint GetPackageTemperature(this IEnumerable<ISensor> sensors)
         {
             ISensor? sensor = sensors

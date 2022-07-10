@@ -16,6 +16,7 @@ builder.Services.AddCustomSwagger();
 builder.Services.AddMaps();
 
 builder.Services.AddSingleton<CpuDataCollector>();
+builder.Services.AddSingleton<RamDataCollector>();
 
 builder.Services.UseReporterGrpc();
 
