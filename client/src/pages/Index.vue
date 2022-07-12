@@ -3,10 +3,7 @@
     <div class="flex row" style="gap: 2 em">
       <RamChart v-if="totalRam != 0" :total="totalRam" :used="usedRam" />
       <TemperatureChart event-bus-key="dupa" />
-      <LoadChart
-        v-if="cpuLoadData && cpuLoadData.length > 0"
-        :values="cpuLoadData"
-      />
+      <LoadChart v-if="!!cpuAverageLoad" :value="cpuAverageLoad" />
       <LoadBarChart
         v-if="cpuLoadData && cpuLoadData.length > 0"
         :values="cpuLoadData"
@@ -90,6 +87,7 @@ export default defineComponent({
       cpuIntervalId: null,
       ramIntervalId: null,
       cpuLoadData: [],
+      cpuAverageLoad: null,
       totalRam: 0,
       usedRam: 0,
     });
@@ -119,12 +117,18 @@ export default defineComponent({
             value: cpuData.packageTemperature,
             date: new Date(),
           });
-
+          state.cpuAverageLoad = {
+            id: "AVERAGE LOAD",
+            value: cpuData.averageLoad,
+            isAverage: true,
+          };
           state.cpuLoadData = [
-            { id: "AVERAGE LOAD", value: cpuData.averageLoad, isAverage: true },
             ...mapCoresLoad(cpuData),
-            ...mapCoresLoad(cpuData),
-            ...mapCoresLoad(cpuData),
+            // ...mapCoresLoad(cpuData),
+            // ...mapCoresLoad(cpuData),
+            // ...mapCoresLoad(cpuData),
+            // ...mapCoresLoad(cpuData),
+            // ...mapCoresLoad(cpuData),
           ];
         } catch (e) {
           console.error(e);
@@ -188,7 +192,7 @@ export default defineComponent({
         return x.load.map((y) => {
           return {
             id: x.id + "/" + i++,
-            value: y + Math.random() * 10,
+            value: y,
             isAverage: false,
           };
         });

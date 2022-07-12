@@ -2,8 +2,6 @@
   <q-card flat bordered>
     <q-card-section>
       <VChart :option="options" style="height: 30em; width: 30em" />
-      <q-btn color="primary" icon="check" label="rand" @click="onClick" />
-      <q-btn color="primary" icon="check" label="add" @click="onClick2" />
     </q-card-section>
   </q-card>
 </template>
@@ -42,21 +40,14 @@ export default {
   },
   setup(props) {
     const state = reactive({});
-    let i = 2;
-    const dataX = ref(["1", "2"]);
-    const dataY = ref([10, 5]);
 
-    const onClick = () => {
-      dataY.value.splice(0);
-      for (let j = 0; j < i; j++) {
-        dataY.value.push(Math.random() * 50 + 50);
-      }
-    };
+    const dataX = computed(() => {
+      return props.values.map((x) => x.id);
+    });
 
-    const onClick2 = () => {
-      dataX.value.push((++i).toString());
-      dataY.value.push(Math.random() * 50 + 50);
-    };
+    const dataY = computed(() => {
+      return props.values.map((x) => x.value);
+    });
 
     const options = ref({
       tooltip: {
@@ -95,7 +86,7 @@ export default {
       ],
     });
 
-    return { ...toRefs(state), options, onClick, onClick2 };
+    return { ...toRefs(state), options };
   },
 };
 </script>
