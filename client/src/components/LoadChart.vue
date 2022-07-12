@@ -52,6 +52,9 @@ export default {
     });
 
     const options = ref({
+      title: {
+        text: "CPU Load",
+      },
       series: [
         {
           type: "gauge",

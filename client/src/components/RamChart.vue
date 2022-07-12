@@ -54,6 +54,9 @@ export default {
     });
 
     const options = ref({
+      title: {
+        text: "RAM Usage",
+      },
       series: [
         {
           min: 0,

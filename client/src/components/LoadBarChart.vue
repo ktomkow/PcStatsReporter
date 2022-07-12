@@ -50,6 +50,9 @@ export default {
     });
 
     const options = ref({
+      title: {
+        text: "CPU Load",
+      },
       tooltip: {
         trigger: "axis",
         axisPointer: {
