@@ -32,8 +32,8 @@ export default {
   name: "LoadChart",
   components: { VChart },
   props: {
-    values: {
-      type: Array,
+    value: {
+      type: Object,
       required: true,
     },
   },
@@ -41,26 +41,20 @@ export default {
     const state = reactive({});
 
     const gaugeData = computed(() => {
-      return props.values.map((x) => {
-        return {
-          value: x.value,
-          name: x.id,
-          title: x.isAverage
-            ? {}
-            : {
-                show: false,
-              },
-          detail: x.isAverage
-            ? {}
-            : {
-                show: false,
-              },
-          itemStyle: x.isAverage ? { color: "#26a69a" } : { color: "#1976d2" },
-        };
-      });
+      return [
+        {
+          value: props.value.value,
+          name: props.value.id,
+          detail: {},
+          itemStyle: { color: "#26a69a" },
+        },
+      ];
     });
 
     const options = ref({
+      title: {
+        text: "CPU Load",
+      },
       series: [
         {
           type: "gauge",

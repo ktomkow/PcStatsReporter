@@ -25,7 +25,7 @@ public class CpuMap : IMap<CpuData, CpuResponse>
         return cores.Select(x => new CpuCoreResponse()
             {
                 Id = x.Id,
-                Load = x.Load,
+                Load = x.Load.ToList(),
                 Speed = x.Speed,
                 Temperature = x.Temperature
             })

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PcStatsReporter.Core.Models
 {
@@ -7,11 +8,11 @@ namespace PcStatsReporter.Core.Models
         public uint Id { get; set; }
         public uint Temperature { get; set; }
         public uint Speed { get; set; }
-        public uint Load { get; set; }
-
+        public ICollection<uint> Load { get; set; } = new List<uint>();
+        
         public override string ToString()
         {
-            return $"Id: {Id}, Temperature: {Temperature}, Speed: {Speed}, Load: {Load}";
+            return $"Id: {Id}, Temperature: {Temperature}, Speed: {Speed}, Load: {string.Join(", ", Load)}";
         }
     }
 }

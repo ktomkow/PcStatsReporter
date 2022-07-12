@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PcStatsReporter.Proto;
 
 namespace PcStatsReporter.Server.Mappers
@@ -37,7 +38,7 @@ namespace PcStatsReporter.Server.Mappers
                 var transportCore = new Proto.Core()
                 {
                     Id = core.Id,
-                    Load = core.Load,
+                    Load = core.Load.First(),
                     Speed = core.Speed,
                     Temperature = core.Temperature
                 };
