@@ -8,12 +8,7 @@ namespace PcStatsReporter.Core.Models
         public uint Id { get; set; }
         public uint Temperature { get; set; }
         public uint Speed { get; set; }
-        public ICollection<uint> Load { get; set; }
-
-        public CpuCore()
-        {
-            Load = new List<uint>();
-        }
+        public ICollection<uint> Load { get; set; } = new List<uint>();
         
         public override string ToString()
         {
