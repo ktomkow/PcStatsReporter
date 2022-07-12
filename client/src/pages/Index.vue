@@ -174,7 +174,6 @@ export default defineComponent({
 
     const mapCoresLoad = (cpuData) => {
       const cores = cpuData.cores.map((x) => {
-        // return { id: x.id, value: x.load, isAverage: false };
         let i = 1;
         return x.load.map((y) => {
           return { id: x.id + "/" + i++, value: y, isAverage: false };
