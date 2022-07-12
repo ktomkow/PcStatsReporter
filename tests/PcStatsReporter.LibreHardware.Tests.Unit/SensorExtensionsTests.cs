@@ -21,6 +21,30 @@ namespace PcStatsReporter.LibreHardware.Tests.Unit
             isSuccess.Should().BeTrue();
             result.Should().Be(expected);
         }
+        
+        [Fact]
+        public void TryGetCoreId_WhenCpu1Thread1_Then1()
+        {
+            uint expected = 1;
+            string input = "CPU Core #1 Thread #1";
+
+            bool isSuccess = input.TryGetCoreId(out uint result);
+
+            isSuccess.Should().BeTrue();
+            result.Should().Be(expected);
+        }
+        
+        [Fact]
+        public void TryGetCoreId_WhenCpu1Thread2_Then1()
+        {
+            uint expected = 1;
+            string input = "CPU Core #1 Thread #2";
+
+            bool isSuccess = input.TryGetCoreId(out uint result);
+
+            isSuccess.Should().BeTrue();
+            result.Should().Be(expected);
+        }
 
         [Fact]
         public void TryGetCoreId_WhenCpu9_Then9()
@@ -77,7 +101,48 @@ namespace PcStatsReporter.LibreHardware.Tests.Unit
             core.Id.Should().Be((uint) 1);
             core.Temperature.Should().Be((uint) 56);
             core.Speed.Should().Be((uint) 3456);
-            core.Load.Should().Be((uint) 63);
+            core.Load.Should().Contain((uint) 63);
+        }
+        
+        [Fact]
+        public void GetCores_MultiThreadedCore()
+        {
+            List<ISensor> sensors = new List<ISensor>()
+            {
+                new Sensor()
+                {
+                    Name = "CPU Core #1",
+                    SensorType = SensorType.Temperature,
+                    Value = 56.3f
+                },
+                new Sensor()
+                {
+                    Name = "CPU Core #1",
+                    SensorType = SensorType.Clock,
+                    Value = 3456.1f
+                },
+                new Sensor()
+                {
+                    Name = "CPU Core #1 Thread #1",
+                    SensorType = SensorType.Load,
+                    Value = 63.49f
+                },
+                new Sensor()
+                {
+                    Name = "CPU Core #1 Thread #2",
+                    SensorType = SensorType.Load,
+                    Value = 59.12f
+                },
+            };
+
+            List<CpuCore> cores = sensors.GetCpuCores();
+            CpuCore core = cores.Single();
+
+            core.Id.Should().Be((uint) 1);
+            core.Temperature.Should().Be((uint) 56);
+            core.Speed.Should().Be((uint) 3456);
+            core.Load.Should().Contain((uint) 63);
+            core.Load.Should().Contain((uint) 59);
         }
 
         [Fact]

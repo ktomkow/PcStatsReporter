@@ -10,7 +10,7 @@ namespace PcStatsReporter.LibreHardware
     {
         public static bool TryGetCoreId(this string name, out uint result)
         {
-            string cutNumber = name.ToLowerInvariant().Replace("cpu core #", "");
+            string cutNumber = name.ToLowerInvariant().Replace("cpu core #", "").Split(' ').First();
 
             return uint.TryParse(cutNumber, out result);
         }
@@ -102,7 +102,7 @@ namespace PcStatsReporter.LibreHardware
                         break;
 
                     case SensorType.Load:
-                        core.Load = (uint) sensor.Value;
+                        core.Load.Add((uint) sensor.Value);
                         break;
                 }
             }
