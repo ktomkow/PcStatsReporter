@@ -55,7 +55,11 @@ export default {
             : {
                 show: false,
               },
-          itemStyle: x.isAverage ? { color: "#26a69a" } : { color: "#1976d2" },
+          itemStyle: x.isAverage
+            ? {
+                color: "#26a69a",
+              }
+            : { color: "#1976d2" },
         };
       });
     });

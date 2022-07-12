@@ -3,7 +3,14 @@
     <div class="flex row" style="gap: 2 em">
       <RamChart v-if="totalRam != 0" :total="totalRam" :used="usedRam" />
       <TemperatureChart event-bus-key="dupa" />
-      <LoadChart :values="cpuLoadData" />
+      <LoadChart
+        v-if="cpuLoadData && cpuLoadData.length > 0"
+        :values="cpuLoadData"
+      />
+      <LoadBarChart
+        v-if="cpuLoadData && cpuLoadData.length > 0"
+        :values="cpuLoadData"
+      />
       <SimpleDigitalDisplay
         v-if="!!cpuPackageTemperature"
         :value="cpuPackageTemperature"
@@ -62,11 +69,18 @@ import { eventBus } from "src/boot/eventBus";
 import { useStore } from "vuex";
 import TemperatureChart from "src/components/TemperatureChart";
 import LoadChart from "src/components/LoadChart";
+import LoadBarChart from "src/components/LoadBarChart";
 import RamChart from "src/components/RamChart";
 
 export default defineComponent({
   name: "PageIndex",
-  components: { SimpleDigitalDisplay, TemperatureChart, LoadChart, RamChart },
+  components: {
+    SimpleDigitalDisplay,
+    TemperatureChart,
+    LoadChart,
+    RamChart,
+    LoadBarChart,
+  },
   setup() {
     const state = reactive({
       cpuAverageTemperature: 0,
@@ -106,14 +120,10 @@ export default defineComponent({
             date: new Date(),
           });
 
-          const a = mapCoresLoad(cpuData);
-          console.log(
-            "🚀 ~ file: Index.vue ~ line 110 ~ state.cpuIntervalId=setInterval ~ a",
-            a
-          );
-
           state.cpuLoadData = [
             { id: "AVERAGE LOAD", value: cpuData.averageLoad, isAverage: true },
+            ...mapCoresLoad(cpuData),
+            ...mapCoresLoad(cpuData),
             ...mapCoresLoad(cpuData),
           ];
         } catch (e) {
@@ -176,7 +186,11 @@ export default defineComponent({
       const cores = cpuData.cores.map((x) => {
         let i = 1;
         return x.load.map((y) => {
-          return { id: x.id + "/" + i++, value: y, isAverage: false };
+          return {
+            id: x.id + "/" + i++,
+            value: y + Math.random() * 10,
+            isAverage: false,
+          };
         });
       });
 
