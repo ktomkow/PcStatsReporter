@@ -106,6 +106,12 @@ export default defineComponent({
             date: new Date(),
           });
 
+          const a = mapCoresLoad(cpuData);
+          console.log(
+            "🚀 ~ file: Index.vue ~ line 110 ~ state.cpuIntervalId=setInterval ~ a",
+            a
+          );
+
           state.cpuLoadData = [
             { id: "AVERAGE LOAD", value: cpuData.averageLoad, isAverage: true },
             ...mapCoresLoad(cpuData),
@@ -167,9 +173,20 @@ export default defineComponent({
     };
 
     const mapCoresLoad = (cpuData) => {
-      return cpuData.cores.map((x) => {
-        return { id: x.id, value: x.load, isAverage: false };
+      const cores = cpuData.cores.map((x) => {
+        // return { id: x.id, value: x.load, isAverage: false };
+        let i = 1;
+        return x.load.map((y) => {
+          return { id: x.id + "/" + i++, value: y, isAverage: false };
+        });
       });
+
+      const result = [];
+      for (const core of cores) {
+        result.push(...core);
+      }
+
+      return result;
     };
 
     return { ...toRefs(state), minTemperature, maxTemperature };
