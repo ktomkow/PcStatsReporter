@@ -21,7 +21,6 @@ namespace PcStatsReporter.LibreHardware
                 .Where(x => x.SensorType == SensorType.Data)
                 .Where(x => x.Value.HasValue)
                 .ToList();
-                // .FirstOrDefault(x => x.Name.Contains("cpu package", StringComparison.InvariantCultureIgnoreCase));
 
                 var usedSensor = ramSensors.FirstOrDefault(x =>
                     x.Name.Contains("memory used", StringComparison.InvariantCultureIgnoreCase));
