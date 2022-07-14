@@ -17,6 +17,7 @@ builder.Services.AddMaps();
 
 builder.Services.AddSingleton<CpuDataCollector>();
 builder.Services.AddSingleton<RamDataCollector>();
+builder.Services.AddSingleton<GpuDataCollector>();
 
 builder.Services.UseReporterGrpc();
 

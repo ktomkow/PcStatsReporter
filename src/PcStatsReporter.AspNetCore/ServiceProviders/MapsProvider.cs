@@ -12,5 +12,6 @@ public static class MapsProvider
     {
         services.AddSingleton<IMap<CpuData, CpuResponse>, CpuMap>();
         services.AddSingleton<IMap<RamData, RamResponse>, RamMap>();
+        services.AddSingleton<IMap<GpuData, GpuResponse>, GpuMap>();
     }
 }
