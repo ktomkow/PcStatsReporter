@@ -3,7 +3,12 @@
     <div class="flex row" style="gap: 2 em">
       <RamChart v-if="totalRam != 0" :total="totalRam" :used="usedRam" />
       <TemperatureChart event-bus-key="dupa" />
-      <LoadChart v-if="!!cpuAverageLoad" :value="cpuAverageLoad" />
+      <LoadChart
+        v-if="!!cpuAverageLoad"
+        :value="cpuAverageLoad"
+        title="Cpu Load"
+      />
+      <LoadChart v-if="!!gpuCoreLoad" :value="gpuCoreLoad" title="Gpu load" />
       <LoadBarChart
         v-if="cpuLoadData && cpuLoadData.length > 0"
         :values="cpuLoadData"
@@ -85,9 +90,11 @@ export default defineComponent({
       cpuPackageTemperature: 0,
       isLoading: true,
       cpuIntervalId: null,
+      gpuIntervalId: null,
       ramIntervalId: null,
       cpuLoadData: [],
       cpuAverageLoad: null,
+      gpuCoreLoad: null,
       totalRam: 0,
       usedRam: 0,
     });
@@ -149,6 +156,22 @@ export default defineComponent({
           state.isLoading = true;
         }
       }, 1000);
+
+      state.gpuIntervalId = setInterval(async () => {
+        try {
+          const result = await api.get("api/nvidia");
+          state.isLoading = false;
+
+          const gpuData = result.data;
+          state.gpuCoreLoad = {
+            id: "CORE LOAD",
+            value: gpuData.loadCore,
+          };
+        } catch (e) {
+          console.error(e);
+          state.isLoading = true;
+        }
+      }, 1000);
     });
 
     onUnmounted(() => {
@@ -157,6 +180,9 @@ export default defineComponent({
       }
       if (!!state.ramIntervalId) {
         clearInterval(state.ramIntervalId);
+      }
+      if (!!state.gpuIntervalId) {
+        clearInterval(state.gpuIntervalId);
       }
     });
 
