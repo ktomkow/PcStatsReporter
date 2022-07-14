@@ -12,7 +12,7 @@ public class GpuDataCollector
     {
         this.computer = new Computer
         {
-            IsMemoryEnabled = true
+            IsGpuEnabled = true
         };
 
         this.computer.Open();
