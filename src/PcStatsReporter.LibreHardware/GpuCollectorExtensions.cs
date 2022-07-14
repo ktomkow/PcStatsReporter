@@ -11,7 +11,8 @@ public static class GpuCollectorExtensions
     public static GpuData GetGpu(this IEnumerable<IHardware> hardware)
     {
         var gpu = hardware.FirstOrDefault(x => x.HardwareType is HardwareType.GpuNvidia);
-        
+        gpu.Update();
+
         var temperatureSensor = gpu.Sensors
             .Where(x => x.Value.HasValue)
             .Where(x => x.SensorType == SensorType.Temperature)
