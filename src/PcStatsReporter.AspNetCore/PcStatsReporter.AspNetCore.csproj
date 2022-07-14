@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <RootNamespace>PcStatsReporter.AspNetCore</RootNamespace>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
 
     <ItemGroup>
