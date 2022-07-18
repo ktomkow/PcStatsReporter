@@ -3,6 +3,24 @@
     <div class="flex row" style="gap: 2 em">
       <RamChart v-if="totalRam != 0" :total="totalRam" :used="usedRam" />
       <TemperatureChart event-bus-key="dupa" />
+      <q-card flat bordered>
+        <q-card-section>
+          <LineChart
+            event-bus-key="cpuLoad"
+            title="CPU LOAD"
+            line-color="blue"
+          />
+        </q-card-section>
+      </q-card>
+      <q-card flat bordered>
+        <q-card-section>
+          <LineChart
+            event-bus-key="gpuLoad"
+            title="GPU LOAD"
+            line-color="green"
+          />
+        </q-card-section>
+      </q-card>
       <LoadChart
         v-if="!!cpuAverageLoad"
         :value="cpuAverageLoad"
@@ -73,6 +91,7 @@ import TemperatureChart from "src/components/TemperatureChart";
 import LoadChart from "src/components/LoadChart";
 import LoadBarChart from "src/components/LoadBarChart";
 import RamChart from "src/components/RamChart";
+import LineChart from "src/components/LineChart";
 
 export default defineComponent({
   name: "PageIndex",
@@ -82,6 +101,7 @@ export default defineComponent({
     LoadChart,
     RamChart,
     LoadBarChart,
+    LineChart,
   },
   setup() {
     const state = reactive({
@@ -137,11 +157,15 @@ export default defineComponent({
             // ...mapCoresLoad(cpuData),
             // ...mapCoresLoad(cpuData),
           ];
+          eventBus.emit("cpuLoad", {
+            value: cpuData.averageLoad,
+            date: new Date(),
+          });
         } catch (e) {
           console.error(e);
           state.isLoading = true;
         }
-      }, 1000);
+      }, 750);
 
       state.ramIntervalId = setInterval(async () => {
         try {
@@ -167,6 +191,11 @@ export default defineComponent({
             id: "CORE LOAD",
             value: gpuData.loadCore,
           };
+
+          eventBus.emit("gpuLoad", {
+            value: gpuData.loadCore,
+            date: new Date(),
+          });
         } catch (e) {
           console.error(e);
           state.isLoading = true;

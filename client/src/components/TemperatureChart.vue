@@ -1,7 +1,11 @@
 <template>
   <q-card flat bordered>
     <q-card-section>
-      <LineChart :event-bus-key="eventBusKey" title="Temperature" color="red" />
+      <LineChart
+        :event-bus-key="eventBusKey"
+        title="Temperature"
+        line-color="red"
+      />
     </q-card-section>
   </q-card>
 </template>
