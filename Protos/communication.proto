@@ -9,7 +9,7 @@ message Registration {
 }
 
 message RegistrationResponse {
-    repeated Settings settings = 1;
+    repeated SettingsResponse settings = 1;
 }
 
 enum SettingType {
@@ -19,10 +19,14 @@ enum SettingType {
     RAM = 3;
 }
 
-message Settings {
+message SettingsResponse {
     SettingType sensor = 1;
     bool enabled = 2;
     uint32 period = 3;
+}
+
+message SettingsRequest {
+    
 }
 
 service Registerer {
@@ -31,6 +35,10 @@ service Registerer {
 
 service Collector {
     rpc Collect (Data) returns (DataResponse);
+}
+
+service SettingsManager {
+    rpc Get (SettingsRequest) returns (SettingsRequest);
 }
 
 message Data {
