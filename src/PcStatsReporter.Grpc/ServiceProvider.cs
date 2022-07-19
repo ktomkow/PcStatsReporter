@@ -14,8 +14,8 @@ public static class ServiceProvider
     public static void AddReporterGrpc(this WebApplication app)
     {
         app.MapGrpcService<CalculatorService>();
-        app.MapGrpcService<CalculatorService>();
-        app.MapGrpcService<CalculatorService>();
-        app.MapGrpcService<CalculatorService>();
+        app.MapGrpcService<CollectorService>();
+        app.MapGrpcService<RegistrationService>();
+        app.MapGrpcService<SettingsService>();
     }
 }
