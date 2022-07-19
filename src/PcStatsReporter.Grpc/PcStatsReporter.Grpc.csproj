@@ -15,7 +15,6 @@
     
     <ItemGroup>
       <ProjectReference Include="..\PcStatsReporter.Core\PcStatsReporter.Core.csproj" />
-      <ProjectReference Include="..\PcStatsReporter.Proto\PcStatsReporter.Proto\PcStatsReporter.Proto.csproj" />
     </ItemGroup>
 
 </Project>

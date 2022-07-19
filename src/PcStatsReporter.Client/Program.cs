@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net.Sockets;
-using System.Text;
-
-namespace PcStatsReporter.Client
+﻿namespace PcStatsReporter.Client
 {
     public static class Program
     {
