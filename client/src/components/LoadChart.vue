@@ -36,6 +36,10 @@ export default {
       type: Object,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
   },
   setup(props) {
     const state = reactive({});
@@ -53,7 +57,7 @@ export default {
 
     const options = ref({
       title: {
-        text: "CPU Load",
+        text: props.title,
       },
       series: [
         {

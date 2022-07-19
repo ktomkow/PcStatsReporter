@@ -1,22 +1,14 @@
 <template>
-  <q-card flat bordered>
-    <q-card-section>
-      <VChart :option="options" style="height: 30em; width: 30em" />
-    </q-card-section>
-  </q-card>
+  <VChart :option="options" style="width: 30em; height: 30em" />
 </template>
 
 <script>
-import { reactive, toRefs, computed, ref } from "vue";
+import { reactive, toRefs, ref } from "vue";
 import "echarts";
 import VChart from "vue-echarts";
 import { use } from "echarts";
 
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-} from "echarts/components";
+import { TitleComponent, GridComponent } from "echarts/components";
 import { LineChart } from "echarts/charts";
 import { UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
@@ -25,7 +17,6 @@ import { useEventBus } from "src/composables/eventBusComposable";
 
 use([
   TitleComponent,
-  TooltipComponent,
   GridComponent,
   LineChart,
   CanvasRenderer,
@@ -33,12 +24,36 @@ use([
 ]);
 
 export default {
-  name: "TemperatureChart",
+  name: "LineChart",
   components: { VChart },
   props: {
     eventBusKey: {
       type: String,
       required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    max: {
+      type: Number,
+      required: false,
+      default: 100,
+    },
+    min: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    size: {
+      type: String,
+      required: false,
+      default: "md",
+    },
+    lineColor: {
+      type: String,
+      required: false,
+      default: "blue",
     },
   },
   setup(props) {
@@ -61,7 +76,7 @@ export default {
 
     const options = ref({
       title: {
-        text: "Dynamic Data & Time Axis",
+        text: props.title,
       },
       grid: {
         left: "8%",
@@ -69,34 +84,14 @@ export default {
         bottom: "4%",
         top: "8%",
       },
-      tooltip: {
-        trigger: "axis",
-        formatter: function (params) {
-          params = params[0];
-          var date = new Date(params.name);
-          return (
-            date.getDate() +
-            "." +
-            (date.getMonth() + 1) +
-            "." +
-            date.getFullYear() +
-            " - " +
-            params.value[1] +
-            "℃"
-          );
-        },
-        axisPointer: {
-          animation: false,
-        },
-      },
       xAxis: {
         type: "time",
         show: false,
       },
       yAxis: {
         type: "value",
-        min: 0,
-        max: 120,
+        min: props.min,
+        max: props.max,
         splitLine: {
           show: true,
         },
@@ -109,7 +104,7 @@ export default {
           data: myData,
           areaStyle: {},
           smooth: true,
-          color: "rgb(230,0,38)",
+          color: props.lineColor,
         },
       ],
     });
@@ -118,5 +113,9 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.md {
+  height: 10em;
+  width: 10em;
+}
+</style>

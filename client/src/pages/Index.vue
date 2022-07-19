@@ -2,8 +2,48 @@
   <q-page class="flex flex-center column">
     <div class="flex row" style="gap: 2 em">
       <RamChart v-if="totalRam != 0" :total="totalRam" :used="usedRam" />
-      <TemperatureChart event-bus-key="dupa" />
-      <LoadChart v-if="!!cpuAverageLoad" :value="cpuAverageLoad" />
+      <q-card flat bordered>
+        <q-card-section>
+          <LineChart
+            event-bus-key="cpuTemp"
+            title="CPU Temperature"
+            line-color="red"
+          />
+        </q-card-section>
+      </q-card>
+      <q-card flat bordered>
+        <q-card-section>
+          <LineChart
+            event-bus-key="gpuTemp"
+            title="GPU Temperature"
+            line-color="red"
+          />
+        </q-card-section>
+      </q-card>
+      <q-card flat bordered>
+        <q-card-section>
+          <LineChart
+            event-bus-key="cpuLoad"
+            title="CPU LOAD"
+            line-color="blue"
+          />
+        </q-card-section>
+      </q-card>
+      <q-card flat bordered>
+        <q-card-section>
+          <LineChart
+            event-bus-key="gpuLoad"
+            title="GPU LOAD"
+            line-color="green"
+          />
+        </q-card-section>
+      </q-card>
+      <LoadChart
+        v-if="!!cpuAverageLoad"
+        :value="cpuAverageLoad"
+        title="Cpu Load"
+      />
+      <LoadChart v-if="!!gpuCoreLoad" :value="gpuCoreLoad" title="Gpu load" />
       <LoadBarChart
         v-if="cpuLoadData && cpuLoadData.length > 0"
         :values="cpuLoadData"
@@ -60,23 +100,22 @@ import {
 import { api } from "src/boot/axios";
 import SimpleDigitalDisplay from "src/components/SimpleDigitalDisplay";
 
-import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
 import { eventBus } from "src/boot/eventBus";
 import { useStore } from "vuex";
-import TemperatureChart from "src/components/TemperatureChart";
 import LoadChart from "src/components/LoadChart";
 import LoadBarChart from "src/components/LoadBarChart";
 import RamChart from "src/components/RamChart";
+import LineChart from "src/components/LineChart";
 
 export default defineComponent({
   name: "PageIndex",
   components: {
     SimpleDigitalDisplay,
-    TemperatureChart,
     LoadChart,
     RamChart,
     LoadBarChart,
+    LineChart,
   },
   setup() {
     const state = reactive({
@@ -85,9 +124,11 @@ export default defineComponent({
       cpuPackageTemperature: 0,
       isLoading: true,
       cpuIntervalId: null,
+      gpuIntervalId: null,
       ramIntervalId: null,
       cpuLoadData: [],
       cpuAverageLoad: null,
+      gpuCoreLoad: null,
       totalRam: 0,
       usedRam: 0,
     });
@@ -113,7 +154,7 @@ export default defineComponent({
           state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
           state.cpuCoresTemperatures = mapCoreTemperatures(cpuData);
           eventBus.emit(eventBusKeys.CPU_DATA_ARRIVED, cpuData);
-          eventBus.emit("dupa", {
+          eventBus.emit("cpuTemp", {
             value: cpuData.packageTemperature,
             date: new Date(),
           });
@@ -130,11 +171,15 @@ export default defineComponent({
             // ...mapCoresLoad(cpuData),
             // ...mapCoresLoad(cpuData),
           ];
+          eventBus.emit("cpuLoad", {
+            value: cpuData.averageLoad,
+            date: new Date(),
+          });
         } catch (e) {
           console.error(e);
           state.isLoading = true;
         }
-      }, 1000);
+      }, 750);
 
       state.ramIntervalId = setInterval(async () => {
         try {
@@ -149,6 +194,31 @@ export default defineComponent({
           state.isLoading = true;
         }
       }, 1000);
+
+      state.gpuIntervalId = setInterval(async () => {
+        try {
+          const result = await api.get("api/nvidia");
+          state.isLoading = false;
+
+          const gpuData = result.data;
+          state.gpuCoreLoad = {
+            id: "CORE LOAD",
+            value: gpuData.loadCore,
+          };
+
+          eventBus.emit("gpuTemp", {
+            value: gpuData.loadCore,
+            date: new Date(),
+          });
+          eventBus.emit("gpuLoad", {
+            value: gpuData.temperature,
+            date: new Date(),
+          });
+        } catch (e) {
+          console.error(e);
+          state.isLoading = true;
+        }
+      }, 1000);
     });
 
     onUnmounted(() => {
@@ -157,6 +227,9 @@ export default defineComponent({
       }
       if (!!state.ramIntervalId) {
         clearInterval(state.ramIntervalId);
+      }
+      if (!!state.gpuIntervalId) {
+        clearInterval(state.gpuIntervalId);
       }
     });
 
