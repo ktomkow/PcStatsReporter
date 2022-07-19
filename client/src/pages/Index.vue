@@ -2,7 +2,24 @@
   <q-page class="flex flex-center column">
     <div class="flex row" style="gap: 2 em">
       <RamChart v-if="totalRam != 0" :total="totalRam" :used="usedRam" />
-      <TemperatureChart event-bus-key="dupa" />
+      <q-card flat bordered>
+        <q-card-section>
+          <LineChart
+            event-bus-key="cpuTemp"
+            title="CPU Temperature"
+            line-color="red"
+          />
+        </q-card-section>
+      </q-card>
+      <q-card flat bordered>
+        <q-card-section>
+          <LineChart
+            event-bus-key="gpuTemp"
+            title="GPU Temperature"
+            line-color="red"
+          />
+        </q-card-section>
+      </q-card>
       <q-card flat bordered>
         <q-card-section>
           <LineChart
@@ -83,11 +100,9 @@ import {
 import { api } from "src/boot/axios";
 import SimpleDigitalDisplay from "src/components/SimpleDigitalDisplay";
 
-import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
 import { eventBus } from "src/boot/eventBus";
 import { useStore } from "vuex";
-import TemperatureChart from "src/components/TemperatureChart";
 import LoadChart from "src/components/LoadChart";
 import LoadBarChart from "src/components/LoadBarChart";
 import RamChart from "src/components/RamChart";
@@ -97,7 +112,6 @@ export default defineComponent({
   name: "PageIndex",
   components: {
     SimpleDigitalDisplay,
-    TemperatureChart,
     LoadChart,
     RamChart,
     LoadBarChart,
@@ -140,7 +154,7 @@ export default defineComponent({
           state.cpuAverageTemperature = calculateAverageTemperature(cpuData);
           state.cpuCoresTemperatures = mapCoreTemperatures(cpuData);
           eventBus.emit(eventBusKeys.CPU_DATA_ARRIVED, cpuData);
-          eventBus.emit("dupa", {
+          eventBus.emit("cpuTemp", {
             value: cpuData.packageTemperature,
             date: new Date(),
           });
@@ -192,8 +206,12 @@ export default defineComponent({
             value: gpuData.loadCore,
           };
 
-          eventBus.emit("gpuLoad", {
+          eventBus.emit("gpuTemp", {
             value: gpuData.loadCore,
+            date: new Date(),
+          });
+          eventBus.emit("gpuLoad", {
+            value: gpuData.temperature,
             date: new Date(),
           });
         } catch (e) {
