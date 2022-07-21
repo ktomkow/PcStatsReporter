@@ -1,29 +1,30 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using PcStatsReporter.Core.Persistence;
+using System.Threading.Tasks;
 
-namespace PcStatsReporter.Core
+namespace PcStatsReporter.Core.Persistence
 {
-    [Obsolete]
-    public class Store
+    public class MemoryHold : IHold
     {
         private static readonly ConcurrentDictionary<Type, object> ConcurrentDictionary = new ConcurrentDictionary<Type, object>();
-        
-        public void Set<T>(T obj)
+
+        public async Task Set<T>(T obj)
         {
             var type = typeof(T);
             ConcurrentDictionary.AddOrUpdate(type, obj, (x,y) => obj);
+
+            await Task.CompletedTask;
         }
 
-        public T Get<T>()
+        public async Task<T> Get<T>()
         {
             var type = typeof(T);
             if (ConcurrentDictionary.TryGetValue(type, out var obj))
             {
-                return (T)obj;
+                return await Task.FromResult((T)obj);
             }
 
-            return default(T);
+            return await Task.FromResult(default(T));
         }
     }
 }
