@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PcStatsReporter.Client.NetworkScanner;
 
 namespace PcStatsReporter.Client
 {
@@ -7,13 +8,18 @@ namespace PcStatsReporter.Client
     {
         public static async Task<int> Main()
         {
-            var host = CreateHostBuilder()
+            var scanner = new Scanner();
+
+            var port = 11111;
+            var host = await scanner.Scan(port);
+            
+            var hostBuilder = CreateHostBuilder()
                 .ConfigureServices(services =>
                 {
                     services.AddHostedService<SampleHostedService>();
                 });
-            
-            await host.RunConsoleAsync();
+
+            await hostBuilder.RunConsoleAsync();
             return Environment.ExitCode;
         }
 
