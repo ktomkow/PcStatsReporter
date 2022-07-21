@@ -1,58 +1,25 @@
-﻿using PcStatsReporter.Core.Models;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace PcStatsReporter.Client
 {
     public static class Program
     {
-        public static async Task Main()
+        public static async Task<int> Main()
         {
-            var ram = new RamSample()
-            {
-                Id = Guid.NewGuid(),
-                ReceivedAt = DateTime.UtcNow.AddSeconds(-1),
-                RegisteredAt = DateTime.UtcNow.AddSeconds(-3),
-                InUse = 4.2
-            };
-
-            Console.WriteLine(ram.ToString());
-
-            var cpu = new CpuSample()
-            {
-                Id = Guid.NewGuid(),
-                ReceivedAt = DateTime.UtcNow.AddSeconds(-1),
-                RegisteredAt = DateTime.UtcNow.AddSeconds(-3),
-                Temperature = 64,
-                AverageLoad = 49,
-                Cores = new List<CoreSample>()
+            var host = CreateHostBuilder()
+                .ConfigureServices(services =>
                 {
-                    new CoreSample()
-                    {
-                        CoreNumber = 1,
-                        Speed = 2949,
-                        Temperature = 67,
-                        ThreadsLoad = new (uint threadNumber, uint threadLoad)[]
-                        {
-                            new(1, 23),
-                            new(2, 21),
-                        }
-                    },
-                    new CoreSample()
-                    {
-                        CoreNumber = 2,
-                        Speed = 2999,
-                        Temperature = 62,
-                        ThreadsLoad = new (uint threadNumber, uint threadLoad)[]
-                        {
-                            new(1, 31),
-                            new(2, 36),
-                        }
-                    }
-                }
-            };
-
-            Console.WriteLine(cpu);
+                    services.AddHostedService<SampleHostedService>();
+                });
             
-            await Task.CompletedTask;
+            await host.RunConsoleAsync();
+            return Environment.ExitCode;
+        }
+
+        private static IHostBuilder CreateHostBuilder()
+        {
+            return Host.CreateDefaultBuilder();
         }
     }
 }
