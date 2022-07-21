@@ -54,7 +54,9 @@ message DataResponse {
 }
 
 message CpuData {
-    repeated Core cores = 2;
+    uint32 temperature = 1;
+    uint32 average_load = 2;
+    repeated Core cores = 3;
 }
 
 message Core {
