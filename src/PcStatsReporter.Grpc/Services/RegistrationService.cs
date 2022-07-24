@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
+using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.Core.ReportingClientSettings;
 using PcStatsReporter.Grpc.Proto;
+using Rebus.Bus;
 
 namespace PcStatsReporter.Grpc.Services;
 
@@ -14,12 +16,14 @@ public class RegistrationService : Registerer.RegistererBase
     private readonly ILogger<RegistrationService> _logger;
     private readonly IHold _hold;
     private readonly ReportingClientSettings _defaultSetting;
+    private readonly IBus _bus;
 
-    public RegistrationService(ILogger<RegistrationService> logger, IHold hold, DefaultSetting defaultSetting)
+    public RegistrationService(ILogger<RegistrationService> logger, IHold hold, DefaultSetting defaultSetting, IBus bus)
     {
         _logger = logger;
         _hold = hold;
         _defaultSetting = defaultSetting;
+        _bus = bus;
     }
 
     public override async Task<RegistrationResponse> Register(RegistrationRequest request, ServerCallContext context)
@@ -66,6 +70,8 @@ public class RegistrationService : Registerer.RegistererBase
             Sensor = SettingType.Service,
             Period = (uint) serviceSettings.Period.TotalSeconds
         });
+        
+        await _bus.Publish(new Registered());
 
         return response;
     }

@@ -31,6 +31,8 @@ namespace PcStatsReporter.Client
                     // services.AddSingleton(channel);
                 });
 
+            // IHost? app = hostBuilder.Build();
+            // await app.StartAsync();
             await hostBuilder.RunConsoleAsync();
             
             return Environment.ExitCode;
