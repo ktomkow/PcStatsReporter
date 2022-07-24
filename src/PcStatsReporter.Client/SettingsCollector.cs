@@ -1,4 +1,5 @@
-﻿using PcStatsReporter.Core.ReportingClientSettings;
+﻿using PcStatsReporter.Client.Initialization;
+using PcStatsReporter.Core.ReportingClientSettings;
 using PcStatsReporter.Grpc.Proto;
 
 namespace PcStatsReporter.Client;
