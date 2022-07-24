@@ -26,6 +26,7 @@ namespace PcStatsReporter.Client
                     services.AddSingleton<AppContext>();
                     services.AddSingleton<Settings>();
                     services.AddSingleton<ClientChannel>();
+                    services.AddSingleton<SettingsCollector>();
 
                     services.AddSingleton(channel);
                 });
