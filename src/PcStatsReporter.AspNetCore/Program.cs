@@ -1,12 +1,17 @@
 using System;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using PcStatsReporter.AspNetCore;
+using PcStatsReporter.AspNetCore.Handlers;
 using PcStatsReporter.AspNetCore.ServiceProviders;
+using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.Core.ReportingClientSettings;
+using PcStatsReporter.Core.ServiceProviders;
 using PcStatsReporter.Grpc;
 using PcStatsReporter.LibreHardware;
+using Rebus.Bus;
+using Rebus.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +38,10 @@ DefaultSetting defaultSetting = new DefaultSetting()
 };
 
 builder.Services.AddSingleton(defaultSetting);
+
+builder.Services.AddReporterRebus();
+builder.Services.AutoRegisterHandlersFromAssemblyOf<RegisteredHandler>();
+
 var app = builder.Build();
 
 app.UseCustomSwagger();
@@ -45,6 +54,9 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyOrigin());
 
+
+var bus = app.UseReporterRebus();
+await bus.Subscribe<Registered>();
 
 app.UseReporterGrpc();
 
