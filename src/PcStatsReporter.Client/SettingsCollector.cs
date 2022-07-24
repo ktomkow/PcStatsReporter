@@ -17,6 +17,13 @@ public class SettingsCollector : Initializable
         SettingsRequest request = new SettingsRequest();
         SettingsResponse response = await _client.GetAsync(request);
 
+        var list = Map(response);
+
+        return list;
+    }
+
+    public static List<ReportingClientSettings> Map(SettingsResponse response)
+    {
         var list = new List<ReportingClientSettings>();
 
         foreach (var setting in response.Settings)
@@ -30,7 +37,7 @@ public class SettingsCollector : Initializable
                     };
                     list.Add(serviceSettings);
                     break;
-                
+
                 case SettingType.Cpu:
                     var cpuSettings = new CpuCollectSettings()
                     {
@@ -38,7 +45,7 @@ public class SettingsCollector : Initializable
                     };
                     list.Add(cpuSettings);
                     break;
-                
+
                 case SettingType.Gpu:
                     var gpuSettings = new GpuCollectSettings()
                     {
@@ -46,7 +53,7 @@ public class SettingsCollector : Initializable
                     };
                     list.Add(gpuSettings);
                     break;
-                
+
                 case SettingType.Ram:
                     var ramSettings = new RamCollectSettings()
                     {
@@ -54,12 +61,12 @@ public class SettingsCollector : Initializable
                     };
                     list.Add(ramSettings);
                     break;
-                
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         return list;
     }
 
