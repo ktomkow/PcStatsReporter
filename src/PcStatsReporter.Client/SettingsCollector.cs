@@ -3,7 +3,7 @@ using PcStatsReporter.Grpc.Proto;
 
 namespace PcStatsReporter.Client;
 
-public class SettingsCollector
+public class SettingsCollector : Initializable
 {
     private readonly AppContext _appContext;
     private SettingsManager.SettingsManagerClient _client;
@@ -70,9 +70,14 @@ public class SettingsCollector
         return list;
     }
 
-    private async Task SelfInit()
+    public async Task SelfInit()
     {
         await _appContext.ClientChannel.WaitForInitialization();
         _client = new SettingsManager.SettingsManagerClient(_appContext.ClientChannel.GrpcChannel);
+    }
+
+    public override async Task<bool> IsInitialized()
+    {
+        return await Task.FromResult(_client is not null);
     }
 }

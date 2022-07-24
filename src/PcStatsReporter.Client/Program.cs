@@ -23,6 +23,7 @@ namespace PcStatsReporter.Client
                     services.AddSingleton<IInitializer<ClientChannel>, GrpcInitializer>();
                     services.AddSingleton<IInitializer<Settings>, SettingsInitializer>();
                     services.AddSingleton<IInitializer<AppContext>, AppContextInitializer>();
+                    services.AddSingleton<IInitializer<SettingsCollector>, SettingCollectorInitializer>();
                     services.AddSingleton<AppContext>();
                     services.AddSingleton<Settings>();
                     services.AddSingleton<ClientChannel>();
