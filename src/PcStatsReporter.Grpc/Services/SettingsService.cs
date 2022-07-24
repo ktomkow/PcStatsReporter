@@ -6,7 +6,7 @@ namespace PcStatsReporter.Grpc.Services;
 
 public class SettingsService : SettingsManager.SettingsManagerBase
 {
-    public override Task<SettingsRequest> Get(SettingsRequest request, ServerCallContext context)
+    public override Task<SettingsResponse> Get(SettingsRequest request, ServerCallContext context)
     {
         return base.Get(request, context);
     }
