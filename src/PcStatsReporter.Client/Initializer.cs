@@ -7,8 +7,6 @@ public abstract class Initializer<T> : IInitializer<T> where T : IInitializable
     protected readonly ILogger _logger;
     protected readonly SemaphoreSlim _semaphore;
     
-    public T Initialized { get; protected set; }
-
     protected Initializer(ILogger logger)
     {
         _logger = logger;

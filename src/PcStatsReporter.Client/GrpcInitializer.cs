@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Grpc.Net.Client;
+using Microsoft.Extensions.Logging;
 
 namespace PcStatsReporter.Client;
 
@@ -12,12 +13,11 @@ public class GrpcInitializer : Initializer<ClientChannel>
     {
         // TODO: initialize here
         // TODO: find address of backend
-        // _initializedObject = GrpcChannel.ForAddress("http://localhost:11111");
-        Initialized = new ClientChannel();
+        var grpcChannel = GrpcChannel.ForAddress("http://localhost:11111");
         
         // TODO: call register method
         // TODO: get cpu name, gpu name, total ram
-        await Task.Delay(TimeSpan.FromSeconds(6));
-        initializable.MarkAsInitialized();
+        initializable.SetChannel(grpcChannel);
+        await Task.CompletedTask;
     }
 }
