@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PcStatsReporter.Core\PcStatsReporter.Core.csproj" />
+    <ProjectReference Include="..\PcStatsReporter.GrpcClient\PcStatsReporter.GrpcClient.csproj" />
   </ItemGroup>
 
   <ItemGroup>
