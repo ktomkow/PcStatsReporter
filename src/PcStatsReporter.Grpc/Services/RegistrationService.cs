@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Grpc.Core;
+using Microsoft.Extensions.Logging;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.Core.ReportingClientSettings;
@@ -9,14 +11,18 @@ namespace PcStatsReporter.Grpc.Services;
 
 public class RegistrationService : Registerer.RegistererBase
 {
+    private readonly ILogger<RegistrationService> _logger;
     private readonly IHold _hold;
+    private readonly ReportingClientSettings _defaultSetting;
 
-    public RegistrationService(IHold hold)
+    public RegistrationService(ILogger<RegistrationService> logger, IHold hold, DefaultSetting defaultSetting)
     {
+        _logger = logger;
         _hold = hold;
+        _defaultSetting = defaultSetting;
     }
 
-    public override async Task<RegistrationResponse> Register(Registration request, ServerCallContext context)
+    public override async Task<RegistrationResponse> Register(RegistrationRequest request, ServerCallContext context)
     {
         PcInfo pcInfo = new PcInfo()
         {
@@ -25,14 +31,16 @@ public class RegistrationService : Registerer.RegistererBase
             TotalRam = request.RamCapacity
         };
 
+        _logger.LogInformation("Registering PcInfo {@PcInfo}", pcInfo);
+
         RegistrationResponse response = new RegistrationResponse();
         response.Settings = new SettingsResponse();
 
-        var cpuSettings = await _hold.Get<CpuCollectSettings>();
-        var gpuSettings = await _hold.Get<GpuCollectSettings>();
-        var ramSettings = await _hold.Get<RamCollectSettings>();
-        var serviceSettings = await _hold.Get<SettingsRefreshSettings>();
-        
+        ReportingClientSettings cpuSettings = await _hold.Get<CpuCollectSettings>() ?? _defaultSetting;
+        ReportingClientSettings gpuSettings = await _hold.Get<GpuCollectSettings>() ?? _defaultSetting;
+        ReportingClientSettings ramSettings = await _hold.Get<RamCollectSettings>() ?? _defaultSetting;
+        ReportingClientSettings serviceSettings = await _hold.Get<SettingsRefreshSettings>() ?? _defaultSetting;
+
         await _hold.Set(pcInfo);
 
         response.Settings.Settings.Add(new Setting()
@@ -58,7 +66,7 @@ public class RegistrationService : Registerer.RegistererBase
             Sensor = SettingType.Service,
             Period = (uint) serviceSettings.Period.TotalSeconds
         });
-        
+
         return response;
     }
 }
