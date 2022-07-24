@@ -4,16 +4,15 @@ namespace PcStatsReporter.Client;
 
 public class ClientChannel : Initializable
 {
-    private bool _isInitialized;
     public GrpcChannel GrpcChannel { get; protected set; }
-    
-    public void MarkAsInitialized()
+
+    public void SetChannel(GrpcChannel channel)
     {
-        _isInitialized = true;
+        GrpcChannel = channel;
     }
     
     public override async Task<bool> IsInitialized()
     {
-        return await Task.FromResult(_isInitialized);
+        return await Task.FromResult(GrpcChannel is not null);
     }
 }

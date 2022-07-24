@@ -13,7 +13,7 @@ public class SettingsInitializer : Initializer<Settings>
 
     protected override async Task InitializeResult(Settings initializable)
     {
-        await Task.Delay(TimeSpan.FromSeconds(3));
-        initializable.MarkAsInitialized();
+        await _clientChannel.WaitForInitialization();
+        initializable.MarkAsInitialized() ;
     }
 }
