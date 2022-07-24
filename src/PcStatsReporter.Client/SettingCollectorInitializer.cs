@@ -6,7 +6,9 @@ public class SettingCollectorInitializer : Initializer<SettingsCollector>
 {
     private readonly AppContext _appContext;
 
-    public SettingCollectorInitializer(ILogger logger, AppContext appContext) : base(logger)
+    public SettingCollectorInitializer(
+        ILogger<SettingCollectorInitializer> logger, 
+        AppContext appContext) : base(logger)
     {
         _appContext = appContext;
     }
