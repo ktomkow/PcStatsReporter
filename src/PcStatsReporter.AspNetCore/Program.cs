@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using PcStatsReporter.AspNetCore.ServiceProviders;
+using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.Grpc;
 using PcStatsReporter.LibreHardware;
 
@@ -19,7 +20,9 @@ builder.Services.AddSingleton<CpuDataCollector>();
 builder.Services.AddSingleton<RamDataCollector>();
 builder.Services.AddSingleton<GpuDataCollector>();
 
-builder.Services.UseReporterGrpc();
+builder.Services.AddSingleton<IHold, MemoryHold>();
+
+builder.Services.AddReporterGrpc();
 
 var app = builder.Build();
 
@@ -34,6 +37,6 @@ app.UseCors(x => x
     .AllowAnyOrigin());
 
 
-app.AddReporterGrpc();
+app.UseReporterGrpc();
 
 app.Run();
