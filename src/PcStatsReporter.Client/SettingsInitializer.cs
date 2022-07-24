@@ -15,6 +15,7 @@ public class SettingsInitializer : Initializer<Settings>
 
     protected override async Task InitializeResult(Settings initializable)
     {
+        await _settingsCollector.WaitForInitialization();
         var settings = await _settingsCollector.Get();
 
         _appContext.Settings.SettingsRefreshSettings.Period = settings.GetServiceSettings().Period;
