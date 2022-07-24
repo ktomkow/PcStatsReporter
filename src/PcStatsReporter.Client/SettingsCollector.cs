@@ -1,20 +1,26 @@
-﻿using PcStatsReporter.Client.Initialization;
-using PcStatsReporter.Core.ReportingClientSettings;
+﻿using PcStatsReporter.Core.ReportingClientSettings;
 using PcStatsReporter.Grpc.Proto;
 
 namespace PcStatsReporter.Client;
 
-public class SettingsCollector : Initializable
+public class SettingsCollector
 {
+    private readonly AppContext _appContext;
     private SettingsManager.SettingsManagerClient _client;
 
     public SettingsCollector(AppContext appContext)
     {
+        _appContext = appContext;
     }
     
     public async Task<List<ReportingClientSettings>> Get()
     {
-        await this.WaitForInitialization();
+        await _appContext.WaitForInitialization();
+        if (_client is null)
+        {
+            _client = new SettingsManager.SettingsManagerClient(_appContext.ClientChannel);
+        }
+        
         SettingsRequest request = new SettingsRequest();
         SettingsResponse response = await _client.GetAsync(request);
 
@@ -69,15 +75,5 @@ public class SettingsCollector : Initializable
         }
 
         return list;
-    }
-
-    public async Task Init(ClientChannel clientChannel)
-    {
-        _client = new SettingsManager.SettingsManagerClient(clientChannel.GrpcChannel);
-    }
-
-    public override async Task<bool> IsInitialized()
-    {
-        return await Task.FromResult(_client is not null);
     }
 }

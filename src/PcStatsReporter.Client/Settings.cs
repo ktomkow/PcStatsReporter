@@ -1,28 +1,19 @@
-﻿using PcStatsReporter.Client.Initialization;
-using PcStatsReporter.Core.ReportingClientSettings;
+﻿using PcStatsReporter.Core.ReportingClientSettings;
 
 namespace PcStatsReporter.Client;
 
-public class Settings : Initializable
+public class Settings
 {
     public CpuCollectSettings CpuCollectSettings { get; }
     public GpuCollectSettings GpuCollectSettings { get; }
     public RamCollectSettings RamCollectSettings { get; }
     public SettingsRefreshSettings SettingsRefreshSettings { get; }
 
-    public Settings()
+    public Settings(CpuCollectSettings cpuCollectSettings, GpuCollectSettings gpuCollectSettings, RamCollectSettings ramCollectSettings, SettingsRefreshSettings settingsRefreshSettings)
     {
-        CpuCollectSettings = new CpuCollectSettings();
-        GpuCollectSettings = new GpuCollectSettings();
-        RamCollectSettings = new RamCollectSettings();
-        SettingsRefreshSettings = new SettingsRefreshSettings();
-    }
-
-    public override async Task<bool> IsInitialized()
-    {
-        return await Task.FromResult(CpuCollectSettings.Period != TimeSpan.Zero &&
-                                     GpuCollectSettings.Period != TimeSpan.Zero &&
-                                     RamCollectSettings.Period != TimeSpan.Zero &&
-                                     SettingsRefreshSettings.Period != TimeSpan.Zero);
+        CpuCollectSettings = cpuCollectSettings;
+        GpuCollectSettings = gpuCollectSettings;
+        RamCollectSettings = ramCollectSettings;
+        SettingsRefreshSettings = settingsRefreshSettings;
     }
 }
