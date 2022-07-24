@@ -4,12 +4,16 @@ namespace PcStatsReporter.Client;
 
 public class SettingCollectorInitializer : Initializer<SettingsCollector>
 {
-    public SettingCollectorInitializer(ILogger logger) : base(logger)
+    private readonly AppContext _appContext;
+
+    public SettingCollectorInitializer(ILogger logger, AppContext appContext) : base(logger)
     {
+        _appContext = appContext;
     }
 
     protected override async Task InitializeResult(SettingsCollector initializable)
     {
-        await initializable.SelfInit();
+        await _appContext.ClientChannel.WaitForInitialization();
+        await initializable.Init(_appContext.ClientChannel);
     }
 }
