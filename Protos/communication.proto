@@ -21,8 +21,7 @@ enum SettingType {
 
 message SettingsResponse {
     SettingType sensor = 1;
-    bool enabled = 2;
-    uint32 period = 3;
+    uint32 period = 2;
 }
 
 message SettingsRequest {
