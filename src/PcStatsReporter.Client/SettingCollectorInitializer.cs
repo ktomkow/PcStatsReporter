@@ -15,7 +15,6 @@ public class SettingCollectorInitializer : Initializer<SettingsCollector>
 
     protected override async Task InitializeResult(SettingsCollector initializable)
     {
-        await _appContext.ClientChannel.WaitForInitialization();
         await initializable.Init(_appContext.ClientChannel);
     }
 }

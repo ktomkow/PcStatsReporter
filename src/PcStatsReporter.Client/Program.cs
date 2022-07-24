@@ -13,7 +13,7 @@ namespace PcStatsReporter.Client
             // var port = 11111;
             // var host = await scanner.Scan(port);
             //
-            GrpcChannel channel = GrpcChannel.ForAddress("http://localhost:11111");
+            // GrpcChannel channel = GrpcChannel.ForAddress("http://localhost:11111");
             
             var hostBuilder = CreateHostBuilder()
                 .ConfigureServices(services =>
@@ -21,7 +21,6 @@ namespace PcStatsReporter.Client
                     services.AddHostedService<CpuCollector>();
                     services.AddHostedService<InitializeService>();
                     services.AddSingleton<IInitializer<ClientChannel>, GrpcInitializer>();
-                    services.AddSingleton<IInitializer<Settings>, SettingsInitializer>();
                     services.AddSingleton<IInitializer<AppContext>, AppContextInitializer>();
                     services.AddSingleton<IInitializer<SettingsCollector>, SettingCollectorInitializer>();
                     services.AddSingleton<AppContext>();
@@ -29,7 +28,7 @@ namespace PcStatsReporter.Client
                     services.AddSingleton<ClientChannel>();
                     services.AddSingleton<SettingsCollector>();
 
-                    services.AddSingleton(channel);
+                    // services.AddSingleton(channel);
                 });
 
             await hostBuilder.RunConsoleAsync();

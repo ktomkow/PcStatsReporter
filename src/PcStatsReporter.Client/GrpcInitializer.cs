@@ -13,7 +13,7 @@ public class GrpcInitializer : Initializer<ClientChannel>
     {
         // TODO: initialize here
         // TODO: find address of backend
-        var grpcChannel = GrpcChannel.ForAddress("http://localhost:11111");
+        var grpcChannel = GrpcChannel.ForAddress("http://localhost:22222");
         
         // TODO: call register method
         // TODO: get cpu name, gpu name, total ram
