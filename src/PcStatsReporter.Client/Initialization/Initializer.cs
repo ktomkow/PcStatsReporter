@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace PcStatsReporter.Client;
+namespace PcStatsReporter.Client.Initialization;
 
 public abstract class Initializer<T> : IInitializer<T> where T : IInitializable
 {

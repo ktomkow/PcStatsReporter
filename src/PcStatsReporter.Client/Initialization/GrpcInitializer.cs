@@ -1,7 +1,7 @@
 ﻿using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
 
-namespace PcStatsReporter.Client;
+namespace PcStatsReporter.Client.Initialization;
 
 public class GrpcInitializer : Initializer<ClientChannel>
 {
