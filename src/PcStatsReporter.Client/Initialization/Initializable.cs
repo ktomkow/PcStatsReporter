@@ -1,4 +1,4 @@
-﻿namespace PcStatsReporter.Client;
+﻿namespace PcStatsReporter.Client.Initialization;
 
 public abstract class Initializable : IInitializable
 {

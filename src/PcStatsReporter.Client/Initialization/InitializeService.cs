@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace PcStatsReporter.Client;
+namespace PcStatsReporter.Client.Initialization;
 
 public class InitializeService : BackgroundService
 {

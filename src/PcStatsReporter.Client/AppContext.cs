@@ -1,4 +1,4 @@
-﻿using PcStatsReporter.Core.ReportingClientSettings;
+﻿using PcStatsReporter.Client.Initialization;
 
 namespace PcStatsReporter.Client;
 

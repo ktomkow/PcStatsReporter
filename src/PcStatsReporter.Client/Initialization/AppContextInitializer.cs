@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using PcStatsReporter.Grpc.Proto;
 
-namespace PcStatsReporter.Client;
+namespace PcStatsReporter.Client.Initialization;
 
 public class AppContextInitializer : Initializer<AppContext>
 {

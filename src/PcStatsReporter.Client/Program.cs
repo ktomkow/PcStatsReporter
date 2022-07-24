@@ -1,6 +1,6 @@
-﻿using Grpc.Net.Client;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PcStatsReporter.Client.Initialization;
 
 namespace PcStatsReporter.Client
 {
