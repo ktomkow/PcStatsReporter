@@ -1,12 +1,27 @@
 ﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using PcStatsReporter.Core.Models;
 
 namespace PcStatsReporter.Client;
 
 public class SampleHostedService : IHostedService
 {
+    private readonly AppContext _appContext;
+    private readonly ILogger<SampleHostedService> _logger;
+
+    public SampleHostedService(AppContext appContext, ILogger<SampleHostedService> logger)
+    {
+        _appContext = appContext;
+        _logger = logger;
+    }
+    
     public async Task StartAsync(CancellationToken cancellationToken)
     {
+        _logger.LogCritical("Start SampleHostedService");
+        _logger.LogCritical("SampleHostedService Waiting..");
+        await _appContext.WaitForInitialization();
+        _logger.LogCritical("SampleHostedService Waiting DONE");
+
         var ram = new RamSample()
         {
             Id = Guid.NewGuid(),
@@ -15,7 +30,7 @@ public class SampleHostedService : IHostedService
             InUse = 4.2
         };
 
-        Console.WriteLine(ram.ToString());
+        // Console.WriteLine(ram.ToString());
 
         var cpu = new CpuSample()
         {
@@ -51,7 +66,7 @@ public class SampleHostedService : IHostedService
             }
         };
 
-        Console.WriteLine(cpu);
+        // Console.WriteLine(cpu);
 
         await Task.CompletedTask;
     }

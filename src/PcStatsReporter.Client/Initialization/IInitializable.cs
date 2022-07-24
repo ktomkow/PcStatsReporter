@@ -2,6 +2,7 @@
 
 public interface IInitializable
 {
+    Task Initialize();
     Task WaitForInitialization();
     Task<bool> IsInitialized();
 }

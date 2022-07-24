@@ -1,23 +1,56 @@
-﻿using PcStatsReporter.Client.Initialization;
+﻿using Grpc.Net.Client;
+using PcStatsReporter.Client.Initialization;
 
 namespace PcStatsReporter.Client;
 
 public class AppContext : Initializable
 {
-    public ClientChannel ClientChannel { get; }
-    public Settings Settings { get; }
-
-
-    public AppContext(
-        ClientChannel clientChannel, 
-        Settings settings)
+    private bool _isInitialized;
+    public GrpcChannel ClientChannel { get; private set; }
+    public Settings Settings { get; private set; }
+    
+    public void SetChannel(GrpcChannel channel)
     {
-        ClientChannel = clientChannel;
-        Settings = settings;
+        if (_isInitialized == false)
+        {
+            ClientChannel = channel;
+        }
+        else
+        {
+            throw new Exception("AppContext already initialized!");
+        }
+    }
+
+    public void SetSettings(Settings settings)
+    {
+        if (_isInitialized == false)
+        {
+            Settings = settings;
+        }
+        else
+        {
+            throw new Exception("AppContext already initialized!");
+        }
+    }
+
+    public override async Task Initialize()
+    {
+        if (Settings is null)
+        {
+            throw new Exception($"{nameof(Settings)} Not set yet!");
+        }
+
+        if (ClientChannel is null)
+        {
+            throw new Exception($"{nameof(ClientChannel)} Not set yet!");
+        }
+        
+        _isInitialized = true;
+        await Task.CompletedTask;
     }
 
     public override async Task<bool> IsInitialized()
     {
-        return await ClientChannel.IsInitialized() && await Settings.IsInitialized();
+        return await Task.FromResult(_isInitialized);
     }
 }

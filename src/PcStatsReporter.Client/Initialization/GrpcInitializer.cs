@@ -1,15 +1,23 @@
 ﻿using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
+using PcStatsReporter.Client.Messages;
+using Rebus.Bus;
+using Rebus.Handlers;
 
 namespace PcStatsReporter.Client.Initialization;
 
-public class GrpcInitializer : Initializer<ClientChannel>
+public class GrpcInitializer : IHandleMessages<GrpcInitializeCommand>
 {
-    public GrpcInitializer(ILogger<GrpcInitializer> logger) : base(logger)
-    {
-    }
+    private readonly AppContext _appContext;
+    private readonly IBus _bus;
 
-    protected override async Task InitializeResult(ClientChannel initializable)
+    public GrpcInitializer(ILogger<GrpcInitializer> logger, AppContext appContext, IBus bus)
+    {
+        _appContext = appContext;
+        _bus = bus;
+    }
+    
+    public async Task Handle(GrpcInitializeCommand message)
     {
         // TODO: initialize here
         // TODO: find address of backend
@@ -17,7 +25,9 @@ public class GrpcInitializer : Initializer<ClientChannel>
         
         // TODO: call register method
         // TODO: get cpu name, gpu name, total ram
-        initializable.SetChannel(grpcChannel);
-        await Task.CompletedTask;
+        _appContext.SetChannel(grpcChannel);
+
+        var @event = new GrpcInitializedEvent();
+        await _bus.Publish(@event);
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PcStatsReporter.Client.Initialization;
+using PcStatsReporter.Client.Messages;
+using PcStatsReporter.Core.ServiceProviders;
+using Rebus.Config;
 
 namespace PcStatsReporter.Client
 {
@@ -19,21 +22,31 @@ namespace PcStatsReporter.Client
                 .ConfigureServices(services =>
                 {
                     services.AddHostedService<CpuCollector>();
-                    services.AddHostedService<InitializeService>();
-                    services.AddSingleton<IInitializer<ClientChannel>, GrpcInitializer>();
-                    services.AddSingleton<IInitializer<AppContext>, AppContextInitializer>();
-                    services.AddSingleton<IInitializer<SettingsCollector>, SettingCollectorInitializer>();
+                    services.AddHostedService<InitService>();
+                    services.AddHostedService<SampleHostedService>();
                     services.AddSingleton<AppContext>();
-                    services.AddSingleton<Settings>();
-                    services.AddSingleton<ClientChannel>();
                     services.AddSingleton<SettingsCollector>();
-
-                    // services.AddSingleton(channel);
+                    services.AddReporterRebus();  
+                    services.AutoRegisterHandlersFromAssemblyOf<InitializationSaga>();
                 });
 
-            // IHost? app = hostBuilder.Build();
-            // await app.StartAsync();
-            await hostBuilder.RunConsoleAsync();
+            IHost? app = hostBuilder.Build();
+
+            var bus = app.UseReporterRebus();
+            await bus.Subscribe<InitializeCommand>();
+            await bus.Subscribe<GotRegistrationDataEvent>();
+            await bus.Subscribe<RegistrationCompletedEvent>();
+            await bus.Subscribe<GrpcInitializedEvent>();
+            
+            await bus.Subscribe<GrpcInitializeCommand>();
+            await bus.Subscribe<GetRegistrationDataCommand>();
+            await bus.Subscribe<RegisterCommand>();
+            
+            await bus.Subscribe<SettingsChanged>();
+
+            await app.RunAsync();
+
+            // await hostBuilder.RunConsoleAsync();
             
             return Environment.ExitCode;
         }

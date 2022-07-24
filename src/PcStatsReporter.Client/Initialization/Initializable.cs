@@ -3,7 +3,9 @@
 public abstract class Initializable : IInitializable
 {
     protected TimeSpan _delayTime = TimeSpan.FromSeconds(1);
-    
+
+    public abstract Task Initialize();
+
     public async Task WaitForInitialization()
     {
         while (await this.IsInitialized() == false)

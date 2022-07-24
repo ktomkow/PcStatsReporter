@@ -22,6 +22,8 @@ public static class RebusServiceProvider
             return x
                 .Transport(t => t.UseInMemoryTransport(network, "queue"))
                 .Routing(r => r.TypeBased().MapAssemblyOf<Registered>("PcStatsReporter"))
+                .Sagas(s => s.StoreInMemory())
+                .Logging(l => l.ColoredConsole())
                 .Subscriptions(s => s.StoreInMemory(subscriberStore));
         });
     }
