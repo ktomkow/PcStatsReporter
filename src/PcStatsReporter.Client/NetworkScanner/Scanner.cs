@@ -21,6 +21,7 @@ public class Scanner
         for (int i = 0; i < 1; i++)
         {
             // dummy but works
+            // TODO: change it
             // host = $"http://192.168.0.{i}";
             string endpoint = $":{port}/api/hc";
             host = "http://localhost";
