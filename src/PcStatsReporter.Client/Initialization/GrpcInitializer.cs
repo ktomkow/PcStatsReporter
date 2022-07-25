@@ -28,7 +28,6 @@ public class GrpcInitializer : IHandleMessages<GrpcInitializeCommand>
     public async Task Handle(GrpcInitializeCommand message)
     {
         var grpcChannel = await CreateGrpcChannel();
-        ;
 
         _appContext.SetChannel(grpcChannel);
 
