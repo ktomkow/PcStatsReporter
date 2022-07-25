@@ -1,22 +1,25 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PcStatsReporter.Client.Messages;
+using PcStatsReporter.Core.Models;
 using PcStatsReporter.Grpc.Proto;
 using Rebus.Handlers;
 
 namespace PcStatsReporter.Client;
 
-public class CpuCollector : BackgroundService, IHandleMessages<SettingsChanged>
+public class CpuCollectorService : BackgroundService, IHandleMessages<SettingsChanged>
 {
     private readonly AppContext _appContext;
-    private readonly ILogger<CpuCollector> _logger;
+    private readonly ILogger<CpuCollectorService> _logger;
+    private readonly ICollector<CpuSample> _collector;
     private Collector.CollectorClient _client;
     private CancellationToken _stoppingToken;
 
-    public CpuCollector(AppContext appContext, ILogger<CpuCollector> logger)
+    public CpuCollectorService(AppContext appContext, ILogger<CpuCollectorService> logger, ICollector<CpuSample> collector)
     {
         _appContext = appContext;
         _logger = logger;
+        _collector = collector;
     }
 
 
@@ -32,6 +35,11 @@ public class CpuCollector : BackgroundService, IHandleMessages<SettingsChanged>
         await _appContext.WaitForInitialization();
         
         _logger.LogInformation("Started {Service}", this.GetType().Name);
+
+        var result = _collector.Collect();
+        
+        _logger.LogInformation("GOT FIRST RESULT");
+        _logger.LogInformation($"{result}");
     }
 
     private async Task StopAsync()

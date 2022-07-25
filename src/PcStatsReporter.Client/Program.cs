@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using PcStatsReporter.Client.Initialization;
 using PcStatsReporter.Client.Messages;
 using PcStatsReporter.Client.NetworkScanner;
+using PcStatsReporter.Core.Models;
 using PcStatsReporter.Core.ServiceProviders;
 using PcStatsReporter.LibreHardware;
 using Rebus.Config;
@@ -23,12 +24,12 @@ namespace PcStatsReporter.Client
             var hostBuilder = CreateHostBuilder()
                 .ConfigureServices(services =>
                 {
-                    services.AddHostedService<CpuCollector>();
+                    services.AddHostedService<CpuCollectorService>();
                     services.AddHostedService<InitService>();
                     // services.AddHostedService<SampleHostedService>();
                     services.AddTransient<Scanner>();
                     services.AddTransient<PcInfoCollector>();
-
+                    services.AddSingleton<ICollector<CpuSample>, CpuCollector>();
                     services.AddSingleton<AppContext>();
                     services.AddSingleton<SettingsCollector>();
                     services.AddReporterRebus();  

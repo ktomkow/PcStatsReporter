@@ -7,7 +7,7 @@ namespace PcStatsReporter.Core.Models
     {
         public uint Temperature { get; set; }
         public uint AverageLoad { get; set; }
-        public IReadOnlyList<CoreSample> Cores { get; set; }
+        public IList<CoreSample> Cores { get; set; } = new List<CoreSample>();
         protected override string Format()
         {
             var sb = new StringBuilder();
