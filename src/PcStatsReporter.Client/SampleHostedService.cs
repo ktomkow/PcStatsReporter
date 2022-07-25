@@ -25,7 +25,6 @@ public class SampleHostedService : IHostedService
         var ram = new RamSample()
         {
             Id = Guid.NewGuid(),
-            ReceivedAt = DateTime.UtcNow.AddSeconds(-1),
             RegisteredAt = DateTime.UtcNow.AddSeconds(-3),
             InUse = 4.2
         };

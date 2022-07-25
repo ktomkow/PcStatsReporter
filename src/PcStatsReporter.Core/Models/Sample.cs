@@ -6,7 +6,6 @@ namespace PcStatsReporter.Core.Models
     public abstract class Sample : IEquatable<Sample>
     {
         public Guid Id { get; set; }
-        public DateTime ReceivedAt { get; set; }
         public DateTime RegisteredAt { get; set; }
 
         public override string ToString()
@@ -16,7 +15,6 @@ namespace PcStatsReporter.Core.Models
             sb.AppendLine("----------------------------------------");
             sb.AppendLine($"Type: {this.GetType().Name}");
             sb.AppendLine($"Id: {Id}");
-            sb.AppendLine($"ReceivedAt: {ReceivedAt}");
             sb.AppendLine($"RegisteredAt: {RegisteredAt}");
             sb.AppendLine("----------------------------------------");
 
