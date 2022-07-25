@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using PcStatsReporter.Client.Initialization;
 using PcStatsReporter.Client.Messages;
+using PcStatsReporter.Client.NetworkScanner;
 using PcStatsReporter.Core.ServiceProviders;
 using Rebus.Config;
 
@@ -24,11 +25,15 @@ namespace PcStatsReporter.Client
                     services.AddHostedService<CpuCollector>();
                     services.AddHostedService<InitService>();
                     services.AddHostedService<SampleHostedService>();
+                    services.AddTransient<Scanner>();
+
                     services.AddSingleton<AppContext>();
                     services.AddSingleton<SettingsCollector>();
                     services.AddReporterRebus();  
                     services.AutoRegisterHandlersFromAssemblyOf<InitializationSaga>();
+                    services.AddHttpClient();
                 });
+
 
             IHost? app = hostBuilder.Build();
 

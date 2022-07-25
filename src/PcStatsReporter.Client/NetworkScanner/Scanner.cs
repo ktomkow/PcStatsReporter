@@ -1,48 +1,48 @@
-﻿using System.Net.Sockets;
+﻿using Microsoft.Extensions.Logging;
 
 namespace PcStatsReporter.Client.NetworkScanner;
 
 public class Scanner
 {
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly ILogger<Scanner> _logger;
+
+    public Scanner(IHttpClientFactory  httpClientFactory, ILogger<Scanner> logger)
+    {
+        _httpClientFactory = httpClientFactory;
+        _logger = logger;
+    }
+    
     public async Task<string> Scan(int port)
     {
-        using TcpClient tcpClient = new TcpClient();
+        HttpClient httpClient = _httpClientFactory.CreateClient();
+
+        string host = "";
         for (int i = 0; i < 256; i++)
         {
+            // dummy but works
+            host = $"http://192.168.0.{i}:{port}/api/hc";
+            _logger.LogDebug("Checking {Host}", host);
+            var cts = new CancellationTokenSource(250);
+            var token = cts.Token;
+
             try
             {
-                string host = $"192.168.0.{i}";
-                Console.WriteLine(host);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-                CancellationToken cancellationToken = cancellationTokenSource.Token;
-                Console.WriteLine(cancellationToken.IsCancellationRequested);
+                await httpClient.GetAsync(host, token);
 
-                ValueTask scanTask = tcpClient.ConnectAsync(host, port, cancellationToken);
-                Task timeoutTask = Timeout(TimeSpan.FromMilliseconds(2000), cancellationToken);
-                
-                await Task.WhenAny(new Task[] {scanTask.AsTask(), timeoutTask});
-                cancellationTokenSource.Cancel();
-                
-                if (timeoutTask.IsCompleted && !scanTask.IsCompleted)
-                {
-                    throw new Exception("Not really this address");
-                }
-
-                Console.WriteLine("YES");
+                _logger.LogInformation("Host {Host} is GOOD", host);
                 return host;
             }
-            catch (Exception e)
+            catch (TaskCanceledException e)
             {
-                // ignored
+                _logger.LogDebug(e, "Host {Host} is not valid", host);
+            }
+            finally
+            {
+                cts.Dispose();
             }
         }
 
-        throw new Exception("Not found");
-    }
-
-    private async Task Timeout(TimeSpan timeSpan, CancellationToken cancellationToken)
-    {
-        Console.WriteLine(cancellationToken.IsCancellationRequested);
-        await Task.Delay(timeSpan, cancellationToken);
+        throw new Exception("Service not found");
     }
 }
