@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using LibreHardwareMonitor.Hardware;
 using PcStatsReporter.Core.Models;
@@ -18,6 +17,8 @@ public class PcInfoCollector
             IsMemoryEnabled = true,
             IsGpuEnabled = true
         };
+        
+        _computer.Open();
     }
 
     public PcInfo Collect()
