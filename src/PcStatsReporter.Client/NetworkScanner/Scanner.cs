@@ -18,17 +18,19 @@ public class Scanner
         HttpClient httpClient = _httpClientFactory.CreateClient();
 
         string host = "";
-        for (int i = 0; i < 256; i++)
+        for (int i = 0; i < 1; i++)
         {
             // dummy but works
-            host = $"http://192.168.0.{i}:{port}/api/hc";
+            // host = $"http://192.168.0.{i}";
+            string endpoint = $":{port}/api/hc";
+            host = "http://localhost";
             _logger.LogDebug("Checking {Host}", host);
             var cts = new CancellationTokenSource(250);
             var token = cts.Token;
 
             try
             {
-                await httpClient.GetAsync(host, token);
+                await httpClient.GetAsync(host + endpoint, token);
 
                 _logger.LogInformation("Host {Host} is GOOD", host);
                 return host;

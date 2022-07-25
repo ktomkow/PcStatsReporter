@@ -25,10 +25,11 @@ public class GrpcInitializer : IHandleMessages<GrpcInitializeCommand>
     public async Task Handle(GrpcInitializeCommand message)
     {
         _logger.LogInformation("Service {Service} Initializing", this.GetType().Name);
-        string host = await _scanner.Scan(11111);
-        // TODO: initialize here
-        // TODO: find address of backend
-        var grpcChannel = GrpcChannel.ForAddress("http://localhost:22222");
+        int apiPort = 11111;
+        int grpcPort = 22222;
+        
+        string host = await _scanner.Scan(apiPort);
+        var grpcChannel = GrpcChannel.ForAddress(host + ":" + grpcPort);
         
         // TODO: call register method
         // TODO: get cpu name, gpu name, total ram
