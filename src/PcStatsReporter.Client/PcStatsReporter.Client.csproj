@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PcStatsReporter.Core\PcStatsReporter.Core.csproj" />
     <ProjectReference Include="..\PcStatsReporter.GrpcClient\PcStatsReporter.GrpcClient.csproj" />
+    <ProjectReference Include="..\PcStatsReporter.LibreHardware\PcStatsReporter.LibreHardware.csproj" />
   </ItemGroup>
 
   <ItemGroup>

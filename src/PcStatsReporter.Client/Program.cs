@@ -4,6 +4,7 @@ using PcStatsReporter.Client.Initialization;
 using PcStatsReporter.Client.Messages;
 using PcStatsReporter.Client.NetworkScanner;
 using PcStatsReporter.Core.ServiceProviders;
+using PcStatsReporter.LibreHardware;
 using Rebus.Config;
 
 namespace PcStatsReporter.Client
@@ -26,6 +27,7 @@ namespace PcStatsReporter.Client
                     services.AddHostedService<InitService>();
                     services.AddHostedService<SampleHostedService>();
                     services.AddTransient<Scanner>();
+                    services.AddTransient<PcInfoCollector>();
 
                     services.AddSingleton<AppContext>();
                     services.AddSingleton<SettingsCollector>();

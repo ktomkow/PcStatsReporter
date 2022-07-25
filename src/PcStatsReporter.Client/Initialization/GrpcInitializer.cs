@@ -14,6 +14,9 @@ public class GrpcInitializer : IHandleMessages<GrpcInitializeCommand>
     private readonly IBus _bus;
     private readonly Scanner _scanner;
 
+    private readonly int apiPort = 11111;
+    private readonly int grpcPort = 22222;
+
     public GrpcInitializer(ILogger<GrpcInitializer> logger, AppContext appContext, IBus bus, Scanner scanner)
     {
         _logger = logger;
@@ -21,23 +24,22 @@ public class GrpcInitializer : IHandleMessages<GrpcInitializeCommand>
         _bus = bus;
         _scanner = scanner;
     }
-    
+
     public async Task Handle(GrpcInitializeCommand message)
     {
-        _logger.LogInformation("Service {Service} Initializing", this.GetType().Name);
-        int apiPort = 11111;
-        int grpcPort = 22222;
-        
-        string host = await _scanner.Scan(apiPort);
-        var grpcChannel = GrpcChannel.ForAddress(host + ":" + grpcPort);
-        
-        // TODO: call register method
-        // TODO: get cpu name, gpu name, total ram
-        _appContext.SetChannel(grpcChannel);
+        var grpcChannel = await CreateGrpcChannel();
+        ;
 
-        _logger.LogInformation("Service {Service} Initialized", this.GetType().Name);
+        _appContext.SetChannel(grpcChannel);
 
         var @event = new GrpcInitializedEvent();
         await _bus.Publish(@event);
+    }
+
+    private async Task<GrpcChannel> CreateGrpcChannel()
+    {
+        string host = await _scanner.Scan(apiPort);
+        GrpcChannel grpcChannel = GrpcChannel.ForAddress(host + ":" + grpcPort);
+        return grpcChannel;
     }
 }
