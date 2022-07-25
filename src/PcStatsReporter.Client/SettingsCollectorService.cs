@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Hosting;
+using PcStatsReporter.Client.Messages;
+using Rebus.Handlers;
 
 namespace PcStatsReporter.Client;
 
-public class SettingsService : BackgroundService
+public class SettingsService : BackgroundService, IHandleMessages<SettingsChanged>
 {
     private readonly AppContext _appContext;
 
@@ -17,5 +19,10 @@ public class SettingsService : BackgroundService
         
         // when initialization is done - run getting settings
         await Task.CompletedTask;
+    }
+
+    public Task Handle(SettingsChanged message)
+    {
+        throw new NotImplementedException();
     }
 }
