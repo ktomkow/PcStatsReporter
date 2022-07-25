@@ -18,8 +18,8 @@ public class InitService : BackgroundService
     
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
-        _logger.LogInformation("Sending initialization command");
+        await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
+        _logger.LogInformation("START INITIALIZING");
         await _bus.Publish(new InitializeCommand());
     }
 }

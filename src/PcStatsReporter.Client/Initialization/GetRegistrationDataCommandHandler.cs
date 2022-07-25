@@ -23,6 +23,8 @@ public class GetRegistrationDataCommandHandler : IHandleMessages<GetRegistration
     public async Task Handle(GetRegistrationDataCommand message)
     {
         var pcInfo = await CollectPcInfo();
+        _logger.LogInformation("Got PcInfo: {@PcInfo}", pcInfo);
+
         var @event = new GotRegistrationDataEvent()
         {
             CpuName = pcInfo.CpuName,
