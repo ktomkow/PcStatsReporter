@@ -8,6 +8,12 @@ namespace PcStatsReporter.Core.Models
         public Guid Id { get; set; }
         public DateTime RegisteredAt { get; set; }
 
+        protected Sample()
+        {
+            Id = Guid.NewGuid();
+            RegisteredAt = DateTime.UtcNow;
+        }
+
         public override string ToString()
         {
             var sb = new StringBuilder();
