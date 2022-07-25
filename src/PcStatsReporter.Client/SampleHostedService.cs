@@ -34,7 +34,6 @@ public class SampleHostedService : IHostedService
         var cpu = new CpuSample()
         {
             Id = Guid.NewGuid(),
-            ReceivedAt = DateTime.UtcNow.AddSeconds(-1),
             RegisteredAt = DateTime.UtcNow.AddSeconds(-3),
             Temperature = 64,
             AverageLoad = 49,
