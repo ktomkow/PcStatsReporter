@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PcStatsReporter.Grpc.Services;
 
-namespace PcStatsReporter.Grpc;
+namespace PcStatsReporter.AspNetCore.Grpc;
 
 public static class ServiceProvider
 {
@@ -14,7 +14,8 @@ public static class ServiceProvider
     public static void UseReporterGrpc(this WebApplication app)
     {
         app.MapGrpcService<CalculatorService>();
-        app.MapGrpcService<CollectorService>();
+        // app.MapGrpcService<CollectorService>();
+        app.MapGrpcService<GrpcCollectorService>();
         app.MapGrpcService<RegistrationService>();
         app.MapGrpcService<SettingsService>();
     }

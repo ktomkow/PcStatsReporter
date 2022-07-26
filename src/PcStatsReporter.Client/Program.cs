@@ -5,6 +5,7 @@ using PcStatsReporter.Client.Messages;
 using PcStatsReporter.Client.NetworkScanner;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.Core.ServiceProviders;
+using PcStatsReporter.GrpcClient.Maps;
 using PcStatsReporter.LibreHardware;
 using Rebus.Config;
 
@@ -32,6 +33,8 @@ namespace PcStatsReporter.Client
                     services.AddSingleton<ICollector<CpuSample>, CpuCollector>();
                     services.AddSingleton<AppContext>();
                     services.AddSingleton<SettingsCollector>();
+                    services.AddGrpcClientMaps();
+
                     services.AddReporterRebus();  
                     services.AutoRegisterHandlersFromAssemblyOf<InitializationSaga>();
                     services.AddHttpClient();

@@ -9,6 +9,7 @@ public class CpuSampleMap : IMap<CpuSample, CollectedData>
     public CollectedData Map(CpuSample source)
     {
         CollectedData result = new();
+        result.Uuid = new Guid();
         result.Uuid.Value = source.Id.ToString();
 
         CollectedCpuData cpuData = new CollectedCpuData

@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using PcStatsReporter.AspNetCore.Grpc;
 using PcStatsReporter.AspNetCore.Handlers;
 using PcStatsReporter.AspNetCore.ServiceProviders;
 using PcStatsReporter.Core.Messages;
