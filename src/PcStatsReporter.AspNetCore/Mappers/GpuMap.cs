@@ -1,4 +1,5 @@
-﻿using PcStatsReporter.Core.Models;
+﻿using PcStatsReporter.Core.Maps;
+using PcStatsReporter.Core.Models;
 using PcStatsReporter.RestContracts;
 
 namespace PcStatsReporter.AspNetCore.Mappers;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PcStatsReporter.AspNetCore.Mappers;
+using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.LibreHardware;
 using PcStatsReporter.RestContracts;

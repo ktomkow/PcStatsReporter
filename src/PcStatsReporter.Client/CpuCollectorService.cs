@@ -7,15 +7,17 @@ using Rebus.Handlers;
 
 namespace PcStatsReporter.Client;
 
-public class CpuCollectorService : BackgroundService, IHandleMessages<SettingsChanged>
+public class CpuCollectorService : BackgroundService
 {
     private readonly AppContext _appContext;
     private readonly ILogger<CpuCollectorService> _logger;
     private readonly ICollector<CpuSample> _collector;
     private Collector.CollectorClient _client;
     private CancellationToken _stoppingToken;
+    private Task _workingTask;
 
-    public CpuCollectorService(AppContext appContext, ILogger<CpuCollectorService> logger, ICollector<CpuSample> collector)
+    public CpuCollectorService(AppContext appContext, ILogger<CpuCollectorService> logger,
+        ICollector<CpuSample> collector)
     {
         _appContext = appContext;
         _logger = logger;
@@ -33,24 +35,29 @@ public class CpuCollectorService : BackgroundService, IHandleMessages<SettingsCh
     {
         _logger.LogInformation("Starting {Service}", this.GetType().Name);
         await _appContext.WaitForInitialization();
-        
         _logger.LogInformation("Started {Service}", this.GetType().Name);
 
-        var result = _collector.Collect();
-        
-        _logger.LogInformation("GOT FIRST RESULT");
-        _logger.LogInformation($"{result}");
+        _workingTask = Task.Run(async () => await Work());
     }
 
-    private async Task StopAsync()
+    private async Task Work()
     {
-        _logger.LogInformation("Stopping {Service}", this.GetType().Name);
+        while (true)
+        {
+            try
+            {
+                CpuSample? cpuSample = _collector.Collect();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error during collecting CPU Sample");
+            }
+            finally
+            {
+                await Task.Delay(_appContext.Settings.CpuCollectSettings.Period);
+            }
+        }
+
         await Task.CompletedTask;
-    }
-
-    public async Task Handle(SettingsChanged message)
-    {
-        await this.StopAsync();
-        await this.StartAsync();
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PcStatsReporter.AspNetCore.Mappers;
+using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.LibreHardware;
