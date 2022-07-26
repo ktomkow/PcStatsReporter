@@ -16,8 +16,7 @@ public class CpuCollectorService : BackgroundService
     private CancellationToken _stoppingToken;
     private Task _workingTask;
 
-    public CpuCollectorService(AppContext appContext, ILogger<CpuCollectorService> logger,
-        ICollector<CpuSample> collector)
+    public CpuCollectorService(AppContext appContext, ILogger<CpuCollectorService> logger, ICollector<CpuSample> collector)
     {
         _appContext = appContext;
         _logger = logger;
@@ -28,7 +27,7 @@ public class CpuCollectorService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _stoppingToken = stoppingToken;
-        await this.StartAsync();
+        await StartAsync();
     }
 
     private async Task StartAsync()
@@ -37,7 +36,7 @@ public class CpuCollectorService : BackgroundService
         await _appContext.WaitForInitialization();
         _logger.LogInformation("Started {Service}", this.GetType().Name);
 
-        _workingTask = Task.Run(async () => await Work());
+        _workingTask = Task.Run(async () => await Work(), _stoppingToken);
     }
 
     private async Task Work()
@@ -47,6 +46,7 @@ public class CpuCollectorService : BackgroundService
             try
             {
                 CpuSample? cpuSample = _collector.Collect();
+                
             }
             catch (Exception e)
             {

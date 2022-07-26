@@ -37,18 +37,23 @@ service Registerer {
 }
 
 service Collector {
-    rpc Collect (Data) returns (DataResponse);
+    rpc Collect (CollectedData) returns (DataResponse);
 }
 
 service SettingsManager {
     rpc Get (SettingsRequest) returns (SettingsResponse);
 }
 
-message Data {
+message Guid {
+    string value = 1;
+}
+
+message CollectedData {
+    Guid uuid = 1;
     oneof data {
-        CpuData cpu = 1;
-        GpuData gpu = 2;
-        RamData ram = 3;
+        CollectedCpuData cpu = 2;
+        CollectedGpuData gpu = 3;
+        CollectedRamData ram = 4;
     }
 }
 
@@ -56,24 +61,29 @@ message DataResponse {
     bool success = 1;
 }
 
-message CpuData {
+message CollectedCpuData {
     uint32 temperature = 1;
     uint32 average_load = 2;
-    repeated Core cores = 3;
+    repeated CollectedCpuCoreData cores = 3;
 }
 
-message Core {
+message CollectedCpuCoreData {
     uint32 id = 1;
     uint32 temperature = 2;
     uint32 speed = 3;
-    uint32 load = 4;
+    repeated CollectedCpuThreadData threads = 4; 
 }
 
-message GpuData {
+message CollectedCpuThreadData {
+    uint32 id = 1;
+    uint32 load = 2;
+}
+
+message CollectedGpuData {
     uint32 core_temperature = 1;
     uint32 core_load = 2;
 }
 
-message RamData {
+message CollectedRamData {
     float in_use = 1;
 }
