@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PcStatsReporter.AspNetCore.Grpc;
 using PcStatsReporter.AspNetCore.Handlers;
 using PcStatsReporter.AspNetCore.Mappers;
+using PcStatsReporter.AspNetCore.Messages;
 using PcStatsReporter.AspNetCore.ServiceProviders;
 using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Persistence;
@@ -61,6 +62,7 @@ app.UseCors(x => x
 
 var bus = app.UseReporterRebus();
 await bus.Subscribe<Registered>();
+await bus.Subscribe<CpuSampleArrived>();
 
 app.UseReporterGrpc();
 
