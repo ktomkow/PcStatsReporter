@@ -22,7 +22,7 @@ public class GrpcCollectorService : CollectorService
     {
         var temperature = request.Cpu.Temperature;
         _logger.LogInformation("Got request {Id}, Temperature: {Temperature} C", request.Uuid.Value, temperature);
-
+        
         var response = new DataResponse()
         {
             Success = true

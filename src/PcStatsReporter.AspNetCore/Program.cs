@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using PcStatsReporter.AspNetCore.Grpc;
 using PcStatsReporter.AspNetCore.Handlers;
+using PcStatsReporter.AspNetCore.Mappers;
 using PcStatsReporter.AspNetCore.ServiceProviders;
 using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Persistence;
@@ -32,6 +33,8 @@ builder.Services.AddSingleton<GpuDataCollector>();
 builder.Services.AddSingleton<IHold, MemoryHold>();
 
 builder.Services.AddReporterGrpc();
+
+builder.Services.AddServerMaps();
 
 DefaultSetting defaultSetting = new DefaultSetting()
 {

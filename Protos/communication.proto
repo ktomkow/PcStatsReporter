@@ -50,10 +50,11 @@ message Guid {
 
 message CollectedData {
     Guid uuid = 1;
+    fixed32 timestamp = 2;
     oneof data {
-        CollectedCpuData cpu = 2;
-        CollectedGpuData gpu = 3;
-        CollectedRamData ram = 4;
+        CollectedCpuData cpu = 3;
+        CollectedGpuData gpu = 4;
+        CollectedRamData ram = 5;
     }
 }
 

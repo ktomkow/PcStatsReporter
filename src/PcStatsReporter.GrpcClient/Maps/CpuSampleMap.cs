@@ -1,6 +1,8 @@
-﻿using PcStatsReporter.Core.Maps;
+﻿using System;
+using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.Grpc.Proto;
+using Guid = PcStatsReporter.Grpc.Proto.Guid;
 
 namespace PcStatsReporter.GrpcClient.Maps;
 
@@ -11,6 +13,7 @@ public class CpuSampleMap : IMap<CpuSample, CollectedData>
         CollectedData result = new();
         result.Uuid = new Guid();
         result.Uuid.Value = source.Id.ToString();
+        result.Timestamp = (uint) ((DateTimeOffset) source.RegisteredAt.ToUniversalTime()).ToUnixTimeSeconds();
 
         CollectedCpuData cpuData = new CollectedCpuData
         {
