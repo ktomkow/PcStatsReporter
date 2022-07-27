@@ -7,6 +7,7 @@ using PcStatsReporter.AspNetCore.Handlers;
 using PcStatsReporter.AspNetCore.Mappers;
 using PcStatsReporter.AspNetCore.Messages;
 using PcStatsReporter.AspNetCore.ServiceProviders;
+using PcStatsReporter.AspNetCore.SignalR;
 using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.Core.ReportingClientSettings;
@@ -47,6 +48,8 @@ builder.Services.AddSingleton(defaultSetting);
 builder.Services.AddReporterRebus();
 builder.Services.AutoRegisterHandlersFromAssemblyOf<RegisteredHandler>();
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 app.UseCustomSwagger();
@@ -54,10 +57,18 @@ app.UseCustomSwagger();
 app.UseRouting();
 app.MapControllers();
 
-app.UseCors(x => x
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-    .AllowAnyOrigin());
+// app.UseCors(x => x
+//     .AllowAnyHeader()
+//     .AllowAnyMethod()
+//     .AllowAnyOrigin());
+
+app.UseCors(corsBuilder =>
+{
+    corsBuilder.WithOrigins("http://localhost:8080")
+        .AllowAnyHeader()
+        .WithMethods("GET", "POST")
+        .AllowCredentials();
+});
 
 
 var bus = app.UseReporterRebus();
@@ -65,5 +76,7 @@ await bus.Subscribe<Registered>();
 await bus.Subscribe<CpuSampleArrived>();
 
 app.UseReporterGrpc();
+
+app.MapHub<ReporterHub>("/reporter");
 
 app.Run();
