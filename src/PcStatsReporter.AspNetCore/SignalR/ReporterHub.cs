@@ -4,10 +4,12 @@ using PcStatsReporter.AspNetCore.SignalR.Contracts;
 using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.Core.Persistence;
+using Rebus.Handlers;
 
 namespace PcStatsReporter.AspNetCore.SignalR;
 
-public class ReporterHub : Hub, IReporterHub
+// public class ReporterHub : Hub, IReporterHub
+public class ReporterHub : Hub
 {
     private readonly IHold _hold;
     private readonly IMap<PcInfo, PcInfoDto> _pcInfoMap;
@@ -30,10 +32,5 @@ public class ReporterHub : Hub, IReporterHub
         var dto = _pcInfoMap.Map(pcInfo);
 
         await Clients.All.SendAsync("registerBasicData", dto);
-    }
-
-    public Task SendCpuData()
-    {
-        throw new System.NotImplementedException();
     }
 }

@@ -17,5 +17,7 @@ public static class MapsProvider
         services.AddTransient<IMap<CpuSample, Foo>, FooMap>();
         
         services.AddTransient<IMap<PcInfo, PcInfoDto>, PcInfoMap>();
+        
+        services.AddTransient<IMap<CpuSample, CpuSampleDto>, CpuDtoMap>();
     }
 }

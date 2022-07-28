@@ -57,10 +57,6 @@ app.UseCustomSwagger();
 app.UseRouting();
 app.MapControllers();
 
-// app.UseCors(x => x
-//     .AllowAnyHeader()
-//     .AllowAnyMethod()
-//     .AllowAnyOrigin());
 
 app.UseCors(corsBuilder =>
 {

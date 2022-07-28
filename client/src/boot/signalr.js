@@ -15,12 +15,22 @@ const signalR = {
         .withUrl(url + "/" + hubName)
         .build();
 
-      this.connection.on("registerBasicData", (data) => {
-        console.warn(
-          "🚀 ~ file: signalr.js ~ line 19 ~ this.connection.on ~ data",
-          data
+      this.connection.on("registerBasicData", (pcInfoData) => {
+        console.log(
+          "🚀 ~ file: signalr.js ~ line 19 ~ this.connection.on ~ pcInfoData",
+          pcInfoData
         );
-        eventBus.emit(eventBusKeys.PC_INFO_ARRIVED, data);
+
+        eventBus.emit(eventBusKeys.PC_INFO_ARRIVED, pcInfoData);
+      });
+
+      this.connection.on("handleCpuData", (cpuData) => {
+        console.log(
+          "🚀 ~ file: signalr.js ~ line 28 ~ this.connection.on ~ cpuData",
+          cpuData
+        );
+
+        eventBus.emit(eventBusKeys.CPU_SAMPLE_ARRIVED, data);
       });
 
       await this.connection.start();
