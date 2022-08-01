@@ -1,6 +1,7 @@
 <template>
   <q-page class="flex flex-center column">
     <div class="text-h1"> New edition client </div>
+    <InfoCard />
     <q-btn
       class="q-pa-md q-ma-md"
       color="primary"
@@ -24,6 +25,8 @@ import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
+import InfoCard from "src/components/InfoCard";
+
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
 
@@ -31,6 +34,7 @@ import { signalR } from "src/boot/signalr";
 
 export default {
   name: "MainPage",
+  components: { InfoCard },
   setup(props) {
     const state = reactive({});
     const store = useStore();
