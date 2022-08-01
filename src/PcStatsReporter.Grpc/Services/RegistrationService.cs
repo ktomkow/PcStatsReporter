@@ -50,25 +50,25 @@ public class RegistrationService : Registerer.RegistererBase
         response.Settings.Settings.Add(new Setting()
         {
             Sensor = SettingType.Cpu,
-            Period = (uint) cpuSettings.Period.TotalSeconds
+            Period = (uint) cpuSettings.Period.TotalMilliseconds
         });
 
         response.Settings.Settings.Add(new Setting()
         {
             Sensor = SettingType.Gpu,
-            Period = (uint) gpuSettings.Period.TotalSeconds
+            Period = (uint) gpuSettings.Period.TotalMilliseconds
         });
 
         response.Settings.Settings.Add(new Setting()
         {
             Sensor = SettingType.Ram,
-            Period = (uint) ramSettings.Period.TotalSeconds
+            Period = (uint) ramSettings.Period.TotalMilliseconds
         });
 
         response.Settings.Settings.Add(new Setting()
         {
             Sensor = SettingType.Service,
-            Period = (uint) serviceSettings.Period.TotalSeconds
+            Period = (uint) serviceSettings.Period.TotalMilliseconds
         });
         
         await _bus.Publish(new Registered());

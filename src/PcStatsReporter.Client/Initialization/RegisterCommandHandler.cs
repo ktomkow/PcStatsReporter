@@ -62,19 +62,19 @@ public class RegisterCommandHandler : IHandleMessages<RegisterCommand>
             switch (setting.Sensor)
             {
                 case SettingType.Service:
-                    serviceSettings.Period = TimeSpan.FromSeconds(setting.Period);
+                    serviceSettings.Period = TimeSpan.FromMilliseconds(setting.Period);
                     break;
     
                 case SettingType.Cpu:
-                    cpuSettings.Period = TimeSpan.FromSeconds(setting.Period);
+                    cpuSettings.Period = TimeSpan.FromMilliseconds(setting.Period);
                     break;
     
                 case SettingType.Gpu:
-                    gpuSettings.Period = TimeSpan.FromSeconds(setting.Period);
+                    gpuSettings.Period = TimeSpan.FromMilliseconds(setting.Period);
                     break;
     
                 case SettingType.Ram:
-                    ramSettings.Period = TimeSpan.FromSeconds(setting.Period);
+                    ramSettings.Period = TimeSpan.FromMilliseconds(setting.Period);
                     break;
     
                 default:
