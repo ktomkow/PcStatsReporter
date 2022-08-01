@@ -33,8 +33,6 @@
 <script>
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
-import { useEventBus } from "src/composables/eventBusComposable";
-import eventBusKeys from "src/consts/eventBusKeys";
 
 import Segment from "src/components/Segment";
 
@@ -42,29 +40,23 @@ export default {
   name: "InfoCard",
   components: { Segment },
   setup(props) {
-    const state = reactive({
-      cpu: null,
-      gpu: null,
-      totalRam: null,
-    });
-
-    const storePcInfo = ({ cpuName, gpuName, totalRam }) => {
-      state.cpu = cpuName;
-      state.gpu = gpuName;
-      state.totalRam = formatTotalRam(totalRam);
-    };
-
-    function formatTotalRam(ram) {
-      return ram.toFixed(2);
-    }
-
-    useEventBus(eventBusKeys.PC_INFO_ARRIVED, storePcInfo);
+    const store = useStore();
+    const state = reactive({});
 
     const isLoading = computed(
-      () => !(state.cpu && state.gpu && state.totalRam)
+      () =>
+        !(
+          store.state.pcInfo.cpuName &&
+          store.state.pcInfo.gpuName &&
+          store.state.pcInfo.totalRam
+        )
     );
 
-    return { ...toRefs(state), isLoading };
+    const cpu = computed(() => store.state.pcInfo.cpuName);
+    const gpu = computed(() => store.state.pcInfo.gpuName);
+    const totalRam = computed(() => store.state.pcInfo.totalRam);
+
+    return { ...toRefs(state), cpu, gpu, totalRam, isLoading };
   },
 };
 </script>
