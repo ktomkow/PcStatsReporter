@@ -43,9 +43,9 @@ export default {
   components: { Segment },
   setup(props) {
     const state = reactive({
-      cpu: "null",
-      gpu: "null",
-      totalRam: "null",
+      cpu: null,
+      gpu: null,
+      totalRam: null,
     });
 
     const storePcInfo = ({ cpuName, gpuName, totalRam }) => {
