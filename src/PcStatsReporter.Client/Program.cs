@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PcStatsReporter.Client.CollectorServices;
 using PcStatsReporter.Client.Initialization;
 using PcStatsReporter.Client.Messages;
 using PcStatsReporter.Client.NetworkScanner;

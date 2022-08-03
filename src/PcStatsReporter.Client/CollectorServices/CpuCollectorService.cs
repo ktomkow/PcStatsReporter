@@ -4,7 +4,7 @@ using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.Grpc.Proto;
 
-namespace PcStatsReporter.Client;
+namespace PcStatsReporter.Client.CollectorServices;
 
 public class CpuCollectorService : BackgroundService
 {
