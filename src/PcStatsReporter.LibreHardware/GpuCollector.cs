@@ -33,7 +33,7 @@ public class GpuCollector : ICollector<GpuSample>
             }
 
             var sensors = hardware.Sensors.ToList();
-            GpuSample cpu = new GpuSample()
+            GpuSample gpu = new GpuSample()
             {
                 CoreTemperature = GetValue(sensors, SensorType.Temperature, "gpu core"),
                 GpuCoreClock = GetValue(sensors, SensorType.Clock, "gpu core"),
@@ -45,7 +45,7 @@ public class GpuCollector : ICollector<GpuSample>
                 GpuMemoryUsed = GetValue(sensors, SensorType.SmallData, "gpu memory used")
             };
 
-            return cpu;
+            return gpu;
         }
 
         throw new Exception("No data found");
