@@ -8,14 +8,14 @@ namespace PcStatsReporter.Client.CollectorServices;
 public class GpuCollectorService : BackgroundService
 {
     private readonly AppContext _appContext;
-    private readonly ILogger<CpuCollectorService> _logger;
+    private readonly ILogger<GpuCollectorService> _logger;
     private readonly ICollector<GpuSample> _collector;
     
     private Collector.CollectorClient _client;
     private CancellationToken _stoppingToken;
     private Task _workingTask;
     
-    public GpuCollectorService(AppContext appContext, ILogger<CpuCollectorService> logger, ICollector<GpuSample> collector)
+    public GpuCollectorService(AppContext appContext, ILogger<GpuCollectorService> logger, ICollector<GpuSample> collector)
     {
         _appContext = appContext;
         _logger = logger;
