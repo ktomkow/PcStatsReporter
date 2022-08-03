@@ -31,14 +31,16 @@ public class CpuCollectorService : BackgroundService
         
         _client = new Collector.CollectorClient(_appContext.ClientChannel);
         
-        StartAsync();
+        await StartAsync();
     }
 
-    private void StartAsync()
+    private Task StartAsync()
     {
         _logger.LogInformation("Starting {Service}", this.GetType().Name);
 
         _workingTask = Task.Run(async () => await Work(), _stoppingToken);
+        
+        return _workingTask;
     }
 
     private async Task Work()
@@ -58,7 +60,7 @@ public class CpuCollectorService : BackgroundService
             }
             finally
             {
-                await Task.Delay(_appContext.Settings.CpuCollectSettings.Period);
+                await Task.Delay(_appContext.Settings.CpuCollectSettings.Period, _stoppingToken);
             }
         }
 
