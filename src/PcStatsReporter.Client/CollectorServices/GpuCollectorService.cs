@@ -50,8 +50,6 @@ public class GpuCollectorService : BackgroundService
                 GpuSample? gpuSample = _collector.Collect();
                 // var mappedSample = _map.Map(gpuSample);
                 // await _client.CollectAsync(mappedSample);
-                Console.WriteLine(gpuSample);
-
             }
             catch (Exception e)
             {

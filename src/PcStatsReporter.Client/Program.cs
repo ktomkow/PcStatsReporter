@@ -27,6 +27,7 @@ namespace PcStatsReporter.Client
                 .ConfigureServices(services =>
                 {
                     services.AddHostedService<CpuCollectorService>();
+                    services.AddHostedService<GpuCollectorService>();
                     services.AddHostedService<InitService>();
                     // services.AddHostedService<SampleHostedService>();
                     services.AddTransient<Scanner>();
