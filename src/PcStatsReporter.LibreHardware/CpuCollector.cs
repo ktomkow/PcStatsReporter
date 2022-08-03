@@ -53,7 +53,7 @@ public class CpuCollector : ICollector<CpuSample>
             .Where(x => x.Value.HasValue)
             .FirstOrDefault(x => x.Name.Contains("cpu package", StringComparison.InvariantCultureIgnoreCase));
 
-        if (sensor is null)
+        if (sensor?.Value is null)
         {
             return default;
         }
@@ -68,7 +68,7 @@ public class CpuCollector : ICollector<CpuSample>
             .Where(x => x.Value.HasValue)
             .FirstOrDefault(x => x.Name.Contains("cpu total", StringComparison.InvariantCultureIgnoreCase));
 
-        if (sensor is null)
+        if (sensor?.Value is null)
         {
             return default;
         }
