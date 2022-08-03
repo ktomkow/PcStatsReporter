@@ -31,6 +31,7 @@ namespace PcStatsReporter.Client
                     services.AddTransient<Scanner>();
                     services.AddTransient<PcInfoCollector>();
                     services.AddSingleton<ICollector<CpuSample>, CpuCollector>();
+                    services.AddSingleton<ICollector<GpuSample>, GpuCollector>();
                     services.AddSingleton<AppContext>();
                     services.AddSingleton<SettingsCollector>();
                     services.AddGrpcClientMaps();
