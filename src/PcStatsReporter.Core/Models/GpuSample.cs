@@ -26,7 +26,7 @@ namespace PcStatsReporter.Core.Models
             sb.AppendLine($"GpuVideEngineLoad: {GpuVideEngineLoad} %");
             sb.AppendLine($"GpuBusLoad: {GpuBusLoad} %");
             
-            sb.AppendLine($"GpuMemoryUsed: {GpuMemoryUsed} C");
+            sb.AppendLine($"GpuMemoryUsed: {GpuMemoryUsed} MB");
 
             return sb.ToString();
         }
