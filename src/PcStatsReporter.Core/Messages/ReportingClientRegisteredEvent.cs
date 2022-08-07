@@ -2,7 +2,7 @@
 
 namespace PcStatsReporter.Core.Messages;
 
-public class Registered
+public class ReportingClientRegisteredEvent
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 }

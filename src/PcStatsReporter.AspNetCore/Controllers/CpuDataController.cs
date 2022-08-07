@@ -39,7 +39,7 @@ public class CpuDataController : ControllerBase
     [Produces("application/json")]
     public async Task<IActionResult> Get()
     {
-        var registered = new Registered();
+        var registered = new ReportingClientRegisteredEvent();
         await _bus.Publish(registered);
         
         var cpuData = cpuDataCollector.Collect();

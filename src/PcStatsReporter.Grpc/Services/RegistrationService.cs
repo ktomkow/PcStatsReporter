@@ -71,7 +71,7 @@ public class RegistrationService : Registerer.RegistererBase
             Period = (uint) serviceSettings.Period.TotalMilliseconds
         });
         
-        await _bus.Publish(new Registered());
+        await _bus.Publish(new ReportingClientRegisteredEvent());
 
         return response;
     }
