@@ -16,10 +16,10 @@ public abstract class Initializable : IInitializable
     {
         while (this.IsInitialized() == false)
         {
-            await Wait();
+            await Wait().ConfigureAwait(false);
         }
 
-        await Task.CompletedTask;
+        await Task.CompletedTask.ConfigureAwait(false);
     }
 
     public virtual bool IsInitialized()
@@ -40,6 +40,6 @@ public abstract class Initializable : IInitializable
     
     private async Task Wait()
     {
-        await Task.Delay(_delayTime);
+        await Task.Delay(_delayTime).ConfigureAwait(false);
     }
 }
