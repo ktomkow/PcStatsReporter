@@ -18,14 +18,10 @@ namespace PcStatsReporter.AspNetCore.Controllers;
 [Route("api/cpu")]
 public class CpuDataController : ControllerBase
 {
-    private readonly CpuDataCollector cpuDataCollector;
-    private readonly IMap<CpuData, CpuResponse> mapper;
     private readonly IBus _bus;
 
-    public CpuDataController(CpuDataCollector cpuDataCollector, IMap<CpuData, CpuResponse> mapper, IBus bus)
+    public CpuDataController(IBus bus)
     {
-        this.cpuDataCollector = cpuDataCollector;
-        this.mapper = mapper;
         _bus = bus;
     }
 
@@ -39,12 +35,10 @@ public class CpuDataController : ControllerBase
     [Produces("application/json")]
     public async Task<IActionResult> Get()
     {
-        var registered = new ReportingClientRegisteredEvent();
+        var registered = new ReportingClientRegisteredEvent(); // todo: remove, it makes no sense
         await _bus.Publish(registered);
         
-        var cpuData = cpuDataCollector.Collect();
-
-        CpuResponse result = mapper.Map(cpuData); 
+        CpuResponse result = new CpuResponse();
         
         return Ok(result);
     }
