@@ -39,8 +39,6 @@ public class RamCollectorService : BackgroundService
         
         while (!stoppingToken.IsCancellationRequested)
         {
-            // to stuff
-
             try
             {
                 RamSample? ramSample = _collector.Collect();
