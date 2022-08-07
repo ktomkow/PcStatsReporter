@@ -1,4 +1,7 @@
-﻿namespace PcStatsReporter.Client.Initialization;
+﻿using System;
+using System.Threading.Tasks;
+
+namespace PcStatsReporter.Core.Initializable;
 
 public abstract class Initializable : IInitializable
 {
