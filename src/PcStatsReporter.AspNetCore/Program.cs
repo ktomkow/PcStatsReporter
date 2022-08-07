@@ -26,7 +26,6 @@ builder.Services.AddCustomSwagger();
 builder.Services.AddMaps();
 
 builder.Services.AddSingleton<RamDataCollector>();
-builder.Services.AddSingleton<GpuDataCollector>();
 
 builder.Services.AddSingleton<IHold, MemoryHold>();
 
