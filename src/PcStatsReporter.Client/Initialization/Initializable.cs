@@ -7,7 +7,7 @@ public abstract class Initializable : IInitializable
     private object _lock = new object();
     private bool _isInitialized = false;
 
-    public abstract void Initialize();
+    public abstract Task Initialize();
 
     public async Task WaitForInitialization()
     {

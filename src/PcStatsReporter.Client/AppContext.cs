@@ -32,7 +32,7 @@ public class AppContext : Initializable
         }
     }
 
-    public override void Initialize()
+    public override Task Initialize()
     {
         if (Settings is null)
         {
@@ -45,5 +45,6 @@ public class AppContext : Initializable
         }
 
         this.SetInitialized();
+        return Task.CompletedTask;
     }
 }

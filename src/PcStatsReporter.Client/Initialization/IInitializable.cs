@@ -3,7 +3,7 @@
 // todo: use cancellation token
 public interface IInitializable
 {
-    void Initialize();
+    Task Initialize();
     Task WaitForInitialization();
     bool IsInitialized();
 }
