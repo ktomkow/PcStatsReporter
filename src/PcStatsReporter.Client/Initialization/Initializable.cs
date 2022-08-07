@@ -3,12 +3,15 @@
 public abstract class Initializable : IInitializable
 {
     protected TimeSpan _delayTime = TimeSpan.FromSeconds(1);
+    
+    private object _lock = new object();
+    private bool _isInitialized = false;
 
-    public abstract Task Initialize();
+    public abstract void Initialize();
 
     public async Task WaitForInitialization()
     {
-        while (await this.IsInitialized() == false)
+        while (this.IsInitialized() == false)
         {
             await Wait();
         }
@@ -16,7 +19,21 @@ public abstract class Initializable : IInitializable
         await Task.CompletedTask;
     }
 
-    public abstract Task<bool> IsInitialized();
+    public virtual bool IsInitialized()
+    {
+        lock (_lock)
+        {
+            return _isInitialized;
+        }
+    }
+
+    protected virtual bool SetInitialized()
+    {
+        lock (_lock)
+        {
+            return _isInitialized = true;
+        }
+    }
     
     private async Task Wait()
     {

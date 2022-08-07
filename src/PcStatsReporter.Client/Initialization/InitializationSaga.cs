@@ -55,8 +55,9 @@ public class InitializationSaga :
         
         _appContext.SetSettings(settings);
         
-        await _appContext.Initialize();
+        _appContext.Initialize();
         
         _logger.LogInformation("Saga Completed");
+        await Task.CompletedTask;
     }
 }
