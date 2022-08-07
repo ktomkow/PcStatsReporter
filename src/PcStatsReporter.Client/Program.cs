@@ -34,6 +34,7 @@ namespace PcStatsReporter.Client
                     services.AddTransient<PcInfoCollector>();
                     services.AddSingleton<ICollector<CpuSample>, CpuCollector>();
                     services.AddSingleton<ICollector<GpuSample>, GpuCollector>();
+                    services.AddSingleton<ICollector<RamSample>, RamCollector>();
                     services.AddSingleton<AppContext>();
                     services.AddSingleton<SettingsCollector>();
                     services.AddGrpcClientMaps();
