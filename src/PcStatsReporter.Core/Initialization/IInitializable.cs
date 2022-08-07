@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PcStatsReporter.Core.Initializable;
+namespace PcStatsReporter.Core.Initialization;
 
 // todo: use cancellation token
 public interface IInitializable

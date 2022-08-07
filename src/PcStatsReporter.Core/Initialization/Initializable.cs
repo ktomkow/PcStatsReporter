@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PcStatsReporter.Core.Initializable;
+namespace PcStatsReporter.Core.Initialization;
 
 public abstract class Initializable : IInitializable
 {

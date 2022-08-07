@@ -1,5 +1,5 @@
 ﻿using Grpc.Net.Client;
-using PcStatsReporter.Core.Initializable;
+using PcStatsReporter.Core.Initialization;
 
 namespace PcStatsReporter.Client;
 
