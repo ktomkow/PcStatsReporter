@@ -11,7 +11,7 @@ using Rebus.Handlers;
 
 namespace PcStatsReporter.AspNetCore.Handlers;
 
-public class CpuSampleArrivedHandler : IHandleMessages<CpuSampleArrived>
+public class CpuSampleArrivedHandler : IHandleMessages<CpuSampleArrivedEvent>
 {
     private readonly ILogger<CpuSampleArrivedHandler> _logger;
     private readonly IHubContext<ReporterHub> _hub;
@@ -26,7 +26,7 @@ public class CpuSampleArrivedHandler : IHandleMessages<CpuSampleArrived>
         _map = map;
     }
     
-    public async Task Handle(CpuSampleArrived message)
+    public async Task Handle(CpuSampleArrivedEvent message)
     {
         var dto = _map.Map(message.CpuSample);
 

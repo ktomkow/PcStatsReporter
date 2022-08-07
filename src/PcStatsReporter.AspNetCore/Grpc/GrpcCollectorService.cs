@@ -45,7 +45,7 @@ public class GrpcCollectorService : CollectorService
     {
         var cpuSample = _cpuMap.Map(request);
 
-        var @event = new CpuSampleArrived()
+        var @event = new CpuSampleArrivedEvent()
         {
             CpuSample = cpuSample
         };

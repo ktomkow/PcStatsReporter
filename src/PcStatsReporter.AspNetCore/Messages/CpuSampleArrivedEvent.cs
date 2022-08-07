@@ -2,7 +2,7 @@
 
 namespace PcStatsReporter.AspNetCore.Messages;
 
-public class CpuSampleArrived
+public class CpuSampleArrivedEvent
 {
     public CpuSample CpuSample { get; set; }
 }

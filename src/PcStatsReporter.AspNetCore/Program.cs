@@ -62,7 +62,7 @@ app.UseCors(corsBuilder =>
 
 var bus = app.UseReporterRebus();
 await bus.Subscribe<ReportingClientRegisteredEvent>();
-await bus.Subscribe<CpuSampleArrived>();
+await bus.Subscribe<CpuSampleArrivedEvent>();
 
 app.UseReporterGrpc();
 
