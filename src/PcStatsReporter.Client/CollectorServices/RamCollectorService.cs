@@ -52,7 +52,7 @@ public class RamCollectorService : BackgroundService
             }
             finally
             {
-                await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
+                await Task.Delay(_appContext.Settings.RamCollectSettings.Period, stoppingToken);
             }
         }
     }
