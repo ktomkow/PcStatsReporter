@@ -25,8 +25,6 @@ builder.Services.AddCustomSwagger();
 
 builder.Services.AddMaps();
 
-builder.Services.AddSingleton<RamDataCollector>();
-
 builder.Services.AddSingleton<IHold, MemoryHold>();
 
 builder.Services.AddReporterGrpc();

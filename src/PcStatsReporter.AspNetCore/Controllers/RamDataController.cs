@@ -15,13 +15,9 @@ namespace PcStatsReporter.AspNetCore.Controllers;
 [Route("api/ram")]
 public class RamDataController : ControllerBase
 {
-    private readonly IMap<RamData, RamResponse> mapper;
-    private readonly RamDataCollector collector;
-
-    public RamDataController(IMap<RamData, RamResponse> mapper, RamDataCollector collector)
+    public RamDataController()
     {
-        this.mapper = mapper;
-        this.collector = collector;
+
     }
     
     /// <summary>
@@ -34,8 +30,7 @@ public class RamDataController : ControllerBase
     [Produces("application/json")]
     public IActionResult Get()
     {
-        RamData ramData = collector.Collect();
-        RamResponse result = mapper.Map(ramData); 
+        RamResponse result = new RamResponse();
         
         return Ok(result);
     }
