@@ -43,14 +43,14 @@ public class SampleArrivedCallClientsHandler : IHandleMessages<CpuSampleArrivedE
         await _hub.Clients.All.SendAsync(ReporterHub.CpuCollectionMethod, dto);
     }
 
-    public async  Task Handle(GpuSampleArrivedEvent message)
+    public async Task Handle(GpuSampleArrivedEvent message)
     {
         var dto = _gpuMap.Map(message.GpuSample);
 
         await _hub.Clients.All.SendAsync(ReporterHub.GpuCollectionMethod, dto);
     }
 
-    public async  Task Handle(RamSampleArrivedEvent message)
+    public async Task Handle(RamSampleArrivedEvent message)
     {
         var dto = _ramMap.Map(message.RamSample);
 
