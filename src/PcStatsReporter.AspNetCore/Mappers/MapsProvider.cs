@@ -13,6 +13,8 @@ public static class MapsProvider
     public static void AddServerMaps(this IServiceCollection services)
     {
         services.AddTransient<IMap<CollectedData, CpuSample>, CollectedCpuSampleMap>();
+        services.AddTransient<IMap<CollectedData, GpuSample>, CollectedGpuSampleMap>();
+        services.AddTransient<IMap<CollectedData, RamSample>, CollectedRamSampleMap>();
 
         services.AddTransient<IMap<CpuSample, Foo>, FooMap>();
         
