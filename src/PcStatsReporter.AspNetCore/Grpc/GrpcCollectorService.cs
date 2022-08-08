@@ -87,11 +87,11 @@ public class GrpcCollectorService : CollectorService
     
     private IEvent ProcessGpuSample(CollectedData request)
     {
-        var cpuSample = _cpuMap.Map(request);
+        var gpuSample = _gpuMap.Map(request);
 
-        var @event = new CpuSampleArrivedEvent()
+        var @event = new GpuSampleArrivedEvent()
         {
-            CpuSample = cpuSample
+            GpuSample = gpuSample
         };
 
         return @event;
@@ -99,11 +99,11 @@ public class GrpcCollectorService : CollectorService
     
     private IEvent ProcessRamSample(CollectedData request)
     {
-        var cpuSample = _cpuMap.Map(request);
+        var ramSample = _ramMap.Map(request);
 
-        var @event = new CpuSampleArrivedEvent()
+        var @event = new RamSampleArrivedEvent()
         {
-            CpuSample = cpuSample
+            RamSample = ramSample
         };
 
         return @event;
