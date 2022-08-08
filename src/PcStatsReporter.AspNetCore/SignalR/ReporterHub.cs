@@ -14,6 +14,13 @@ public class ReporterHub : Hub
     private readonly IHold _hold;
     private readonly IMap<PcInfo, PcInfoDto> _pcInfoMap;
 
+    public const string CpuCollectionMethod = "handleCpuData";
+    public const string GpuCollectionMethod = "handleGpuData";
+    public const string RamCollectionMethod = "handleRamData";
+    
+    public const string RegisterMethod = "registerBasicData";
+    // await _hub.Clients.All.SendAsync("handleCpuData", dto);
+
     public ReporterHub(IHold hold, IMap<PcInfo, PcInfoDto> pcInfoMap)
     {
         _hold = hold;
@@ -31,6 +38,6 @@ public class ReporterHub : Hub
 
         var dto = _pcInfoMap.Map(pcInfo);
 
-        await Clients.All.SendAsync("registerBasicData", dto);
+        await Clients.All.SendAsync(RegisterMethod, dto);
     }
 }

@@ -30,7 +30,6 @@ public class CpuSampleArrivedHandler : IHandleMessages<CpuSampleArrivedEvent>
     {
         var dto = _map.Map(message.CpuSample);
 
-
-        await _hub.Clients.All.SendAsync("handleCpuData", dto);
+        await _hub.Clients.All.SendAsync(ReporterHub.CpuCollectionMethod, dto);
     }
 }
