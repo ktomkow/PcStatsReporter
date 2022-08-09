@@ -15,11 +15,10 @@ public static class MapsProvider
         services.AddTransient<IMap<CollectedData, CpuSample>, CollectedCpuSampleMap>();
         services.AddTransient<IMap<CollectedData, GpuSample>, CollectedGpuSampleMap>();
         services.AddTransient<IMap<CollectedData, RamSample>, CollectedRamSampleMap>();
-
-        services.AddTransient<IMap<CpuSample, Foo>, FooMap>();
         
         services.AddTransient<IMap<PcInfo, PcInfoDto>, PcInfoMap>();
-        
         services.AddTransient<IMap<CpuSample, CpuSampleDto>, CpuDtoMap>();
+        services.AddTransient<IMap<GpuSample, GpuSampleDto>, GpuDtoMap>();
+        services.AddTransient<IMap<RamSample, RamSampleDto>, RamDtoMap>();
     }
 }
