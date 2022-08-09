@@ -24,11 +24,11 @@ const signalR = {
       });
 
       this.connection.on("handleGpuData", (data) => {
-        eventBus.emit(eventBusKeys.CPU_SAMPLE_ARRIVED, data);
+        eventBus.emit(eventBusKeys.GPU_SAMPLE_ARRIVED, data);
       });
 
       this.connection.on("handleRamData", (data) => {
-        eventBus.emit(eventBusKeys.CPU_SAMPLE_ARRIVED, data);
+        eventBus.emit(eventBusKeys.RAM_SAMPLE_ARRIVED, data);
       });
 
       await this.connection.start();

@@ -2,6 +2,11 @@
   <q-page class="flex flex-center column">
     <div class="text-h1"> New edition client </div>
     <InfoCard />
+    <div>
+      <div class="bg-red-3 q-pa-md">{{ cpu }}</div>
+      <div class="bg-green-3 q-pa-md">{{ gpu }}</div>
+      <div class="bg-blue-3 q-pa-md">{{ ram }}</div>
+    </div>
     <q-btn
       class="q-pa-md q-ma-md"
       color="primary"
@@ -36,7 +41,7 @@ export default {
   name: "MainPage",
   components: { InfoCard },
   setup(props) {
-    const state = reactive({});
+    const state = reactive({ cpu: "", gpu: "", ram: "" });
     const store = useStore();
     const router = useRouter();
     const q = useQuasar();
@@ -46,7 +51,20 @@ export default {
       q.notify(string);
     }
 
+    function setCpuSample(data) {
+      state.cpu = JSON.stringify(data);
+    }
+    function setGpuSample(data) {
+      state.gpu = JSON.stringify(data);
+    }
+    function setRamSample(data) {
+      state.ram = JSON.stringify(data);
+    }
+
     useEventBus(eventBusKeys.PC_INFO_ARRIVED, showRegisterData);
+    useEventBus(eventBusKeys.CPU_SAMPLE_ARRIVED, setCpuSample);
+    useEventBus(eventBusKeys.GPU_SAMPLE_ARRIVED, setGpuSample);
+    useEventBus(eventBusKeys.RAM_SAMPLE_ARRIVED, setRamSample);
 
     const start = async () => {
       await signalR.connect("http://localhost:11111", "reporter");
