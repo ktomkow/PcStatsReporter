@@ -1,10 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PcStatsReporter.AspNetCore.Mappers;
+using PcStatsReporter.AspNetCore.SignalR.Contracts;
 using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Models;
+using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.LibreHardware;
 using PcStatsReporter.RestContracts;
 using Rebus.Bus;
@@ -18,11 +22,13 @@ namespace PcStatsReporter.AspNetCore.Controllers;
 [Route("api/cpu")]
 public class CpuDataController : ControllerBase
 {
-    private readonly IBus _bus;
+    private readonly IHold _holder;
+    private readonly IMap<CpuSample, CpuSampleDto> _map;
 
-    public CpuDataController(IBus bus)
+    public CpuDataController(IHold holder, IMap<CpuSample, CpuSampleDto> map)
     {
-        _bus = bus;
+        _holder = holder;
+        _map = map;
     }
 
     /// <summary>
@@ -30,16 +36,30 @@ public class CpuDataController : ControllerBase
     /// </summary>
     /// <returns>CpuResponse</returns>
     /// /// <response code="200">Returns data</response>
+    /// /// <response code="204">Request is handled properly but no data is available yet</response>
+    /// /// <response code="500">Oups</response>
     [HttpGet]
-    [ProducesResponseType(typeof(CpuResponse),StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(CpuResponse), StatusCodes.Status200OK)]
     [Produces("application/json")]
     public async Task<IActionResult> Get()
     {
-        var registered = new ReportingClientRegisteredEvent(); // todo: remove, it makes no sense
-        await _bus.Publish(registered);
-        
-        CpuResponse result = new CpuResponse();
-        
+        var pcInfo = await _holder.Get<PcInfo>();
+        var latestCpuSample = await _holder.Get<CpuSample>();
+
+        if (pcInfo is null || latestCpuSample is null)
+        {
+            return NoContent();
+        }
+
+        // todo: full map in separate file
+        CpuResponse result = new CpuResponse()
+        {
+            Name = pcInfo.CpuName,
+            Cores = new List<CpuCoreResponse>(),
+            AverageLoad = latestCpuSample.AverageLoad,
+            PackageTemperature = latestCpuSample.Temperature
+        };
+
         return Ok(result);
     }
 }
