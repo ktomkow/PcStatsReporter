@@ -56,7 +56,7 @@ public class GpuCollectorService : BackgroundService
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error during collecting CPU Sample");
+                _logger.LogError(e, "Error during collecting GPU Sample");
             }
             finally
             {
