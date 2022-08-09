@@ -10,5 +10,7 @@ public static class ServiceProvider
     public static void AddGrpcClientMaps(this IServiceCollection services)
     {
         services.AddTransient<IMap<CpuSample, CollectedData>, CpuSampleMap>();
+        services.AddTransient<IMap<GpuSample, CollectedData>, GpuSampleMap>();
+        services.AddTransient<IMap<RamSample, CollectedData>, RamSampleMap>();
     }
 }
