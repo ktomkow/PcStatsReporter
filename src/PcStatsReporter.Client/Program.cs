@@ -16,13 +16,6 @@ namespace PcStatsReporter.Client
     {
         public static async Task<int> Main()
         {
-            // var scanner = new Scanner();
-            //
-            // var port = 11111;
-            // var host = await scanner.Scan(port);
-            //
-            // GrpcChannel channel = GrpcChannel.ForAddress("http://localhost:11111");
-            
             var hostBuilder = CreateHostBuilder()
                 .ConfigureServices(services =>
                 {
