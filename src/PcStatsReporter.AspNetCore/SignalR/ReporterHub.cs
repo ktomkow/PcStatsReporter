@@ -19,7 +19,6 @@ public class ReporterHub : Hub
     public const string RamCollectionMethod = "handleRamData";
     
     public const string RegisterMethod = "registerBasicData";
-    // await _hub.Clients.All.SendAsync("handleCpuData", dto);
 
     public ReporterHub(IHold hold, IMap<PcInfo, PcInfoDto> pcInfoMap)
     {
