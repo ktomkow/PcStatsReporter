@@ -36,10 +36,6 @@ public class GrpcCollectorService : CollectorService
 
     public override async Task<DataResponse> Collect(CollectedData request, ServerCallContext context)
     {
-        var temperature = request.Cpu.Temperature;
-        
-        _logger.LogInformation("Got request {Id}, Temperature: {Temperature} C", request.Uuid.Value, temperature);
-        
         try
         {
             var @event = request.DataCase switch
