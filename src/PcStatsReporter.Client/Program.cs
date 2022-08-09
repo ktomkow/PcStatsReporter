@@ -28,8 +28,8 @@ namespace PcStatsReporter.Client
                 {
                     services.AddHostedService<CpuCollectorService>();
                     services.AddHostedService<GpuCollectorService>();
+                    services.AddHostedService<RamCollectorService>();
                     services.AddHostedService<InitService>();
-                    // services.AddHostedService<SampleHostedService>();
                     services.AddTransient<Scanner>();
                     services.AddTransient<PcInfoCollector>();
                     services.AddSingleton<ICollector<CpuSample>, CpuCollector>();
