@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.Grpc.Proto;
 
@@ -10,13 +11,15 @@ public class RamCollectorService : BackgroundService
     private readonly AppContext _appContext;
     private readonly ILogger<RamCollectorService> _logger;
     private readonly ICollector<RamSample> _collector;
+    private readonly IMap<RamSample, CollectedData> _map;
     private Collector.CollectorClient _client;
 
-    public RamCollectorService(AppContext appContext, ILogger<RamCollectorService> logger, ICollector<RamSample> collector)
+    public RamCollectorService(AppContext appContext, ILogger<RamCollectorService> logger, ICollector<RamSample> collector, IMap<RamSample, CollectedData> map)
     {
         _appContext = appContext;
         _logger = logger;
         _collector = collector;
+        _map = map;
     }
 
     public override Task StartAsync(CancellationToken cancellationToken)
@@ -41,8 +44,9 @@ public class RamCollectorService : BackgroundService
         {
             try
             {
-                RamSample? ramSample = _collector.Collect();
-                // todo: map and send
+                RamSample ramSample = _collector.Collect();
+                var mappedSample = _map.Map(ramSample);
+                await _client.CollectAsync(mappedSample);
             }
             catch (Exception e)
             {
