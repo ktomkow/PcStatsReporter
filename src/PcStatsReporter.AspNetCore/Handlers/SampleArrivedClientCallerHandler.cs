@@ -11,9 +11,9 @@ using Rebus.Handlers;
 
 namespace PcStatsReporter.AspNetCore.Handlers;
 
-public class SampleArrivedCallClientsHandler : IHandleMessages<CpuSampleArrivedEvent>, IHandleMessages<GpuSampleArrivedEvent>, IHandleMessages<RamSampleArrivedEvent>
+public class SampleArrivedClientCallerHandler : IHandleMessages<CpuSampleArrivedEvent>, IHandleMessages<GpuSampleArrivedEvent>, IHandleMessages<RamSampleArrivedEvent>
 {
-    private readonly ILogger<SampleArrivedCallClientsHandler> _logger;
+    private readonly ILogger<SampleArrivedClientCallerHandler> _logger;
     private readonly IHubContext<ReporterHub> _hub;
 
     private readonly IBus _bus;
@@ -21,7 +21,7 @@ public class SampleArrivedCallClientsHandler : IHandleMessages<CpuSampleArrivedE
     private readonly IMap<GpuSample, GpuSampleDto> _gpuMap;
     private readonly IMap<RamSample, RamSampleDto> _ramMap;
 
-    public SampleArrivedCallClientsHandler(ILogger<SampleArrivedCallClientsHandler> logger,
+    public SampleArrivedClientCallerHandler(ILogger<SampleArrivedClientCallerHandler> logger,
         IHubContext<ReporterHub> hub,
         IBus bus,
         IMap<CpuSample, CpuSampleDto> cpuMap,
