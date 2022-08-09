@@ -16,20 +16,18 @@ const signalR = {
         .build();
 
       this.connection.on("registerBasicData", (pcInfoData) => {
-        console.log(
-          "🚀 ~ file: signalr.js ~ line 19 ~ this.connection.on ~ pcInfoData",
-          pcInfoData
-        );
-
         eventBus.emit(eventBusKeys.PC_INFO_ARRIVED, pcInfoData);
       });
 
-      this.connection.on("handleCpuData", (cpuData) => {
-        console.log(
-          "🚀 ~ file: signalr.js ~ line 28 ~ this.connection.on ~ cpuData",
-          cpuData
-        );
+      this.connection.on("handleCpuData", (data) => {
+        eventBus.emit(eventBusKeys.CPU_SAMPLE_ARRIVED, data);
+      });
 
+      this.connection.on("handleGpuData", (data) => {
+        eventBus.emit(eventBusKeys.CPU_SAMPLE_ARRIVED, data);
+      });
+
+      this.connection.on("handleRamData", (data) => {
         eventBus.emit(eventBusKeys.CPU_SAMPLE_ARRIVED, data);
       });
 
