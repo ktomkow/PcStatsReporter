@@ -29,6 +29,7 @@ public class ReporterHub : Hub
     
     public override async Task OnConnectedAsync()
     {
+        // todo: this method sucks, should do it better 
         var pcInfo = await _hold.Get<PcInfo>() ?? new PcInfo()
         {
             CpuName = "unknown cpu",
