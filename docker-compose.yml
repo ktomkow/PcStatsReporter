@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  reporter_service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 1111:1111
+      - 2222:2222
