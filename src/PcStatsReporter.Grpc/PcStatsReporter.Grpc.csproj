@@ -11,11 +11,11 @@
 
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+        <PackageReference Include="Rebus" Version="6.6.5" />
     </ItemGroup>
     
     <ItemGroup>
       <ProjectReference Include="..\PcStatsReporter.Core\PcStatsReporter.Core.csproj" />
-      <ProjectReference Include="..\PcStatsReporter.Proto\PcStatsReporter.Proto\PcStatsReporter.Proto.csproj" />
     </ItemGroup>
 
 </Project>

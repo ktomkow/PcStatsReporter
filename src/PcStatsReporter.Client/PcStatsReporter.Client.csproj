@@ -5,10 +5,19 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PcStatsReporter.Proto\PcStatsReporter.Proto\PcStatsReporter.Proto.csproj" />
+    <ProjectReference Include="..\PcStatsReporter.Core\PcStatsReporter.Core.csproj" />
+    <ProjectReference Include="..\PcStatsReporter.GrpcClient\PcStatsReporter.GrpcClient.csproj" />
+    <ProjectReference Include="..\PcStatsReporter.LibreHardware\PcStatsReporter.LibreHardware.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+  </ItemGroup>
+  
 </Project>

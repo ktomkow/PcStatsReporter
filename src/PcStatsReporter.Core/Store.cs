@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using PcStatsReporter.Core.Persistence;
 
 namespace PcStatsReporter.Core
 {
+    [Obsolete]
     public class Store
     {
         private static readonly ConcurrentDictionary<Type, object> ConcurrentDictionary = new ConcurrentDictionary<Type, object>();

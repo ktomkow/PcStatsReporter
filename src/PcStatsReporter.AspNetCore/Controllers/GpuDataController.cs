@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PcStatsReporter.AspNetCore.Mappers;
+using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.LibreHardware;
 using PcStatsReporter.RestContracts;
@@ -14,13 +15,9 @@ namespace PcStatsReporter.AspNetCore.Controllers;
 [Route("api/nvidia")]
 public class GpuDataController : ControllerBase
 {
-    private readonly IMap<GpuData, GpuResponse> mapper;
-    private readonly GpuDataCollector collector;
-
-    public GpuDataController(IMap<GpuData, GpuResponse> mapper, GpuDataCollector collector)
+    public GpuDataController()
     {
-        this.mapper = mapper;
-        this.collector = collector;
+
     }
     
     /// <summary>
@@ -33,8 +30,7 @@ public class GpuDataController : ControllerBase
     [Produces("application/json")]
     public IActionResult Get()
     {
-        GpuData gpuData = collector.Collect();
-        GpuResponse result = mapper.Map(gpuData); 
+        GpuResponse result = new GpuResponse(); 
         
         return Ok(result);
     }

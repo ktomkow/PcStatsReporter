@@ -1,8 +1,18 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using PcStatsReporter.AspNetCore.Grpc;
+using PcStatsReporter.AspNetCore.Handlers;
+using PcStatsReporter.AspNetCore.Mappers;
+using PcStatsReporter.AspNetCore.Messages;
 using PcStatsReporter.AspNetCore.ServiceProviders;
-using PcStatsReporter.Grpc;
+using PcStatsReporter.AspNetCore.SignalR;
+using PcStatsReporter.Core.Messages;
+using PcStatsReporter.Core.Persistence;
+using PcStatsReporter.Core.ReportingClientSettings;
+using PcStatsReporter.Core.ServiceProviders;
 using PcStatsReporter.LibreHardware;
+using Rebus.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +25,23 @@ builder.Services.AddCustomSwagger();
 
 builder.Services.AddMaps();
 
-builder.Services.AddSingleton<CpuDataCollector>();
-builder.Services.AddSingleton<RamDataCollector>();
-builder.Services.AddSingleton<GpuDataCollector>();
+builder.Services.AddSingleton<IHold, MemoryHold>();
 
-builder.Services.UseReporterGrpc();
+builder.Services.AddReporterGrpc();
+
+builder.Services.AddServerMaps();
+
+DefaultSetting defaultSetting = new DefaultSetting()
+{
+    Period = TimeSpan.FromSeconds(10)
+};
+
+builder.Services.AddSingleton(defaultSetting);
+
+builder.Services.AddReporterRebus();
+builder.Services.AutoRegisterHandlersFromAssemblyOf<RegisteredHandler>();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -28,12 +50,24 @@ app.UseCustomSwagger();
 app.UseRouting();
 app.MapControllers();
 
-app.UseCors(x => x
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-    .AllowAnyOrigin());
+
+app.UseCors(corsBuilder =>
+{
+    corsBuilder.WithOrigins("http://localhost:8080")
+        .AllowAnyHeader()
+        .WithMethods("GET", "POST")
+        .AllowCredentials();
+});
 
 
-app.AddReporterGrpc();
+var bus = app.UseReporterRebus();
+await bus.Subscribe<ReportingClientRegisteredEvent>();
+await bus.Subscribe<CpuSampleArrivedEvent>();
+await bus.Subscribe<GpuSampleArrivedEvent>();
+await bus.Subscribe<RamSampleArrivedEvent>();
+
+app.UseReporterGrpc();
+
+app.MapHub<ReporterHub>("/reporter");
 
 app.Run();

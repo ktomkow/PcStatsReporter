@@ -15,4 +15,8 @@
         <PackageReference Include="Grpc.Net.Client" Version="2.47.0" />
         <PackageReference Include="Grpc.Tools" Version="2.47.0" PrivateAssets="All" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\PcStatsReporter.Core\PcStatsReporter.Core.csproj" />
+    </ItemGroup>
 </Project>

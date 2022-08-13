@@ -2,52 +2,89 @@
 
 option csharp_namespace = "PcStatsReporter.Grpc.Proto";
 
-message ToServer {
-    oneof payload {
-        ToServerCommand command = 1;
-    }
+message RegistrationRequest {
+    string cpu_name = 1;
+    string gpu_name = 2;
+    float ram_capacity = 3;
 }
 
-message ToClient {
-    oneof payload {
-        ToClientCommand command = 1;
-        ToClientData data = 2;
-    }
+message RegistrationResponse {
+    SettingsResponse settings = 1;
 }
 
-message ToServerCommand {
-    oneof command {
-        Disconnect disconnect = 1;
-        SendData send_data = 2;
-    }
+enum SettingType {
+    SERVICE = 0;
+    CPU = 1;
+    GPU = 2;
+    RAM = 3;
 }
 
-message ToClientCommand {
+message Setting {
+    SettingType sensor = 1;
+    uint32 period = 2;
+}
+
+message SettingsResponse {
+    repeated Setting settings = 1;
+}
+
+message SettingsRequest {
     
 }
 
-message Disconnect {
-
+service Registerer {
+    rpc Register (RegistrationRequest) returns (RegistrationResponse);
 }
 
-message SendData {
-    
+service Collector {
+    rpc Collect (CollectedData) returns (DataResponse);
 }
 
-message ToClientData {
+service SettingsManager {
+    rpc Get (SettingsRequest) returns (SettingsResponse);
+}
+
+message Guid {
+    string value = 1;
+}
+
+message CollectedData {
+    Guid uuid = 1;
+    fixed32 timestamp = 2;
     oneof data {
-        CpuData cpu = 1;
+        CollectedCpuData cpu = 3;
+        CollectedGpuData gpu = 4;
+        CollectedRamData ram = 5;
     }
 }
 
-message CpuData {
-    string name = 1;
-    repeated Core cores = 2;
+message DataResponse {
+    bool success = 1;
 }
 
-message Core {
+message CollectedCpuData {
+    uint32 temperature = 1;
+    uint32 average_load = 2;
+    repeated CollectedCpuCoreData cores = 3;
+}
+
+message CollectedCpuCoreData {
     uint32 id = 1;
     uint32 temperature = 2;
     uint32 speed = 3;
-    uint32 load = 4;
+    repeated CollectedCpuThreadData threads = 4; 
+}
+
+message CollectedCpuThreadData {
+    uint32 id = 1;
+    uint32 load = 2;
+}
+
+message CollectedGpuData {
+    uint32 core_temperature = 1;
+    uint32 core_load = 2;
+}
+
+message CollectedRamData {
+    float in_use = 1;
 }
