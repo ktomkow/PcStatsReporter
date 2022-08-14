@@ -27,17 +27,23 @@ public class GrpcInitializer : IHandleMessages<GrpcInitializeCommand>
 
     public async Task Handle(GrpcInitializeCommand message)
     {
+        _logger.LogInformation("Initialize grpc client started");
         var grpcChannel = await CreateGrpcChannel();
 
         _appContext.SetChannel(grpcChannel);
 
         var @event = new GrpcInitializedEvent();
         await _bus.Publish(@event);
+
+        _logger.LogInformation("Initialize grpc client finished");
     }
 
     private async Task<GrpcChannel> CreateGrpcChannel()
     {
+        _logger.LogInformation("Start scanning network to find server");
         string host = await _scanner.Scan(apiPort);
+        _logger.LogInformation("Server host: {Host}", host);
+
         GrpcChannel grpcChannel = GrpcChannel.ForAddress(host + ":" + grpcPort);
         return grpcChannel;
     }
