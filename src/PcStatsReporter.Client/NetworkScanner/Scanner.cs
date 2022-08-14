@@ -33,7 +33,7 @@ public class Scanner
             {
                 await httpClient.GetAsync(host + endpoint, token);
 
-                _logger.LogInformation("Host {Host} is GOOD", host);
+                _logger.LogDebug("Host {Host} is GOOD", host);
                 return host;
             }
             catch (TaskCanceledException e)
