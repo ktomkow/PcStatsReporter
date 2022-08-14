@@ -33,7 +33,7 @@ builder.Services.AddServerMaps();
 
 DefaultSetting defaultSetting = new DefaultSetting()
 {
-    Period = TimeSpan.FromSeconds(10)
+    Period = TimeSpan.FromSeconds(1)
 };
 
 builder.Services.AddSingleton(defaultSetting);
