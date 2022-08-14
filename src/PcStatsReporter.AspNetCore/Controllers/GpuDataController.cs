@@ -25,7 +25,8 @@ public class GpuDataController : ControllerBase
     /// This method gets latest data about dedicated GPU
     /// </summary>
     /// <returns>GpuResponse</returns>
-    /// /// <response code="200">Returns data</response>
+    /// <response code="200">Returns data</response>
+    /// <response code="204">Data not available yet</response>
     [HttpGet]
     [ProducesResponseType(typeof(GpuResponse), StatusCodes.Status200OK)]
     [Produces("application/json")]

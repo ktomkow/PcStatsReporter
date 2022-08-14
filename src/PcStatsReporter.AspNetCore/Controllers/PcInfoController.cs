@@ -25,7 +25,8 @@ public class PcInfoController : ControllerBase
     /// This method gets stable data about PC
     /// </summary>
     /// <returns>PcInfoResponse</returns>
-    /// /// <response code="200">Returns data</response>
+    /// <response code="200">Returns data</response>
+    /// <response code="204">Data not available yet</response>
     [HttpGet]
     [ProducesResponseType(typeof(PcInfoResponse),StatusCodes.Status200OK)]
     [Produces("application/json")]

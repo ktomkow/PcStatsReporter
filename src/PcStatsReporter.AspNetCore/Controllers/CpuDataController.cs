@@ -30,9 +30,8 @@ public class CpuDataController : ControllerBase
     /// This method gets latest data about CPU temperatures, speed and load. It also includes CPU name
     /// </summary>
     /// <returns>CpuResponse</returns>
-    /// /// <response code="200">Returns data</response>
-    /// /// <response code="204">Request is handled properly but no data is available yet</response>
-    /// /// <response code="500">Oups</response>
+    /// <response code="200">Returns data</response>
+    /// <response code="204">Request is handled properly but no data is available yet</response>
     [HttpGet]
     [ProducesResponseType(typeof(CpuResponse), StatusCodes.Status200OK)]
     [Produces("application/json")]

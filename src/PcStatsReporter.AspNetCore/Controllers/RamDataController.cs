@@ -25,7 +25,8 @@ public class RamDataController : ControllerBase
     /// This method gets latest data about RAM memory
     /// </summary>
     /// <returns>RamResponse</returns>
-    /// /// <response code="200">Returns data</response>
+    /// <response code="200">Returns data</response>
+    /// <response code="204">Data not available yet</response>
     [HttpGet]
     [ProducesResponseType(typeof(RamResponse),StatusCodes.Status200OK)]
     [Produces("application/json")]
