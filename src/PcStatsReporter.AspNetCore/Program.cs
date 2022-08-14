@@ -53,8 +53,9 @@ app.MapControllers();
 
 app.UseCors(corsBuilder =>
 {
-    corsBuilder.WithOrigins("http://localhost:8080")
+    corsBuilder
         .AllowAnyHeader()
+        .AllowAnyOrigin()
         .WithMethods("GET", "POST")
         .AllowCredentials();
 });
