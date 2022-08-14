@@ -1,0 +1,7 @@
+{
+  "appId": "pcstatsreporter.capacitor",
+  "appName": "PcStatsReporter",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "www"
+}
