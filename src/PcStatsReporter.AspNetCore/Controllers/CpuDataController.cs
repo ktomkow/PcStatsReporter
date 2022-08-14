@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PcStatsReporter.AspNetCore.Mappers;
 using PcStatsReporter.AspNetCore.SignalR.Contracts;
 using PcStatsReporter.Core.Maps;
-using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.Core.Persistence;
-using PcStatsReporter.LibreHardware;
 using PcStatsReporter.RestContracts;
-using Rebus.Bus;
 
 namespace PcStatsReporter.AspNetCore.Controllers;
 
