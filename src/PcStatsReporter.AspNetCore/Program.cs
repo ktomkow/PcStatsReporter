@@ -11,7 +11,6 @@ using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.Core.ReportingClientSettings;
 using PcStatsReporter.Core.ServiceProviders;
-using PcStatsReporter.LibreHardware;
 using Rebus.Config;
 
 var builder = WebApplication.CreateBuilder(args);
