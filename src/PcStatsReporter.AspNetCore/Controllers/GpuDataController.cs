@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PcStatsReporter.AspNetCore.Mappers;
-using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Models;
-using PcStatsReporter.LibreHardware;
+using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.RestContracts;
 
 namespace PcStatsReporter.AspNetCore.Controllers;
@@ -15,23 +14,33 @@ namespace PcStatsReporter.AspNetCore.Controllers;
 [Route("api/nvidia")]
 public class GpuDataController : ControllerBase
 {
-    public GpuDataController()
-    {
+    private readonly IHold _holder;
 
+    public GpuDataController(IHold holder)
+    {
+        _holder = holder;
     }
-    
+
     /// <summary>
     /// This method gets latest data about dedicated GPU
     /// </summary>
     /// <returns>GpuResponse</returns>
     /// /// <response code="200">Returns data</response>
     [HttpGet]
-    [ProducesResponseType(typeof(GpuResponse),StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GpuResponse), StatusCodes.Status200OK)]
     [Produces("application/json")]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-        GpuResponse result = new GpuResponse(); 
-        
+        var pcInfo = await _holder.Get<PcInfo>();
+        var latestGpuSample = await _holder.Get<GpuSample>();
+
+        if (pcInfo is null || latestGpuSample is null)
+        {
+            return NoContent();
+        }
+
+        GpuResponse result = new GpuResponse();
+
         return Ok(result);
     }
 }

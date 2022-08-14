@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PcStatsReporter.AspNetCore.Mappers;
 using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Models;
+using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.LibreHardware;
 using PcStatsReporter.RestContracts;
 
@@ -15,9 +17,11 @@ namespace PcStatsReporter.AspNetCore.Controllers;
 [Route("api/ram")]
 public class RamDataController : ControllerBase
 {
-    public RamDataController()
-    {
+    private readonly IHold _holder;
 
+    public RamDataController(IHold holder)
+    {
+        _holder = holder;
     }
     
     /// <summary>
@@ -28,9 +32,17 @@ public class RamDataController : ControllerBase
     [HttpGet]
     [ProducesResponseType(typeof(RamResponse),StatusCodes.Status200OK)]
     [Produces("application/json")]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-        RamResponse result = new RamResponse();
+        var pcInfo = await _holder.Get<PcInfo>();
+        var latestRamSample = await _holder.Get<RamSample>();
+
+        if (pcInfo is null || latestRamSample is null)
+        {
+            return NoContent();
+        }
+
+        var result = new RamResponse();
         
         return Ok(result);
     }
