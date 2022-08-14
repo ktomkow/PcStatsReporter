@@ -54,9 +54,9 @@ app.MapControllers();
 app.UseCors(corsBuilder =>
 {
     corsBuilder
+        .SetIsOriginAllowed(_ => true)
         .AllowAnyHeader()
-        .AllowAnyOrigin()
-        .WithMethods("GET", "POST")
+        .AllowAnyMethod()
         .AllowCredentials();
 });
 
