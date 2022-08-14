@@ -24,7 +24,7 @@ public class Scanner
             // TODO: change it
             // host = $"http://192.168.0.{i}";
             string endpoint = $":{port}/api/hc";
-            host = "http://localhost";
+            host = "http://192.168.0.133";
             _logger.LogDebug("Checking {Host}", host);
             var cts = new CancellationTokenSource(250);
             var token = cts.Token;
