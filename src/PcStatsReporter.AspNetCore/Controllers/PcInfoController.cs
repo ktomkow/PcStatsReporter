@@ -38,7 +38,12 @@ public class PcInfoController : ControllerBase
             return NoContent();
         }
 
-        var result = new PcInfoResponse();
+        var result = new PcInfoResponse()
+        {
+            CpuName = pcInfo.CpuName,
+            GpuName = pcInfo.GpuName,
+            TotalRam = pcInfo.TotalRam
+        };
         
         return Ok(result);
     }
