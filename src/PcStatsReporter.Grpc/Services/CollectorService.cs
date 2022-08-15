@@ -36,6 +36,8 @@ public class CollectorService : Collector.CollectorBase
     {
         try
         {
+            _logger.LogTrace("Handling collected data of type {Type}", request.DataCase);
+            
             var @event = request.DataCase switch
             {
                 CollectedData.DataOneofCase.None => throw new ArgumentNullException(nameof(request.DataCase)),
