@@ -25,7 +25,7 @@ builder.Services.AddMaps();
 
 builder.Services.AddSingleton<IHold, MemoryHold>();
 
-builder.Services.AddReporterGrpc();
+builder.Services.AddReporterGrpcServer();
 
 builder.Services.AddServerMaps();
 
@@ -65,7 +65,7 @@ await bus.Subscribe<CpuSampleArrivedEvent>();
 await bus.Subscribe<GpuSampleArrivedEvent>();
 await bus.Subscribe<RamSampleArrivedEvent>();
 
-app.UseReporterGrpc();
+app.UseReporterGrpcServer();
 
 app.MapHub<ReporterHub>("/reporter");
 

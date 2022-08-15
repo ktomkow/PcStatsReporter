@@ -6,12 +6,12 @@ namespace PcStatsReporter.Grpc;
 
 public static class ServiceProvider
 {
-    public static void AddReporterGrpc(this IServiceCollection services)
+    public static void AddReporterGrpcServer(this IServiceCollection services)
     {
         services.AddGrpc();
     }
     
-    public static void UseReporterGrpc(this WebApplication app)
+    public static void UseReporterGrpcServer(this WebApplication app)
     {
         app.MapGrpcService<CalculatorService>();
         app.MapGrpcService<CollectorService>();
