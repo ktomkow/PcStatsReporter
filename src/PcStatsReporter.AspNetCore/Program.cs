@@ -1,16 +1,15 @@
 using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using PcStatsReporter.AspNetCore.Grpc;
 using PcStatsReporter.AspNetCore.Handlers;
 using PcStatsReporter.AspNetCore.Mappers;
-using PcStatsReporter.AspNetCore.Messages;
 using PcStatsReporter.AspNetCore.ServiceProviders;
 using PcStatsReporter.AspNetCore.SignalR;
 using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.Core.ReportingClientSettings;
 using PcStatsReporter.Core.ServiceProviders;
+using PcStatsReporter.Grpc;
 using Rebus.Config;
 
 var builder = WebApplication.CreateBuilder(args);

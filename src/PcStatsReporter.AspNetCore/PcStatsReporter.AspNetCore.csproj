@@ -17,4 +17,8 @@
       <ProjectReference Include="..\PcStatsReporter.RestContracts\PcStatsReporter.RestContracts.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Grpc" />
+    </ItemGroup>
+
 </Project>

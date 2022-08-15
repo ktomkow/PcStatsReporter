@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using PcStatsReporter.AspNetCore.Messages;
 using PcStatsReporter.AspNetCore.SignalR;
 using PcStatsReporter.AspNetCore.SignalR.Contracts;
 using PcStatsReporter.Core.Maps;
+using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Models;
 using Rebus.Bus;
 using Rebus.Handlers;

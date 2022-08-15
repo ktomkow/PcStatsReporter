@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PcStatsReporter.AspNetCore.Messages;
+using PcStatsReporter.Core.Messages;
 using PcStatsReporter.Core.Persistence;
 using Rebus.Handlers;
 
