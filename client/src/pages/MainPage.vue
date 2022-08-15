@@ -2,6 +2,7 @@
   <q-page class="flex flex-center column">
     <div class="text-h1"> New edition client </div>
     <InfoCard />
+    <RamChart />
     <div>
       <div class="bg-red-3 q-pa-md">{{ cpu }}</div>
       <div class="bg-green-3 q-pa-md">{{ gpu }}</div>
@@ -31,6 +32,7 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 import InfoCard from "src/components/InfoCard";
+import RamChart from "src/components/RamChart";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
@@ -39,7 +41,7 @@ import { signalR } from "src/boot/signalr";
 
 export default {
   name: "MainPage",
-  components: { InfoCard },
+  components: { InfoCard, RamChart },
   setup(props) {
     const state = reactive({ cpu: "", gpu: "", ram: "" });
     const store = useStore();

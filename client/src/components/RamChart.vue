@@ -7,7 +7,11 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed, ref, watch } from "vue";
+import { reactive, toRefs, computed, ref } from "vue";
+import { useStore } from "vuex";
+
+import { useEventBus } from "src/composables/eventBusComposable";
+import eventBusKeys from "src/consts/eventBusKeys";
 
 import VChart from "vue-echarts";
 import { use } from "echarts";
@@ -31,23 +35,26 @@ use([
 export default {
   name: "RamChart",
   components: { VChart },
-  props: {
-    total: {
-      type: Number,
-      required: true,
-    },
-    used: {
-      type: Number,
-      required: true,
-    },
-  },
-  setup(props) {
-    const state = reactive({});
+  setup() {
+    const state = reactive({ usedRam: null });
+    const store = useStore();
+
+    const totalRam = computed(() => store.state.pcInfo.totalRam ?? 0);
+
+    // const isLoading = computed(() => { // to use later
+    //   return !!store.state.pcInfo.total && !!state.usedRam;
+    // });
+
+    useEventBus(eventBusKeys.RAM_SAMPLE_ARRIVED, setRamValue);
+
+    function setRamValue(data) {
+      state.usedRam = data.inUse.toFixed(2);
+    }
 
     const ramValue = computed(() => {
       return [
         {
-          value: props.used,
+          value: state.usedRam ?? 0,
           name: "RAM",
         },
       ];
@@ -60,7 +67,7 @@ export default {
       series: [
         {
           min: 0,
-          max: props.total,
+          max: totalRam.value,
           type: "gauge",
           startAngle: 90,
           endAngle: -270,
@@ -107,7 +114,13 @@ export default {
             borderColor: "inherit",
             borderRadius: 20,
             borderWidth: 1,
-            formatter: (v) => v + " GB / " + props.total + " GB",
+            formatter: (v) => {
+              if (!totalRam.value || !state.usedRam) {
+                return "Loading..";
+              }
+
+              return v + " GB / " + totalRam.value + " GB";
+            },
           },
         },
       ],
