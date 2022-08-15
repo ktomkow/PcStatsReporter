@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PcStatsReporter.AspNetCore.SignalR.Contracts;
-using PcStatsReporter.Core.Maps;
 using PcStatsReporter.Core.Models;
 using PcStatsReporter.Core.Persistence;
 using PcStatsReporter.RestContracts;
