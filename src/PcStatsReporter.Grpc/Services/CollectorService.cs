@@ -56,8 +56,8 @@ public class CollectorService : Collector.CollectorBase
         }
         catch (Exception e)
         {
-            // todo: logging
-            Console.WriteLine(e.Message);
+            _logger.LogError(e, "Error during handling collect attempt of data case {DataCase}", request.DataCase);
+            
             var response = new DataResponse()
             {
                 Success = false
