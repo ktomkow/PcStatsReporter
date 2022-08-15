@@ -40,7 +40,11 @@ public class RamDataController : ControllerBase
             return NoContent();
         }
 
-        var result = new RamResponse();
+        var result = new RamResponse()
+        {
+            Total = pcInfo.TotalRam,
+            Used = latestRamSample.InUse
+        };
         
         return Ok(result);
     }

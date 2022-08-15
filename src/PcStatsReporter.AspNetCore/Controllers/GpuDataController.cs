@@ -40,7 +40,12 @@ public class GpuDataController : ControllerBase
             return NoContent();
         }
 
-        GpuResponse result = new GpuResponse();
+        GpuResponse result = new GpuResponse()
+        {
+            Name = pcInfo.GpuName,
+            Temperature = latestGpuSample.CoreTemperature,
+            LoadCore = latestGpuSample.GpuCoreLoad
+        };
 
         return Ok(result);
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -49,9 +50,15 @@ public class CpuDataController : ControllerBase
         CpuResponse result = new CpuResponse()
         {
             Name = pcInfo.CpuName,
-            Cores = new List<CpuCoreResponse>(),
             AverageLoad = latestCpuSample.AverageLoad,
-            PackageTemperature = latestCpuSample.Temperature
+            PackageTemperature = latestCpuSample.Temperature,
+            Cores = latestCpuSample.Cores.Select(x => new CpuCoreResponse()
+            {
+                Id = x.CoreNumber,
+                Speed = x.Speed,
+                Temperature = x.Temperature,
+                Load = x.ThreadsLoad.Select(y => y.threadLoad).ToList()
+            }).ToList()
         };
 
         return Ok(result);
