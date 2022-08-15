@@ -5,7 +5,6 @@ using PcStatsReporter.Core.Models;
 
 namespace PcStatsReporter.AspNetCore.Mappers.Maps;
 
-[Obsolete]
 public class GpuDtoMap : IMap<GpuSample, GpuSampleDto>
 {
     public GpuSampleDto Map(GpuSample source)

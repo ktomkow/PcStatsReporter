@@ -5,7 +5,6 @@ using PcStatsReporter.Core.Models;
 
 namespace PcStatsReporter.AspNetCore.Mappers.Maps;
 
-[Obsolete]
 public class PcInfoMap : IMap<PcInfo, PcInfoDto>
 {
     public PcInfoDto Map(PcInfo source)

@@ -5,7 +5,6 @@ using PcStatsReporter.Core.Models;
 
 namespace PcStatsReporter.AspNetCore.Mappers.Maps;
 
-[Obsolete]
 public class RamDtoMap : IMap<RamSample, RamSampleDto>
 {
     public RamSampleDto Map(RamSample source)
