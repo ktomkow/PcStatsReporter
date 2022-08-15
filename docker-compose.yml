@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    restart: always
     ports:
       - 11111:11111
       - 22222:22222
