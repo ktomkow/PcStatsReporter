@@ -13,7 +13,6 @@ public static class ServiceProvider
     
     public static void UseReporterGrpcServer(this WebApplication app)
     {
-        app.MapGrpcService<CalculatorService>();
         app.MapGrpcService<CollectorService>();
         app.MapGrpcService<RegistrationService>();
         app.MapGrpcService<SettingsService>();
