@@ -10,7 +10,7 @@ using Rebus.Bus;
 
 namespace PcStatsReporter.Grpc.Services;
 
-public abstract class CollectorService : Collector.CollectorBase
+public class CollectorService : Collector.CollectorBase
 {
     private readonly ILogger<CollectorService> _logger;
     private readonly IBus _bus;
