@@ -47,6 +47,8 @@ public class RamCollectorService : BackgroundService
                 RamSample ramSample = _collector.Collect();
                 var mappedSample = _map.Map(ramSample);
                 await _client.CollectAsync(mappedSample);
+                
+                _logger.LogDebug("{Sample} collected", nameof(RamSample));
             }
             catch (Exception e)
             {

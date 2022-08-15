@@ -52,7 +52,8 @@ public class CpuCollectorService : BackgroundService
                 CpuSample? cpuSample = _collector.Collect();
                 var mappedSample = _map.Map(cpuSample);
                 await _client.CollectAsync(mappedSample);
-
+                
+                _logger.LogDebug("{Sample} collected", nameof(CpuSample));
             }
             catch (Exception e)
             {
