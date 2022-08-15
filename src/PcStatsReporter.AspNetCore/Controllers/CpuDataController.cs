@@ -19,12 +19,10 @@ namespace PcStatsReporter.AspNetCore.Controllers;
 public class CpuDataController : ControllerBase
 {
     private readonly IHold _holder;
-    private readonly IMap<CpuSample, CpuSampleDto> _map;
 
-    public CpuDataController(IHold holder, IMap<CpuSample, CpuSampleDto> map)
+    public CpuDataController(IHold holder)
     {
         _holder = holder;
-        _map = map;
     }
 
     /// <summary>
