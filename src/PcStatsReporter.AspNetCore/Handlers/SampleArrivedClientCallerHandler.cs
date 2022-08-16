@@ -16,21 +16,18 @@ public class SampleArrivedClientCallerHandler : IHandleMessages<CpuSampleArrived
     private readonly ILogger<SampleArrivedClientCallerHandler> _logger;
     private readonly IHubContext<ReporterHub> _hub;
 
-    private readonly IBus _bus;
     private readonly IMap<CpuSample, CpuSampleDto> _cpuMap;
     private readonly IMap<GpuSample, GpuSampleDto> _gpuMap;
     private readonly IMap<RamSample, RamSampleDto> _ramMap;
 
     public SampleArrivedClientCallerHandler(ILogger<SampleArrivedClientCallerHandler> logger,
         IHubContext<ReporterHub> hub,
-        IBus bus,
         IMap<CpuSample, CpuSampleDto> cpuMap,
         IMap<GpuSample, GpuSampleDto> gpuMap,
         IMap<RamSample, RamSampleDto> ramMap)
     {
         _logger = logger;
         _hub = hub;
-        _bus = bus;
         _cpuMap = cpuMap;
         _gpuMap = gpuMap;
         _ramMap = ramMap;
