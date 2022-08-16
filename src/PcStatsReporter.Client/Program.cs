@@ -23,7 +23,7 @@ namespace PcStatsReporter.Client
                     services.AddHostedService<GpuCollectorService>();
                     services.AddHostedService<RamCollectorService>();
                     services.AddHostedService<InitService>();
-                    services.AddTransient<Scanner>();
+                    services.AddTransient<IServiceFinder, HttpScanner>();
                     services.AddTransient<PcInfoCollector>();
                     services.AddSingleton<ICollector<CpuSample>, CpuCollector>();
                     services.AddSingleton<ICollector<GpuSample>, GpuCollector>();

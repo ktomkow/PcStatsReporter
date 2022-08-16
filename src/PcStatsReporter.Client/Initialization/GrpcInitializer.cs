@@ -12,12 +12,12 @@ public class GrpcInitializer : IHandleMessages<GrpcInitializeCommand>
     private readonly ILogger<GrpcInitializer> _logger;
     private readonly AppContext _appContext;
     private readonly IBus _bus;
-    private readonly Scanner _scanner;
+    private readonly IServiceFinder _scanner;
 
     private readonly int apiPort = 11111;
     private readonly int grpcPort = 22222;
 
-    public GrpcInitializer(ILogger<GrpcInitializer> logger, AppContext appContext, IBus bus, Scanner scanner)
+    public GrpcInitializer(ILogger<GrpcInitializer> logger, AppContext appContext, IBus bus, IServiceFinder scanner)
     {
         _logger = logger;
         _appContext = appContext;
@@ -41,7 +41,7 @@ public class GrpcInitializer : IHandleMessages<GrpcInitializeCommand>
     private async Task<GrpcChannel> CreateGrpcChannel()
     {
         _logger.LogInformation("Start scanning network to find server");
-        string host = await _scanner.Scan(apiPort);
+        string host = await _scanner.FindService(apiPort);
         _logger.LogInformation("Server host: {Host}", host);
 
         GrpcChannel grpcChannel = GrpcChannel.ForAddress(host + ":" + grpcPort);

@@ -2,18 +2,18 @@
 
 namespace PcStatsReporter.Client.NetworkScanner;
 
-public class Scanner
+public class HttpScanner : IServiceFinder
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly ILogger<Scanner> _logger;
+    private readonly ILogger<HttpScanner> _logger;
 
-    public Scanner(IHttpClientFactory  httpClientFactory, ILogger<Scanner> logger)
+    public HttpScanner(IHttpClientFactory  httpClientFactory, ILogger<HttpScanner> logger)
     {
         _httpClientFactory = httpClientFactory;
         _logger = logger;
     }
     
-    public async Task<string> Scan(int port)
+    public async Task<string> FindService(int port)
     {
         HttpClient httpClient = _httpClientFactory.CreateClient();
 
