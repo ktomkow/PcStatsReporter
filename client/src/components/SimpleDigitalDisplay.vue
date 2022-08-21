@@ -32,7 +32,7 @@ export default {
     },
     round: {
       type: Boolean,
-      required: false,
+      required: true,
       default: true,
     },
   },
