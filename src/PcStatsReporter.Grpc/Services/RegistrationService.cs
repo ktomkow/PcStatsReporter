@@ -40,12 +40,13 @@ public class RegistrationService : Registerer.RegistererBase
         RegistrationResponse response = new RegistrationResponse();
         response.Settings = new SettingsResponse();
 
+        // todo: create service/etc with default settings
         ReportingClientSettings cpuSettings = await _hold.Get<CpuCollectSettings>() ?? _defaultSetting;
         ReportingClientSettings gpuSettings = await _hold.Get<GpuCollectSettings>() ?? _defaultSetting;
         ReportingClientSettings ramSettings = await _hold.Get<RamCollectSettings>() ?? _defaultSetting;
         ReportingClientSettings serviceSettings = await _hold.Get<SettingsRefreshSettings>() ?? _defaultSetting;
 
-        await _hold.Set(pcInfo);
+        await _hold.Set(pcInfo); // todo: to remove
 
         response.Settings.Settings.Add(new Setting()
         {
@@ -71,7 +72,10 @@ public class RegistrationService : Registerer.RegistererBase
             Period = (uint) serviceSettings.Period.TotalMilliseconds
         });
         
-        await _bus.Publish(new ReportingClientRegisteredEvent());
+        await _bus.Publish(new ReportingClientRegisteredEvent()
+        {
+            PcInfo = pcInfo
+        });
 
         return response;
     }
