@@ -89,3 +89,26 @@ describe("roundToString when 2 fraction parts and round to 2 fraction parts (no 
     }
   );
 });
+
+describe("roundToString when 0 or 1 or 2 or 3 fraction parts and round to 3 fraction parts then round and complete using '0'", () => {
+  const cases = [
+    [0, "0.000"],
+    [0.0, "0.000"],
+    [0.1, "0.100"],
+    [-94.7, "-94.700"],
+    [1571.33, "1571.330"],
+    [14.23, "14.230"],
+    [15.8, "15.800"],
+    [11.333, "11.333"],
+  ];
+
+  test.each(cases)(
+    "When input %p and digits 3 then %p",
+    (input, expectedResult) => {
+      const result = roundToString(input, 3);
+
+      expect(result).toEqual(expectedResult);
+      expect(typeof result).toEqual("string");
+    }
+  );
+});
