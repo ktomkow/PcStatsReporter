@@ -69,7 +69,7 @@ export default {
     useEventBus(eventBusKeys.RAM_SAMPLE_ARRIVED, setRamSample);
 
     const start = async () => {
-      await signalR.connect("http://192.168.0.133:11111", "reporter");
+      await signalR.connect("http://localhost:11111", "reporter");
     };
 
     const stop = () => {
