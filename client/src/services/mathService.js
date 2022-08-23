@@ -17,6 +17,6 @@ export function roundToString(number, digits) {
     return "";
   }
 
-  const rounded = number.toFixed(0);
+  const rounded = number.toFixed(digits);
   return rounded.toString();
 }

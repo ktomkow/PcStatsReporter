@@ -70,3 +70,22 @@ describe("roundToString to int", () => {
     }
   );
 });
+
+describe("roundToString when 2 fraction parts and round to 2 fraction parts (no 0 as last digit) then round", () => {
+  const cases = [
+    [1.12, "1.12"],
+    [0.11, "0.11"],
+    [-25.39, "-25.39"],
+    [1571.32, "1571.32"],
+  ];
+
+  test.each(cases)(
+    "When input %p and digits 2 then %p",
+    (input, expectedResult) => {
+      const result = roundToString(input, 2);
+
+      expect(result).toEqual(expectedResult);
+      expect(typeof result).toEqual("string");
+    }
+  );
+});
