@@ -1,5 +1,3 @@
-// todo: add tests
-
 export function roundToString(number, digits) {
   if (number !== 0) {
     if (!number || typeof number !== "number") {
