@@ -23,6 +23,7 @@ import {
 } from "echarts/components";
 import { GaugeChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
+import { roundToString } from "src/services/mathService";
 
 use([
   TitleComponent,
@@ -39,22 +40,19 @@ export default {
     const state = reactive({ usedRam: null });
     const store = useStore();
 
-    const totalRam = computed(() => store.state.pcInfo.totalRam ?? 0);
-
-    // const isLoading = computed(() => { // to use later
-    //   return !!store.state.pcInfo.total && !!state.usedRam;
-    // });
+    const totalRam = computed(() => store.state.pcInfo.totalRam);
+    const totalRamString = computed(() => roundToString(totalRam.value, 2));
 
     useEventBus(eventBusKeys.RAM_SAMPLE_ARRIVED, setRamValue);
 
     function setRamValue(data) {
-      state.usedRam = data.inUse.toFixed(2);
+      state.usedRam = roundToString(data.inUse, 2);
     }
 
     const ramValue = computed(() => {
       return [
         {
-          value: state.usedRam ?? 0,
+          value: state.usedRam,
           name: "RAM",
         },
       ];
@@ -67,7 +65,7 @@ export default {
       series: [
         {
           min: 0,
-          max: totalRam.value,
+          max: totalRam.value ?? 0,
           type: "gauge",
           startAngle: 90,
           endAngle: -270,
@@ -119,7 +117,7 @@ export default {
                 return "Loading..";
               }
 
-              return v + " GB / " + totalRam.value + " GB";
+              return v + " GB / " + totalRamString.value + " GB";
             },
           },
         },
