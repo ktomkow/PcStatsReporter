@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
+import { reactive, toRefs } from "vue";
 
 import Segment from "src/components/Segment";
 
