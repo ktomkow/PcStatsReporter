@@ -3,6 +3,7 @@
     <div class="text-h1"> New edition client </div>
     <InfoCard />
     <RamChart />
+    <CpuTemperatureChart />
     <div>
       <div class="bg-red-3 q-pa-md">{{ cpu }}</div>
       <div class="bg-green-3 q-pa-md">{{ gpu }}</div>
@@ -33,6 +34,7 @@ import { useRouter } from "vue-router";
 
 import InfoCard from "src/components/InfoCard";
 import RamChart from "src/components/RamChart";
+import CpuTemperatureChart from "src/components/CpuTemperatureChart";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
@@ -41,7 +43,7 @@ import { signalR } from "src/boot/signalr";
 
 export default {
   name: "MainPage",
-  components: { InfoCard, RamChart },
+  components: { InfoCard, RamChart, CpuTemperatureChart },
   setup(props) {
     const state = reactive({ cpu: "", gpu: "", ram: "" });
     const store = useStore();
