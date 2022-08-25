@@ -5,6 +5,7 @@
       <RamChart />
       <CpuTemperatureChart />
       <InfoCard />
+      <GpuTemperatureChart />
     </div>
     <div>
       <div class="bg-red-3 q-pa-md">{{ cpu }}</div>
@@ -37,6 +38,7 @@ import { useRouter } from "vue-router";
 import InfoCard from "src/components/InfoCard";
 import RamChart from "src/components/RamChart";
 import CpuTemperatureChart from "src/components/CpuTemperatureChart";
+import GpuTemperatureChart from "src/components/GpuTemperatureChart";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
@@ -45,7 +47,7 @@ import { signalR } from "src/boot/signalr";
 
 export default {
   name: "MainPage",
-  components: { InfoCard, RamChart, CpuTemperatureChart },
+  components: { InfoCard, RamChart, CpuTemperatureChart, GpuTemperatureChart },
   setup(props) {
     const state = reactive({ cpu: "", gpu: "", ram: "" });
     const store = useStore();

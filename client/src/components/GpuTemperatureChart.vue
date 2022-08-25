@@ -2,8 +2,8 @@
   <Segment :is-loading="isLoading" size="md">
     <LineChart
       :event-bus-key="chartBusKey"
-      title="CPU Temperature"
-      line-color="blue"
+      title="GPU Temperature"
+      line-color="green"
     />
   </Segment>
 </template>
@@ -25,16 +25,16 @@ export default {
   setup() {
     const state = reactive({ isLoading: true });
 
-    const chartBusKey = "mainCpuTemperature";
+    const chartBusKey = "mainGpuTemperature";
 
-    useEventBus(eventBusKeys.CPU_SAMPLE_ARRIVED, cpuSampleArrived);
+    useEventBus(eventBusKeys.GPU_SAMPLE_ARRIVED, cpuSampleArrived);
 
     function cpuSampleArrived(data) {
       state.isLoading = false;
 
       eventBus.emit(chartBusKey, {
-        value: data.temperature,
-        date: data.registeredAt,
+        value: data.coreTemperature,
+        date: new Date(),
       });
     }
 
