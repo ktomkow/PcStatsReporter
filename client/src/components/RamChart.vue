@@ -1,9 +1,7 @@
 <template>
-  <q-card flat bordered>
-    <q-card-section>
-      <VChart :option="options" style="height: 30em; width: 30em" />
-    </q-card-section>
-  </q-card>
+  <Segment size="md">
+    <VChart :option="options" />
+  </Segment>
 </template>
 
 <script>
@@ -15,6 +13,7 @@ import eventBusKeys from "src/consts/eventBusKeys";
 
 import VChart from "vue-echarts";
 import { use } from "echarts";
+import Segment from "src/components/Segment";
 
 import {
   TitleComponent,
@@ -35,7 +34,7 @@ use([
 
 export default {
   name: "RamChart",
-  components: { VChart },
+  components: { VChart, Segment },
   setup() {
     const state = reactive({ usedRam: null });
     const store = useStore();
