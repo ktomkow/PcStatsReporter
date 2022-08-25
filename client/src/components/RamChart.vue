@@ -1,6 +1,6 @@
 <template>
-  <Segment size="md">
-    <VChart :option="options" />
+  <Segment size="md" :is-loading="isLoading">
+    <VChart v-if="!isLoading" :option="options" />
   </Segment>
 </template>
 
@@ -57,6 +57,8 @@ export default {
       ];
     });
 
+    const isLoading = computed(() => !totalRam.value || !state.usedRam);
+
     const options = ref({
       title: {
         text: "RAM Usage",
@@ -112,7 +114,7 @@ export default {
             borderRadius: 20,
             borderWidth: 1,
             formatter: (v) => {
-              if (!totalRam.value || !state.usedRam) {
+              if (isLoading.value) {
                 return "Loading..";
               }
 
@@ -125,7 +127,7 @@ export default {
       ],
     });
 
-    return { ...toRefs(state), options };
+    return { ...toRefs(state), options, isLoading };
   },
 };
 </script>
