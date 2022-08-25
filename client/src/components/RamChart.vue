@@ -117,7 +117,9 @@ export default {
                 return "Loading..";
               }
 
-              return v + " GB / " + totalRamString.value + " GB";
+              return (
+                roundToString(v, 2) + " GB / " + totalRamString.value + " GB"
+              );
             },
           },
         },
