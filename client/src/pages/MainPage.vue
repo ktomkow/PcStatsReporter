@@ -1,9 +1,11 @@
 <template>
   <q-page class="flex flex-center column">
     <div class="text-h1"> New edition client </div>
-    <InfoCard />
-    <RamChart />
-    <CpuTemperatureChart />
+    <div class="cards-grid">
+      <RamChart />
+      <CpuTemperatureChart />
+      <InfoCard />
+    </div>
     <div>
       <div class="bg-red-3 q-pa-md">{{ cpu }}</div>
       <div class="bg-green-3 q-pa-md">{{ gpu }}</div>
@@ -83,4 +85,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.cards-grid {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto auto;
+  grid-gap: 1em;
+  grid-auto-flow: column;
+}
+</style>
