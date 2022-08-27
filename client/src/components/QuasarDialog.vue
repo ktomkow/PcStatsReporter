@@ -19,11 +19,11 @@
 </template>
 
 <script>
-import { useDialogPluginComponent } from 'quasar';
-import { defineComponent } from 'vue';
+import { useDialogPluginComponent } from "quasar";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'QuasarDialog',
+  name: "QuasarDialog",
   props: {
     message: {
       type: String,

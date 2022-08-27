@@ -1,10 +1,10 @@
-import { mount } from '@cypress/vue';
-import DialogWrapper from 'app/test/cypress/wrappers/DialogWrapper.vue';
-import QuasarDialog from '../QuasarDialog.vue';
+import { mount } from "@cypress/vue";
+import DialogWrapper from "app/test/cypress/wrappers/DialogWrapper.vue";
+import QuasarDialog from "../QuasarDialog.vue";
 
-describe('QuasarDialog', () => {
-  it('should show a dialog with a message', () => {
-    const message = 'Hello, I am a dialog';
+describe("QuasarDialog", () => {
+  it("should show a dialog with a message", () => {
+    const message = "Hello, I am a dialog";
     mount(DialogWrapper, {
       props: {
         component: QuasarDialog,
@@ -15,13 +15,13 @@ describe('QuasarDialog', () => {
     });
 
     cy.withinDialog((el) => {
-      cy.wrap(el).should('contain', message);
-      cy.dataCy('ok-button').click();
+      cy.wrap(el).should("contain", message);
+      cy.dataCy("ok-button").click();
     });
   });
 
-  it('should keep the dialog open when not dismissed', () => {
-    const message = 'Hello, I am a dialog';
+  it("should keep the dialog open when not dismissed", () => {
+    const message = "Hello, I am a dialog";
     mount(DialogWrapper, {
       props: {
         component: QuasarDialog,
@@ -36,7 +36,7 @@ describe('QuasarDialog', () => {
     cy.withinDialog({
       persistent: true,
       fn: (el) => {
-        cy.wrap(el).should('contain', message);
+        cy.wrap(el).should("contain", message);
       },
     });
   });

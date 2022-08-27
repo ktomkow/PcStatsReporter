@@ -1,7 +1,7 @@
 <template>
   <q-select
-    data-cy="select"
     v-model="selected"
+    data-cy="select"
     label="test options selection"
     :options="options"
     :loading="loading"
@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from "vue";
 
-const syncOptions = ['Option 1', 'Option 2', 'Option 3'];
+const syncOptions = ["Option 1", "Option 2", "Option 3"];
 
 export default defineComponent({
-  name: 'QuasarSelect',
+  name: "QuasarSelect",
   props: {
     loadOptionsAsync: {
       type: Boolean,

@@ -17,17 +17,15 @@
 
 const {
   injectDevServer,
-} = require('@quasar/quasar-app-extension-testing-e2e-cypress/cct-dev-server');
-
+} = require("@quasar/quasar-app-extension-testing-e2e-cypress/cct-dev-server");
 
 /**
  * @type {Cypress.PluginConfig}
  */
 module.exports = async (on, config) => {
-  
   // Enable component testing, you can safely remove this
   // if you don't plan to use Cypress for component tests
-  if (config.testingType === 'component') {
+  if (config.testingType === "component") {
     await injectDevServer(on, config);
   }
 

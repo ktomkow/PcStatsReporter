@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'QuasarPageSticky',
+  name: "QuasarPageSticky",
   props: {
     title: {
       type: String,

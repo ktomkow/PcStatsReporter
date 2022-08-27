@@ -16,16 +16,16 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'QuasarTooltip',
+  name: "QuasarTooltip",
   props: {
     modelValue: {
       type: String,
       required: true,
     },
   },
-  emits: { 'update:modelValue': (payload) => payload !== undefined },
+  emits: { "update:modelValue": (payload) => payload !== undefined },
 });
 </script>

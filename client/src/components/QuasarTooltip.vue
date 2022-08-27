@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import { ref, defineComponent } from 'vue';
+import { ref, defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'QuasarTooltip',
+  name: "QuasarTooltip",
   setup() {
     const showTooltip = ref(true);
 
