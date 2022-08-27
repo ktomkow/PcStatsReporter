@@ -6,6 +6,7 @@
       <CpuTemperatureChart />
       <InfoCard />
       <GpuTemperatureChart />
+      <CpuLoadTabs />
     </div>
     <div>
       <div class="bg-red-3 q-pa-md">{{ cpu }}</div>
@@ -44,10 +45,17 @@ import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
 
 import { signalR } from "src/boot/signalr";
+import CpuLoadTabs from "src/components/CpuLoadTabs.vue";
 
 export default {
   name: "MainPage",
-  components: { InfoCard, RamChart, CpuTemperatureChart, GpuTemperatureChart },
+  components: {
+    InfoCard,
+    RamChart,
+    CpuTemperatureChart,
+    GpuTemperatureChart,
+    CpuLoadTabs,
+  },
   setup(props) {
     const state = reactive({ cpu: "", gpu: "", ram: "" });
     const store = useStore();
