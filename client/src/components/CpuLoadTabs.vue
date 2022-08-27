@@ -57,7 +57,7 @@ export default {
 .griid {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
   grid-gap: 1em;
   grid-auto-flow: row;
 }
