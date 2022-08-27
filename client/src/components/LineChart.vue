@@ -103,7 +103,7 @@ export default {
           showSymbol: false,
           data: myData,
           areaStyle: {},
-          smooth: true,
+          smooth: false,
           color: props.lineColor,
         },
       ],
