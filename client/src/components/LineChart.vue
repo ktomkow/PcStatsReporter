@@ -1,5 +1,5 @@
 <template>
-  <VChart :option="options" style="width: 30em; height: 30em" />
+  <VChart :option="options" />
 </template>
 
 <script>
