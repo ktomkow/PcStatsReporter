@@ -1,12 +1,14 @@
 <template>
   <Segment>
     <div class="griid bg-orange-1 fit q-pa-md">
-      <LineChart :event-bus-key="key" title="  #1" line-color="green" />
-      <LineChart :event-bus-key="key" title="  #2" line-color="green" />
-      <LineChart :event-bus-key="key" title="  #3" line-color="green" />
-      <LineChart :event-bus-key="key" title="  #4" line-color="green" />
-      <LineChart :event-bus-key="key" title="  #5" line-color="green" />
-      <LineChart :event-bus-key="key" title="  #6" line-color="green" />
+      <LineChart
+        v-for="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+        :key="i"
+        :event-bus-key="key"
+        :title="'    #' + i"
+        y-axis-label-hidden
+        line-color="green"
+      />
     </div>
   </Segment>
 </template>
@@ -56,7 +58,7 @@ export default {
 <style lang="scss" scoped>
 .griid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
   grid-auto-rows: 1fr;
   grid-gap: 1em;
   grid-auto-flow: row;
