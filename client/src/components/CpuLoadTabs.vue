@@ -1,5 +1,5 @@
 <template>
-  <Segment>
+  <Segment :is-loading="isLoading">
     <div class="griid bg-orange-1 fit q-pa-md">
       <LineChart
         v-for="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
@@ -33,6 +33,8 @@ export default {
     const router = useRouter();
     const q = useQuasar();
 
+    const isLoading = computed(() => true);
+
     const key = "key";
 
     let id = null;
@@ -50,7 +52,7 @@ export default {
       clearInterval(id);
     });
 
-    return { ...toRefs(state), key };
+    return { ...toRefs(state), key, isLoading };
   },
 };
 </script>
