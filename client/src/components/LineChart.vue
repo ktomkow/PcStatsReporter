@@ -56,6 +56,11 @@ export default {
       required: false,
       default: "blue",
     },
+    yAxisLabelHidden: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   setup(props) {
     const state = reactive({});
@@ -95,6 +100,9 @@ export default {
         max: props.max,
         splitLine: {
           show: true,
+        },
+        axisLabel: {
+          formatter: props.yAxisLabelHidden ? "" : "{value}",
         },
       },
       series: [
