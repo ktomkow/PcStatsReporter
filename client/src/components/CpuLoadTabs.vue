@@ -7,10 +7,6 @@
       <LineChart :event-bus-key="key" title="  #4" line-color="green" />
       <LineChart :event-bus-key="key" title="  #5" line-color="green" />
       <LineChart :event-bus-key="key" title="  #6" line-color="green" />
-
-      <!-- <div class="q-pa-xl bg-red-2">a</div>
-      <div class="q-pa-xl bg-green-2">b</div>
-      <div class="q-pa-xl bg-blue-2">c</div> -->
     </div>
   </Segment>
 </template>
@@ -61,7 +57,7 @@ export default {
 .griid {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 33% 33% 33%;
+  grid-template-rows: repeat(3, 1fr);
   grid-gap: 1em;
   grid-auto-flow: row;
 }
