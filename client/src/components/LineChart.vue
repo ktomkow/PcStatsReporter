@@ -59,7 +59,7 @@ export default {
     yAxisLabelHidden: {
       type: Boolean,
       required: false,
-      default: true,
+      default: false,
     },
   },
   setup(props) {
