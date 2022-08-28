@@ -2,10 +2,10 @@
   <Segment :is-loading="isLoading">
     <div v-if="!isLoading" class="griid bg-orange-1 fit q-pa-md">
       <LineChart
-        v-for="i in ids"
+        v-for="i in threads"
         :key="i"
-        :event-bus-key="key"
-        :title="'    #' + i"
+        :event-bus-key="i.busKey"
+        :title="'#' + i.id"
         y-axis-label-hidden
         line-color="green"
       />
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed, ref, onMounted, onUnmounted } from "vue";
+import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -22,54 +22,62 @@ import { useRouter } from "vue-router";
 import Segment from "src/components/Segment.vue";
 import LineChart from "src/components/LineChart";
 
+import { useEventBus } from "src/composables/eventBusComposable";
+import eventBusKeys from "src/consts/eventBusKeys";
 import { eventBus } from "src/boot/eventBus";
 
 export default {
   name: "CpuLoadTabs",
   components: { Segment, LineChart },
   setup(props) {
-    const state = reactive({});
+    const state = reactive({
+      //{ id, busKey}
+      threads: [],
+    });
     const store = useStore();
     const router = useRouter();
     const q = useQuasar();
 
-    const isLoading = computed(() => ids.value.length < 1);
+    const isLoading = computed(() => state.threads.length < 1);
 
-    const key = "key";
+    useEventBus(eventBusKeys.CPU_SAMPLE_ARRIVED, cpuSampleArrived);
 
-    let id = null;
+    function cpuSampleArrived(data) {
+      if (state.threads.length < 1) {
+        insertThreads(data.cores);
+      }
 
-    const ids = ref([]);
-    let j = 0;
+      for (const core of data.cores) {
+        for (const thread of core.threadsLoad) {
+          const busKey = buildBusKey(core, thread);
+          eventBus.emit(busKey, {
+            value: thread.load,
+            date: data.registeredAt,
+          });
+        }
+      }
+    }
 
-    onMounted(() => {
-      setTimeout(() => {
-        ids.value = [1, 2, 3, 4];
-      }, 3000);
-      setTimeout(() => {
-        ids.value = [];
-        setTimeout(() => {
-          ids.value = [1, 2, 3, 4];
-          ids.value.push(5);
-          ids.value.push(6);
-          ids.value.push(7);
-          ids.value.push(8);
-        }, 0);
-      }, 6000);
-      id = setInterval(() => {
-        console.log("🚀 ~ file: CpuLoadTabs.vue ~ line 48 ~ setup ~ j", j);
-        eventBus.emit(key, {
-          value: Math.random() * 20 + 50,
-          date: new Date(),
-        });
-      }, 1000);
-    });
+    function insertThreads(cores) {
+      for (const core of cores) {
+        for (const thread of core.threadsLoad) {
+          state.threads.push({
+            id: buildThreadId(core, thread),
+            busKey: buildBusKey(core, thread),
+          });
+        }
+      }
+    }
 
-    onUnmounted(() => {
-      clearInterval(id);
-    });
+    function buildThreadId(core, thread) {
+      return core.coreNumber + "/" + thread.number;
+    }
 
-    return { ...toRefs(state), key, isLoading, ids };
+    function buildBusKey(core, thread) {
+      return "CPU_LOAD" + buildThreadId(core, thread);
+    }
+
+    return { ...toRefs(state), isLoading };
   },
 };
 </script>
