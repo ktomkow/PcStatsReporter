@@ -83,6 +83,10 @@ export default {
     const options = ref({
       title: {
         text: props.title,
+        textStyle: {
+          color: "grey",
+          fontSize: 14,
+        },
       },
       grid: {
         left: "8%",
