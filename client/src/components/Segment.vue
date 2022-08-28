@@ -1,6 +1,9 @@
 <template>
-  <q-card flat bordered :class="componentClass">
-    <q-card-section class="fit q-pa-none q-ma-none">
+  <q-card flat bordered :class="componentClass" class="layout">
+    <q-card-section class="q-pa-none q-ma-none">
+      <div class="q-px-sm text-h6">{{ title }}</div>
+    </q-card-section>
+    <q-card-section class="q-pa-none q-ma-none" style="flex: 1 0 0">
       <slot></slot>
     </q-card-section>
     <InnerLoad :show="isLoading" />
@@ -24,6 +27,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    title: {
+      type: String,
+      required: false,
+      default: null,
     },
   },
   setup(props) {
@@ -52,6 +60,11 @@ export default {
 </script>
 
 <style lang="css">
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 1fr;
+}
 .segment-md {
   width: 30em;
   height: 30em;
