@@ -7,6 +7,7 @@
       <InfoCard />
       <GpuTemperatureChart />
       <CpuLoadTabs />
+      <ColorPallete />
     </div>
     <div>
       <div class="bg-red-3 q-pa-md">{{ cpu }}</div>
@@ -40,6 +41,7 @@ import InfoCard from "src/components/InfoCard";
 import RamChart from "src/components/RamChart";
 import CpuTemperatureChart from "src/components/CpuTemperatureChart";
 import GpuTemperatureChart from "src/components/GpuTemperatureChart";
+import ColorPallete from "src/components/ColorPallete";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
@@ -55,6 +57,7 @@ export default {
     CpuTemperatureChart,
     GpuTemperatureChart,
     CpuLoadTabs,
+    ColorPallete,
   },
   setup(props) {
     const state = reactive({ cpu: "", gpu: "", ram: "" });
