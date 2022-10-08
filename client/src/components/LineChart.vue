@@ -1,5 +1,5 @@
 <template>
-  <VChart :option="options" />
+  <VChart ref="mychart" :option="options" />
 </template>
 
 <script>
@@ -65,8 +65,17 @@ export default {
   setup(props) {
     const state = reactive({});
     const myData = ref([]);
+    const mychart = ref(null);
 
     useEventBus(props.eventBusKey, addValue);
+
+    setTimeout(() => {
+      mychart.value.option.series[0].color = "red";
+      console.warn(
+        "🚀 ~ file: LineChart.vue ~ line 75 ~ setTimeout ~ mychart",
+        mychart.value
+      );
+    }, 5000);
 
     // {value, date}
     function addValue(item) {
@@ -122,7 +131,7 @@ export default {
       ],
     });
 
-    return { ...toRefs(state), options };
+    return { ...toRefs(state), options, mychart };
   },
 };
 </script>
