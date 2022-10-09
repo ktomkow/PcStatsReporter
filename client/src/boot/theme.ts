@@ -1,9 +1,8 @@
 import { boot } from "quasar/wrappers";
-import { LocalStorage, setCssVar, getCssVar } from "quasar";
+import { LocalStorage } from "quasar";
 import { THEME } from "src/consts/localStorageKeys";
-import ColorId, { ColorIds } from "src/models/Colors/ColorId";
 
-import Theme, { createEmptyTheme } from "src/models/Colors/Theme";
+import Theme from "src/models/Colors/Theme";
 
 import {
   loadThemeFromCss,
