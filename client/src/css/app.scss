@@ -1,11 +1,21 @@
 // app global css in SCSS form
 :root {
   --q-ram: #453cbb;
+  --q-cputemp: #000000;
 }
+
 .text-ram {
   color: var(--q-ram);
 }
 
 .bg-ram {
   background: var(--q-ram);
+}
+
+.text-cputemp {
+  color: var(--q-cputemp);
+}
+
+.bg-cputemp {
+  background: var(--q-cputemp);
 }
