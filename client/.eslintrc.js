@@ -16,7 +16,12 @@ module.exports = {
   },
 
   // Rules order is important, please avoid shuffling them
-  extends: ["plugin:vue/vue3-recommended", "eslint:recommended", "plugin:prettier/recommended"],
+  extends: [
+    "plugin:vue/vue3-recommended",
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+  ],
 
   plugins: [
     // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-files
