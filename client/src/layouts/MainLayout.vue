@@ -72,7 +72,7 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
-    const rightDrawerOpen = ref(false);
+    const rightDrawerOpen = ref(true);
 
     return {
       essentialLinks: linksList,
