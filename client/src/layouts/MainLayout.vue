@@ -18,7 +18,7 @@
           flat
           dense
           round
-          icon="menu"
+          icon="o_palette"
           aria-label="Menu"
           @click="toggleRightDrawer"
         />
