@@ -32,10 +32,8 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
-import { useStore } from "vuex";
+import { reactive, toRefs } from "vue";
 import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
 
 import InfoCard from "src/components/InfoCard";
 import RamChart from "src/components/RamChart";
@@ -59,10 +57,8 @@ export default {
     CpuLoadTabs,
     ColorPallete,
   },
-  setup(props) {
+  setup() {
     const state = reactive({ cpu: "", gpu: "", ram: "" });
-    const store = useStore();
-    const router = useRouter();
     const q = useQuasar();
 
     function showRegisterData(data) {
