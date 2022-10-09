@@ -16,7 +16,7 @@ module.exports = {
   },
 
   // Rules order is important, please avoid shuffling them
-  extends: ["plugin:vue/vue3-essential", "eslint:recommended", "prettier"],
+  extends: ["plugin:vue/vue3-recommended", "eslint:recommended", "plugin:prettier/recommended"],
 
   plugins: [
     // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-files
