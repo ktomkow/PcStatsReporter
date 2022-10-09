@@ -1,5 +1,5 @@
 <template>
-  <div>abc</div>
+  <div class="fit bg-blue-2"></div>
 </template>
 
 <script>
