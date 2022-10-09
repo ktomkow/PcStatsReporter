@@ -39,7 +39,7 @@ import InfoCard from "src/components/InfoCard";
 import RamChart from "src/components/RamChart";
 import CpuTemperatureChart from "src/components/CpuTemperatureChart";
 import GpuTemperatureChart from "src/components/GpuTemperatureChart";
-import ColorPallete from "src/components/ColorPallete";
+import ColorPallete from "src/components/themes/ColorPallete";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
