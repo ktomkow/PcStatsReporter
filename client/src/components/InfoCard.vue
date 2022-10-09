@@ -39,7 +39,7 @@ import Segment from "src/components/Segment";
 export default {
   name: "InfoCard",
   components: { Segment },
-  setup(props) {
+  setup() {
     const store = useStore();
     const state = reactive({});
 
