@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpR lFr">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -14,10 +14,18 @@
         <q-toolbar-title> Hardware Stats Reporter </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleRightDrawer"
+        />
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" bordered>
+    <q-drawer v-model="leftDrawerOpen" bordered side="left">
       <q-list>
         <q-item-label header> Essential Links </q-item-label>
 
@@ -27,6 +35,10 @@
           v-bind="link"
         />
       </q-list>
+    </q-drawer>
+
+    <q-drawer v-model="rightDrawerOpen" bordered side="right">
+      <div>dupa</div>
     </q-drawer>
 
     <q-page-container>
@@ -58,12 +70,17 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const rightDrawerOpen = ref(false);
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
+      rightDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
+      toggleRightDrawer() {
+        rightDrawerOpen.value = !rightDrawerOpen.value;
       },
     };
   },
