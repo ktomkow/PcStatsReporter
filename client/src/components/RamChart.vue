@@ -59,7 +59,7 @@ export default {
 
     const isLoading = computed(() => !totalRam.value || !state.usedRam);
 
-    watch(totalRam, (newValue, oldValue) => {
+    watch(totalRam, (newValue) => {
       options.value.series[0].max = newValue;
     });
 
