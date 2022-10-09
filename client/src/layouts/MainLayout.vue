@@ -38,7 +38,7 @@
     </q-drawer>
 
     <q-drawer v-model="rightDrawerOpen" bordered side="right">
-      <div>dupa</div>
+      <ThemesDrawer />
     </q-drawer>
 
     <q-page-container>
@@ -60,12 +60,14 @@ const linksList = [
 ];
 
 import { defineComponent, ref } from "vue";
+import ThemesDrawer from "src/components/themes/ThemesDrawer.vue";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
     EssentialLink,
+    ThemesDrawer,
   },
 
   setup() {
