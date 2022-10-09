@@ -1,1 +1,21 @@
 // app global css in SCSS form
+:root {
+  --q-ram-usage-line: #a0a0a0;
+  --q-cpu-temp-line: #a0a0a0;
+}
+
+.text-ram-usage-line {
+  color: var(--q-ram-usage-line);
+}
+
+.bg-ram-usage-line {
+  background: var(--q-ram-usage-line);
+}
+
+.text-cpu-temp-line {
+  color: var(--q-cpu-temp-line);
+}
+
+.bg-cpu-temp-line {
+  background: var(--q-cpu-temp-line);
+}

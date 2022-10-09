@@ -1,5 +1,5 @@
 <template>
-  <VChart :option="options" style="width: 30em; height: 30em" />
+  <VChart ref="mychart" :option="options" />
 </template>
 
 <script>
@@ -33,7 +33,8 @@ export default {
     },
     title: {
       type: String,
-      required: true,
+      required: false,
+      default: "",
     },
     max: {
       type: Number,
@@ -55,12 +56,26 @@ export default {
       required: false,
       default: "blue",
     },
+    yAxisLabelHidden: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props) {
     const state = reactive({});
     const myData = ref([]);
+    const mychart = ref(null);
 
     useEventBus(props.eventBusKey, addValue);
+
+    setTimeout(() => {
+      mychart.value.option.series[0].color = "red";
+      console.warn(
+        "🚀 ~ file: LineChart.vue ~ line 75 ~ setTimeout ~ mychart",
+        mychart.value
+      );
+    }, 5000);
 
     // {value, date}
     function addValue(item) {
@@ -77,6 +92,10 @@ export default {
     const options = ref({
       title: {
         text: props.title,
+        textStyle: {
+          color: "grey",
+          fontSize: 14,
+        },
       },
       grid: {
         left: "8%",
@@ -95,6 +114,9 @@ export default {
         splitLine: {
           show: true,
         },
+        axisLabel: {
+          formatter: props.yAxisLabelHidden ? "" : "{value}",
+        },
       },
       series: [
         {
@@ -103,13 +125,13 @@ export default {
           showSymbol: false,
           data: myData,
           areaStyle: {},
-          smooth: true,
+          smooth: false,
           color: props.lineColor,
         },
       ],
     });
 
-    return { ...toRefs(state), options };
+    return { ...toRefs(state), options, mychart };
   },
 };
 </script>

@@ -5,8 +5,9 @@ module.exports = {
   root: true,
 
   parserOptions: {
-    parser: "@babel/eslint-parser",
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    extraFileExtensions: [".vue"],
+    parser: "@typescript-eslint/parser",
+    ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
     sourceType: "module", // Allows for the use of imports
   },
 
@@ -16,19 +17,10 @@ module.exports = {
 
   // Rules order is important, please avoid shuffling them
   extends: [
-    // Base ESLint recommended rules
-    // 'eslint:recommended',
-
-    // Uncomment any of the lines below to choose desired strictness,
-    // but leave only one uncommented!
-    // See https://eslint.vuejs.org/rules/#available-rules
-    // "plugin:vue/vue3-essential", // Priority A: Essential (Error Prevention)
-    // 'plugin:vue/vue3-strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
-    "plugin:vue/vue3-recommended", // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
-
-    // https://github.com/prettier/eslint-config-prettier#installation
-    // usage with Prettier, provided by 'eslint-config-prettier'.
+    "plugin:vue/vue3-recommended",
+    "eslint:recommended",
     "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
   ],
 
   plugins: [
@@ -36,6 +28,7 @@ module.exports = {
     // required to lint *.vue files
     "vue",
     "prettier",
+    "@typescript-eslint",
     // https://github.com/typescript-eslint/typescript-eslint/issues/389#issuecomment-509292674
     // Prettier has not been included as plugin to avoid performance impact
     // add it as an extension for your IDE
@@ -64,5 +57,23 @@ module.exports = {
     "vue/multi-word-component-names": "off",
     "brace-style": ["error", "1tbs"],
     "prettier/prettier": "error",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "no-extra-boolean-cast": "warn",
+    "no-unused-vars": "warn",
   },
+  overrides: [
+    {
+      files: ["./**/*spec.js"],
+      rules: {
+        "no-undef": ["off"],
+      },
+    },
+    {
+      files: ["./**/vue.config.js", "./**/jest.config.js", "electron-main.js"],
+      rules: {
+        "no-undef": ["off"],
+        "no-empty": ["off"],
+      },
+    },
+  ],
 };

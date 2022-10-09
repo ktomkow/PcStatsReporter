@@ -1,13 +1,11 @@
 <template>
-  <q-card flat bordered>
-    <q-card-section>
-      <VChart :option="options" style="height: 30em; width: 30em" />
-    </q-card-section>
-  </q-card>
+  <Segment size="md" :is-loading="isLoading">
+    <VChart v-if="!isLoading" :option="options" />
+  </Segment>
 </template>
 
 <script>
-import { reactive, toRefs, computed, ref } from "vue";
+import { reactive, toRefs, computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 
 import { useEventBus } from "src/composables/eventBusComposable";
@@ -15,6 +13,7 @@ import eventBusKeys from "src/consts/eventBusKeys";
 
 import VChart from "vue-echarts";
 import { use } from "echarts";
+import Segment from "src/components/Segment";
 
 import {
   TitleComponent,
@@ -23,6 +22,7 @@ import {
 } from "echarts/components";
 import { GaugeChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
+import { roundToString } from "src/services/mathService";
 
 use([
   TitleComponent,
@@ -34,30 +34,33 @@ use([
 
 export default {
   name: "RamChart",
-  components: { VChart },
+  components: { VChart, Segment },
   setup() {
     const state = reactive({ usedRam: null });
     const store = useStore();
 
-    const totalRam = computed(() => store.state.pcInfo.totalRam ?? 0);
-
-    // const isLoading = computed(() => { // to use later
-    //   return !!store.state.pcInfo.total && !!state.usedRam;
-    // });
+    const totalRam = computed(() => store.state.pcInfo.totalRam);
+    const totalRamString = computed(() => roundToString(totalRam.value, 2));
 
     useEventBus(eventBusKeys.RAM_SAMPLE_ARRIVED, setRamValue);
 
     function setRamValue(data) {
-      state.usedRam = data.inUse.toFixed(2);
+      state.usedRam = roundToString(data.inUse, 2);
     }
 
     const ramValue = computed(() => {
       return [
         {
-          value: state.usedRam ?? 0,
+          value: state.usedRam,
           name: "RAM",
         },
       ];
+    });
+
+    const isLoading = computed(() => !totalRam.value || !state.usedRam);
+
+    watch(totalRam, (newValue, oldValue) => {
+      options.value.series[0].max = newValue;
     });
 
     const options = ref({
@@ -67,7 +70,7 @@ export default {
       series: [
         {
           min: 0,
-          max: totalRam.value,
+          max: totalRam.value ?? 0,
           type: "gauge",
           startAngle: 90,
           endAngle: -270,
@@ -115,18 +118,20 @@ export default {
             borderRadius: 20,
             borderWidth: 1,
             formatter: (v) => {
-              if (!totalRam.value || !state.usedRam) {
+              if (isLoading.value) {
                 return "Loading..";
               }
 
-              return v + " GB / " + totalRam.value + " GB";
+              return (
+                roundToString(v, 2) + " GB / " + totalRamString.value + " GB"
+              );
             },
           },
         },
       ],
     });
 
-    return { ...toRefs(state), options };
+    return { ...toRefs(state), options, isLoading };
   },
 };
 </script>

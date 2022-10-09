@@ -1,8 +1,14 @@
 <template>
   <q-page class="flex flex-center column">
     <div class="text-h1"> New edition client </div>
-    <InfoCard />
-    <RamChart />
+    <div class="cards-grid">
+      <RamChart />
+      <CpuTemperatureChart />
+      <InfoCard />
+      <GpuTemperatureChart />
+      <CpuLoadTabs />
+      <ColorPallete />
+    </div>
     <div>
       <div class="bg-red-3 q-pa-md">{{ cpu }}</div>
       <div class="bg-green-3 q-pa-md">{{ gpu }}</div>
@@ -33,15 +39,26 @@ import { useRouter } from "vue-router";
 
 import InfoCard from "src/components/InfoCard";
 import RamChart from "src/components/RamChart";
+import CpuTemperatureChart from "src/components/CpuTemperatureChart";
+import GpuTemperatureChart from "src/components/GpuTemperatureChart";
+import ColorPallete from "src/components/ColorPallete";
 
 import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
 
 import { signalR } from "src/boot/signalr";
+import CpuLoadTabs from "src/components/CpuLoadTabs.vue";
 
 export default {
   name: "MainPage",
-  components: { InfoCard, RamChart },
+  components: {
+    InfoCard,
+    RamChart,
+    CpuTemperatureChart,
+    GpuTemperatureChart,
+    CpuLoadTabs,
+    ColorPallete,
+  },
   setup(props) {
     const state = reactive({ cpu: "", gpu: "", ram: "" });
     const store = useStore();
@@ -69,7 +86,7 @@ export default {
     useEventBus(eventBusKeys.RAM_SAMPLE_ARRIVED, setRamSample);
 
     const start = async () => {
-      await signalR.connect("http://192.168.0.133:11111", "reporter");
+      await signalR.connect("http://localhost:11111", "reporter");
     };
 
     const stop = () => {
@@ -81,4 +98,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.cards-grid {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-template-rows: auto auto;
+  grid-gap: 1em;
+  grid-auto-flow: column;
+}
+</style>

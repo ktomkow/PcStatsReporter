@@ -13,7 +13,7 @@ const { configure } = require("quasar/wrappers");
 module.exports = configure(function (ctx) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
-    supportTS: false,
+    supportTS: true,
 
     // https://quasar.dev/quasar-cli/prefetch-feature
     // preFetch: true,
@@ -28,6 +28,7 @@ module.exports = configure(function (ctx) {
       "statisticsCollector",
       "signalr",
       "dataCollector",
+      "theme",
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -76,7 +77,7 @@ module.exports = configure(function (ctx) {
       chainWebpack(chain) {
         chain
           .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+          .use(ESLintPlugin, [{ extensions: ["js", "vue", "ts"] }]);
       },
     },
 
@@ -104,7 +105,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Notify"],
+      plugins: ["Notify", "LocalStorage"],
     },
 
     // animations: 'all', // --- includes all animations

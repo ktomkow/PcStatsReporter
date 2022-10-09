@@ -7,5 +7,5 @@ export function setCpuName(state, cpuName) {
 }
 
 export function setTotalRam(state, totalRam) {
-  state.totalRam = totalRam.toFixed(2);
+  state.totalRam = totalRam;
 }

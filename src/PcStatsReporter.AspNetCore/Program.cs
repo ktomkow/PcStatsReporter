@@ -1,6 +1,9 @@
 using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PcStatsReporter.AspNetCore;
+using PcStatsReporter.AspNetCore.DummyClient;
 using PcStatsReporter.AspNetCore.Handlers;
 using PcStatsReporter.AspNetCore.Mappers;
 using PcStatsReporter.AspNetCore.ServiceProviders;
@@ -41,13 +44,20 @@ builder.Services.AutoRegisterHandlersFromAssemblyOf<RegisteredHandler>();
 
 builder.Services.AddSignalR();
 
+ServiceSettings settings = new();
+builder.Configuration.GetSection(nameof(ServiceSettings)).Bind(settings);
+
+if (settings.UseDummyClient)
+{
+    builder.Services.AddDummyClient();
+}
+
 var app = builder.Build();
 
 app.UseCustomSwagger();
 
 app.UseRouting();
 app.MapControllers();
-
 
 app.UseCors(corsBuilder =>
 {
