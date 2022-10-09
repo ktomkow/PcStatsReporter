@@ -31,10 +31,10 @@ export default {
     const state = reactive({ isLoading: true });
     const chartBusKey = "mainCpuTemperature";
 
-    const lineColor = ref(getPaletteColor(ColorId.CpuTempLine));
-    useEventBus(eventBusKeys.COLOR_UPDATED, colorChanged);
     useEventBus(eventBusKeys.CPU_SAMPLE_ARRIVED, cpuSampleArrived);
 
+    const lineColor = ref(getPaletteColor(ColorId.CpuTempLine));
+    useEventBus(eventBusKeys.COLOR_UPDATED, colorChanged);
     function colorChanged(newColor) {
       if (newColor.id === ColorId.CpuTempLine) {
         lineColor.value = newColor.value;
