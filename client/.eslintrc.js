@@ -54,6 +54,7 @@ module.exports = {
     "prettier/prettier": "error",
     "@typescript-eslint/explicit-function-return-type": "off",
     "no-extra-boolean-cast": "warn",
+    "no-unused-vars": "warn",
   },
   overrides: [
     {
