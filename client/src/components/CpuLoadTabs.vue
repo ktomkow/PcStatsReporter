@@ -15,9 +15,6 @@
 
 <script>
 import { reactive, toRefs, computed } from "vue";
-import { useStore } from "vuex";
-import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
 
 import Segment from "src/components/Segment.vue";
 import LineChart from "src/components/LineChart";
@@ -29,14 +26,11 @@ import { eventBus } from "src/boot/eventBus";
 export default {
   name: "CpuLoadTabs",
   components: { Segment, LineChart },
-  setup(props) {
+  setup() {
     const state = reactive({
       //{ id, busKey}
       threads: [],
     });
-    const store = useStore();
-    const router = useRouter();
-    const q = useQuasar();
 
     const isLoading = computed(() => state.threads.length < 1);
 
