@@ -6,7 +6,7 @@
         no-caps
         label="RAM"
         icon-right="colorize"
-        color="ram"
+        color="ram-usage-line"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-color v-model="ram" dark />
@@ -17,7 +17,7 @@
         no-caps
         label="CPU temp"
         icon-right="colorize"
-        color="cputemp"
+        color="cpu-temp-line"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-color v-model="cputemp" dark />
@@ -33,7 +33,7 @@ import { reactive, toRefs, computed, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
-import { setCssVar, getCssVar, colors } from "quasar";
+import { setCssVar, getCssVar } from "quasar";
 
 import { THEME } from "src/consts/localStorageKeys";
 
@@ -41,6 +41,7 @@ import Segment from "src/components/Segment.vue";
 
 import Theme from "src/models/Colors/Theme";
 import Color from "src/models/Colors/Color";
+import ColorId from "src/models/Colors/ColorId";
 
 interface State {
   ram: string;
@@ -53,15 +54,14 @@ export default {
   components: { Segment },
   setup(props: any) {
     const $q = useQuasar();
-    const { getPaletteColor } = colors;
     const model: State = {
       ram: "#000000",
       cputemp: "#000000",
       theme: {
         name: "",
         colors: [
-          { id: "ram", value: "" },
-          { id: "cputemp", value: "" },
+          { id: ColorId.RamUsageLine, value: "" },
+          { id: ColorId.CpuTempLine, value: "" },
         ],
       },
     };
@@ -71,14 +71,14 @@ export default {
     onMounted(() => {
       const theme: Theme | null = $q.localStorage.getItem(THEME);
       if (theme) {
-        const r = theme.colors.find((x) => x.id === "ram");
+        const r = theme.colors.find((x) => x.id === ColorId.RamUsageLine);
         if (r && r.value) {
-          setCssVar("ram", r.value);
+          setCssVar(ColorId.RamUsageLine, r.value);
         }
 
-        const c = theme.colors.find((x) => x.id === "cputemp");
+        const c = theme.colors.find((x) => x.id === ColorId.CpuTempLine);
         if (c && c.value) {
-          setCssVar("cputemp", c.value);
+          setCssVar(ColorId.CpuTempLine, c.value);
         }
       }
 
@@ -86,15 +86,15 @@ export default {
         "🚀 ~ file: ColorPallete.vue ~ line 73 ~ onMounted ~ theme",
         theme
       );
-      state.ram = getCssVar("ram") ?? "#000000";
-      state.cputemp = getCssVar("cputemp") ?? "#000000";
+      state.ram = getCssVar(ColorId.RamUsageLine) ?? "#000000";
+      state.cputemp = getCssVar(ColorId.CpuTempLine) ?? "#000000";
 
-      const ramColor = state.theme.colors.find((x) => x.id === "ram");
+      const ramColor = state.theme.colors.find((x) => ColorId.RamUsageLine);
       if (ramColor) {
         ramColor.value = state.ram;
       }
 
-      const cpuTempColor = state.theme.colors.find((x) => x.id === "cputemp");
+      const cpuTempColor = state.theme.colors.find((x) => ColorId.CpuTempLine);
       if (cpuTempColor) {
         cpuTempColor.value = state.cputemp;
       }
@@ -103,14 +103,14 @@ export default {
     watch(
       () => state.ram,
       (nv: any, old: any) => {
-        setCssVar("ram", nv);
+        setCssVar(ColorId.RamUsageLine, nv);
       }
     );
 
     watch(
       () => state.cputemp,
       (nv: any, old: any) => {
-        setCssVar("cputemp", nv);
+        setCssVar(ColorId.CpuTempLine, nv);
       }
     );
 
@@ -121,8 +121,8 @@ export default {
       const theme: Theme = {
         name: "testowy",
         colors: [
-          { id: "ram", value: state.ram },
-          { id: "cputemp", value: state.cputemp },
+          { id: ColorId.RamUsageLine, value: state.ram },
+          { id: ColorId.CpuTempLine, value: state.cputemp },
         ],
       };
 

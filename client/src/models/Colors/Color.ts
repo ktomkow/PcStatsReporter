@@ -1,8 +1,6 @@
-export default interface Color {
-  id: string;
-  value: string;
-}
+import ColorId from "src/models/Colors/ColorId";
 
-function create(value: string): Color {
-  return { value: "aaa", id: "default" };
+export default interface Color {
+  id: ColorId;
+  value: string;
 }
