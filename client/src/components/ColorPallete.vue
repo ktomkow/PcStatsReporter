@@ -34,7 +34,7 @@ import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { setCssVar, getCssVar } from "quasar";
-
+import { setCssColor } from "src/features/themes/themeCssTransfer";
 import { THEME } from "src/consts/localStorageKeys";
 
 import Segment from "src/components/Segment.vue";
@@ -103,14 +103,16 @@ export default {
     watch(
       () => state.ram,
       (nv: any, old: any) => {
-        setCssVar(ColorId.RamUsageLine, nv);
+        // setCssVar(ColorId.RamUsageLine, nv);
+        setCssColor({ id: ColorId.RamUsageLine, value: nv });
       }
     );
 
     watch(
       () => state.cputemp,
       (nv: any, old: any) => {
-        setCssVar(ColorId.CpuTempLine, nv);
+        // setCssVar(ColorId.CpuTempLine, nv);
+        setCssColor({ id: ColorId.CpuTempLine, value: nv });
       }
     );
 

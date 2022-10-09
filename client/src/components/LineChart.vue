@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, ref } from "vue";
+import { reactive, toRefs, ref, watch } from "vue";
 import "echarts";
 import VChart from "vue-echarts";
 import { use } from "echarts";
@@ -69,13 +69,12 @@ export default {
 
     useEventBus(props.eventBusKey, addValue);
 
-    setTimeout(() => {
-      mychart.value.option.series[0].color = "red";
-      console.warn(
-        "🚀 ~ file: LineChart.vue ~ line 75 ~ setTimeout ~ mychart",
-        mychart.value
-      );
-    }, 5000);
+    watch(
+      () => props.lineColor,
+      (newValue) => {
+        mychart.value.option.series[0].color = newValue;
+      }
+    );
 
     // {value, date}
     function addValue(item) {
