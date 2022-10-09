@@ -7,7 +7,7 @@ module.exports = {
   parserOptions: {
     extraFileExtensions: [".vue"],
     parser: "@typescript-eslint/parser",
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
     sourceType: "module", // Allows for the use of imports
   },
 
