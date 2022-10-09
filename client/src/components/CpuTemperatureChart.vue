@@ -18,7 +18,6 @@ import { useEventBus } from "src/composables/eventBusComposable";
 import eventBusKeys from "src/consts/eventBusKeys";
 import { eventBus } from "src/boot/eventBus";
 import ColorId from "src/models/Colors/ColorId";
-import Color from "src/models/Colors/Color";
 
 import LineChart from "src/components/LineChart";
 
