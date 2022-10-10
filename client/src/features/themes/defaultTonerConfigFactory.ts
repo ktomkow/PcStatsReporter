@@ -3,15 +3,15 @@ import ColorId from "src/models/Colors/ColorId";
 
 export default function createDefaultTonerConfigCollection(): TonerConfig[] {
   return [
-    {
-      source: ColorId.MainBackground,
-      target: ColorId.MainBackgroundDarker,
-      darken: true,
-    },
-    {
-      source: ColorId.MainBackground,
-      target: ColorId.MainBackgroundLighter,
-      darken: false,
-    },
+    // {
+    //   source: ColorId.MainBackground,
+    //   target: ColorId.MainBackgroundDarker,
+    //   darken: true,
+    // },
+    // {
+    //   source: ColorId.MainBackground,
+    //   target: ColorId.MainBackgroundLighter,
+    //   darken: false,
+    // },
   ];
 }
