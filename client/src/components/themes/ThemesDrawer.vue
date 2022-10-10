@@ -2,6 +2,8 @@
   <div class="fit q-pa-sm q-gutter-sm">
     <ColorPickButton :color-id="ColorId.RamUsageLine" label="Ram" />
     <ColorPickButton :color-id="ColorId.CpuTempLine" label="Cpu" />
+    <ColorPickButton :color-id="ColorId.MainBackground" label="Background" />
+    <ColorPickButton :color-id="ColorId.Toolbar" label="Toolbar" />
   </div>
 </template>
 

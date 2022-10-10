@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="hHh lpR lFr">
+  <q-layout view="hHh lpR lFr" class="bg-main-background">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="bg-toolbar">
         <q-btn
           flat
           dense
@@ -25,7 +25,12 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" bordered side="left">
+    <q-drawer
+      v-model="leftDrawerOpen"
+      bordered
+      side="left"
+      class="bg-main-background-lighter"
+    >
       <q-list>
         <q-item-label header> Essential Links </q-item-label>
 
@@ -37,7 +42,12 @@
       </q-list>
     </q-drawer>
 
-    <q-drawer v-model="rightDrawerOpen" bordered side="right">
+    <q-drawer
+      v-model="rightDrawerOpen"
+      bordered
+      side="right"
+      class="bg-main-background-darker"
+    >
       <ThemesDrawer />
     </q-drawer>
 
@@ -71,7 +81,7 @@ export default defineComponent({
   },
 
   setup() {
-    const leftDrawerOpen = ref(false);
+    const leftDrawerOpen = ref(true);
     const rightDrawerOpen = ref(true);
 
     return {

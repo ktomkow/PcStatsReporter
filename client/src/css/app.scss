@@ -1,7 +1,43 @@
 // app global css in SCSS form
 :root {
+  --q-main-background: #a0a0a0;
+  --q-main-background-darker: #a0a0a0;
+  --q-main-background-lighter: #a0a0a0;
   --q-ram-usage-line: #a0a0a0;
   --q-cpu-temp-line: #a0a0a0;
+  --q-toolbar: #a0a0a0;
+}
+
+.text-main-background {
+  color: var(--q-main-background);
+}
+
+.bg-main-background {
+  background: var(--q-main-background);
+}
+
+.text-main-background-darker {
+  color: var(--q-main-background-darker);
+}
+
+.bg-main-background-darker {
+  background: var(--q-main-background-darker);
+}
+
+.text-main-background-lighter {
+  color: var(--q-main-background-lighter);
+}
+
+.bg-main-background-lighter {
+  background: var(--q-main-background-lighter);
+}
+
+.text-main-background {
+  color: var(--q-main-background);
+}
+
+.bg-main-background {
+  background: var(--q-main-background);
 }
 
 .text-ram-usage-line {
@@ -18,4 +54,12 @@
 
 .bg-cpu-temp-line {
   background: var(--q-cpu-temp-line);
+}
+
+.text-toolbar {
+  color: var(--q-toolbar);
+}
+
+.bg-toolbar {
+  background: var(--q-toolbar);
 }

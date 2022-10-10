@@ -29,6 +29,7 @@ module.exports = configure(function (ctx) {
       "signalr",
       "dataCollector",
       "theme",
+      "colorToner",
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
