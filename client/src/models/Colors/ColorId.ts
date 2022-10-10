@@ -3,7 +3,7 @@ enum ColorId {
   RamUsageLine = "ram-usage-line",
   MainBackground = "main-background",
   MainBackgroundDarker = "main-background-darker",
-  MainBackgroundLighter = "main-background-ligther",
+  MainBackgroundLighter = "main-background-lighter",
   Toolbar = "toolbar",
 }
 
