@@ -35,10 +35,6 @@ export default boot(async (/* { app, router, ... } */) => {
     }
 
     const config = tonerConfig.filter((x) => x.source === color.id);
-    console.log(
-      "🚀 ~ file: colorToner.ts ~ line 38 ~ handleColorChange ~ config",
-      config
-    );
     if (!config) {
       return;
     }

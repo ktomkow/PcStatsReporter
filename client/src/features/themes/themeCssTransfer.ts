@@ -31,10 +31,6 @@ export function loadThemeFromCss(): Theme {
 }
 
 export function setCssColor(color: Color): void {
-  console.log(
-    "🚀 ~ file: themeCssTransfer.ts ~ line 34 ~ setCssColor ~ color",
-    color
-  );
   const eventBusKey = eventBusKeys.COLOR_UPDATED;
 
   setCssVar(color.id, color.value);
