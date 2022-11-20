@@ -1,6 +1,8 @@
+import type { Config } from "@jest/types";
+
 const esModules = ["quasar", "quasar/lang", "lodash-es"].join("|");
 
-module.exports = {
+const config: Config.InitialOptions = {
   globals: {
     __DEV__: true,
     // TODO: Remove if resolved natively
@@ -8,13 +10,18 @@ module.exports = {
     "vue-jest": {
       pug: { doctype: "html" },
     },
+    "ts-jest": {
+      tsconfig: {
+        rootDir: ".",
+      },
+    },
   },
   // Jest assumes we are testing in node environment, specify jsdom environment instead
   testEnvironment: "jsdom",
   // noStackTrace: true,
   // bail: true,
   // cache: false,
-  // verbose: true,
+  verbose: true,
   // watch: true,
   reporters: ["jest-teamcity"],
   collectCoverage: false,
@@ -22,6 +29,7 @@ module.exports = {
   collectCoverageFrom: [
     "<rootDir>/src/**/*.vue",
     "<rootDir>/src/**/*.js",
+    "<rootDir>/src/**/*.ts",
     "<rootDir>/src/**/*.jsx",
   ],
   // Needed in JS codebases too because of feature flags
@@ -35,10 +43,10 @@ module.exports = {
     },
   },
   testMatch: [
-    "<rootDir>/test/jest/__tests__/**/*.(spec|test).js",
-    "<rootDir>/src/**/*.jest.(spec|test).js",
+    "<rootDir>/test/jest/__tests__/**/*.(spec|test).(ts|js)",
+    "<rootDir>/src/**/*.jest.(spec|test).(ts|js)",
   ],
-  moduleFileExtensions: ["vue", "js", "jsx", "json"],
+  moduleFileExtensions: ["vue", "js", "jsx", "json", "ts"],
   moduleNameMapper: {
     "^quasar$": "quasar/dist/quasar.esm.prod.js",
     "^~/(.*)$": "<rootDir>/$1",
@@ -56,6 +64,7 @@ module.exports = {
     ".*\\.js$": "babel-jest",
     ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$":
       "jest-transform-stub",
+    "^.+\\.tsx?$": "ts-jest",
     // use these if NPM is being flaky, care as hosting could interfere with these
     // '.*\\.vue$': '@quasar/quasar-app-extension-testing-unit-jest/node_modules/vue-jest',
     // '.*\\.js$': '@quasar/quasar-app-extension-testing-unit-jest/node_modules/babel-jest'
@@ -63,3 +72,5 @@ module.exports = {
   transformIgnorePatterns: [`node_modules/(?!(${esModules}))`],
   snapshotSerializers: ["jest-serializer-vue"],
 };
+
+export default config;

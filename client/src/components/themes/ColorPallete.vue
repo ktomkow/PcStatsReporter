@@ -29,18 +29,15 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, computed, watch, onMounted } from "vue";
-import { useStore } from "vuex";
+import { reactive, toRefs, watch, onMounted } from "vue";
 import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
 import { setCssVar, getCssVar } from "quasar";
-
+import { setCssColor } from "src/features/themes/themeCssTransfer";
 import { THEME } from "src/consts/localStorageKeys";
 
 import Segment from "src/components/Segment.vue";
 
 import Theme from "src/models/Colors/Theme";
-import Color from "src/models/Colors/Color";
 import ColorId from "src/models/Colors/ColorId";
 
 interface State {
@@ -52,7 +49,7 @@ interface State {
 export default {
   name: "ColorPallete",
   components: { Segment },
-  setup(props: any) {
+  setup() {
     const $q = useQuasar();
     const model: State = {
       ram: "#000000",
@@ -82,19 +79,21 @@ export default {
         }
       }
 
-      console.log(
-        "🚀 ~ file: ColorPallete.vue ~ line 73 ~ onMounted ~ theme",
-        theme
-      );
       state.ram = getCssVar(ColorId.RamUsageLine) ?? "#000000";
       state.cputemp = getCssVar(ColorId.CpuTempLine) ?? "#000000";
 
-      const ramColor = state.theme.colors.find((x) => ColorId.RamUsageLine);
+      const ramColor = state.theme.colors.find(
+        (x) => x.id === ColorId.RamUsageLine
+      );
+
       if (ramColor) {
         ramColor.value = state.ram;
       }
 
-      const cpuTempColor = state.theme.colors.find((x) => ColorId.CpuTempLine);
+      const cpuTempColor = state.theme.colors.find(
+        (x) => x.id === ColorId.CpuTempLine
+      );
+
       if (cpuTempColor) {
         cpuTempColor.value = state.cputemp;
       }
@@ -102,20 +101,17 @@ export default {
 
     watch(
       () => state.ram,
-      (nv: any, old: any) => {
-        setCssVar(ColorId.RamUsageLine, nv);
+      (newValue: any) => {
+        setCssColor({ id: ColorId.RamUsageLine, value: newValue });
       }
     );
 
     watch(
       () => state.cputemp,
-      (nv: any, old: any) => {
-        setCssVar(ColorId.CpuTempLine, nv);
+      (newValue: any) => {
+        setCssColor({ id: ColorId.CpuTempLine, value: newValue });
       }
     );
-
-    const store = useStore();
-    const router = useRouter();
 
     const save = () => {
       const theme: Theme = {
