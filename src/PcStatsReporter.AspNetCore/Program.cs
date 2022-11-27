@@ -2,7 +2,6 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PcStatsReporter.AspNetCore;
 using PcStatsReporter.AspNetCore.Configuration;
 using PcStatsReporter.AspNetCore.DummyClient;
 using PcStatsReporter.AspNetCore.Handlers;
@@ -45,10 +44,10 @@ builder.Services.AutoRegisterHandlersFromAssemblyOf<RegisteredHandler>();
 
 builder.Services.AddSignalR();
 
-ServiceSettings settings = new();
-builder.Configuration.GetSection(nameof(ServiceSettings).Replace("Settings",string.Empty)).Bind(settings);
+BuiltInCollectorSettings builtInCollectorSettings = new();
+builder.Configuration.GetSection(nameof(BuiltInCollectorSettings).Replace("Settings",string.Empty)).Bind(builtInCollectorSettings);
 
-if (settings.UseDummyClient)
+if (builtInCollectorSettings.UseDummyClient)
 {
     builder.Services.AddDummyClient();
 }
