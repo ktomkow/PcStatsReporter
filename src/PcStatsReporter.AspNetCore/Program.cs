@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using PcStatsReporter.AspNetCore.Configuration;
 using PcStatsReporter.AspNetCore.DummyClient;
 using PcStatsReporter.AspNetCore.Handlers;
@@ -81,8 +82,21 @@ app.UseReporterGrpcServer();
 
 app.MapHub<ReporterHub>("/reporter");
 
-var configPrinter = app.Services.GetService<IConfigPrinter>();
+var logger = app.Services.GetService<ILogger<Program>>();
+if (logger is null)
+{
+    throw new ApplicationException("LOGGER IS NOT CONFIGURED!");
+}
 
-configPrinter.Print();
+var configPrinter = app.Services.GetService<IConfigPrinter>();
+if (configPrinter is null)
+{
+    logger.LogCritical("CONFIG PRINTER IS NULL!");
+}
+else
+{ 
+    configPrinter.Print();
+}
+
 return;
 app.Run();
