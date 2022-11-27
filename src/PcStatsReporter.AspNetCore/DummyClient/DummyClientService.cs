@@ -38,7 +38,6 @@ public class DummyClientService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogWarning("{Service} enabled", nameof(DummyClientService));
         _logger.LogInformation("{Service} is waiting {Seconds} seconds", nameof(DummyClientService), _settings.HoldTime.TotalSeconds);
         await Task.Delay(_settings.HoldTime, stoppingToken);
         _logger.LogInformation("{Service} is starting", nameof(DummyClientService));

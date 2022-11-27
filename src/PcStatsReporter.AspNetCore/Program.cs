@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PcStatsReporter.AspNetCore;
+using PcStatsReporter.AspNetCore.Configuration;
 using PcStatsReporter.AspNetCore.DummyClient;
 using PcStatsReporter.AspNetCore.Handlers;
 using PcStatsReporter.AspNetCore.Mappers;
@@ -45,12 +46,14 @@ builder.Services.AutoRegisterHandlersFromAssemblyOf<RegisteredHandler>();
 builder.Services.AddSignalR();
 
 ServiceSettings settings = new();
-builder.Configuration.GetSection(nameof(ServiceSettings)).Bind(settings);
+builder.Configuration.GetSection(nameof(ServiceSettings).Replace("Settings",string.Empty)).Bind(settings);
 
 if (settings.UseDummyClient)
 {
     builder.Services.AddDummyClient();
 }
+
+builder.Services.AddSingleton<IConfigPrinter, ConfigPrinter>();
 
 var app = builder.Build();
 
@@ -79,4 +82,8 @@ app.UseReporterGrpcServer();
 
 app.MapHub<ReporterHub>("/reporter");
 
+var configPrinter = app.Services.GetService<IConfigPrinter>();
+
+configPrinter.Print();
+return;
 app.Run();

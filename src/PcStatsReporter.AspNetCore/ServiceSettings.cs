@@ -1,6 +1,8 @@
-﻿namespace PcStatsReporter.AspNetCore;
+﻿using PcStatsReporter.AspNetCore.Configuration;
 
-public class ServiceSettings
+namespace PcStatsReporter.AspNetCore;
+
+public class ServiceSettings : IWebSettings
 {
     public bool UseDummyClient { get; set; }
 }
