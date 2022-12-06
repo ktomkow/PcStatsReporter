@@ -22,7 +22,8 @@ const api: Api = {
 export default boot(async () => {
   setTimeout(async () => {
     const baseAddressScanResult = await find();
-    if (baseAddressScanResult.success === false) {
+
+    if (baseAddressScanResult.isSuccess === false) {
       throw "Not found base address!";
     }
 
