@@ -48,6 +48,7 @@ import eventBusKeys from "src/consts/eventBusKeys";
 import { signalR } from "src/boot/signalr";
 import CpuLoadTabs from "src/components/CpuLoadTabs.vue";
 import { find } from "src/services/serverFinder";
+import { api } from "src/boot/axios";
 
 export default {
   name: "MainPage",
@@ -84,7 +85,10 @@ export default {
     useEventBus(eventBusKeys.RAM_SAMPLE_ARRIVED, setRamSample);
 
     const start = async () => {
-      await signalR.connect("http://localhost:11111", "reporter");
+      // await signalR.connect("http://localhost:11111", "reporter");
+      if (api.isInitialized) {
+        await signalR.connect(api.baseAddress, "reporter");
+      }
     };
 
     const stop = () => {
