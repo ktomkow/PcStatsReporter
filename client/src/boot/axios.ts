@@ -1,6 +1,7 @@
 import { boot } from "quasar/wrappers";
 import axios, { AxiosInstance } from "axios";
 import { find } from "src/services/serverFinder";
+import { Notify } from "quasar";
 
 export interface Api {
   isInitialized: boolean;
@@ -24,10 +25,25 @@ export default boot(async () => {
     const baseAddressScanResult = await find();
 
     if (baseAddressScanResult.isSuccess === false) {
+      Notify.create({
+        message: "Not found base address!",
+        type: "negative",
+        timeout: 5000,
+        closeBtn: true,
+        progress: true,
+      });
+
       throw "Not found base address!";
     }
 
     console.log("API address found", baseAddressScanResult);
+    Notify.create({
+      message: "API address found",
+      type: "positive",
+      timeout: 5000,
+      closeBtn: true,
+      progress: true,
+    });
 
     const axiosInstance = axios.create({
       baseURL: baseAddressScanResult.address,
