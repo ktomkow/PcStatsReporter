@@ -98,5 +98,4 @@ else
     configPrinter.Print();
 }
 
-return;
 app.Run();

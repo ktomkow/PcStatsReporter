@@ -9,3 +9,5 @@ services:
     ports:
       - 11111:11111
       - 22222:22222
+    environment:
+      - BuiltInCollector:UseDummyClient=false

@@ -58,8 +58,9 @@ module.exports = {
     "brace-style": ["error", "1tbs"],
     "prettier/prettier": "error",
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
     "no-extra-boolean-cast": "warn",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
   },
   overrides: [
     {
